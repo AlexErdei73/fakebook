@@ -1,0 +1,18 @@
+.signup input {
+  margin: 0.5rem;
+}
+
+.signup button {
+  margin: 0.5rem auto;
+}
+
+.signup form {
+  width: fit-content;
+  margin: auto;
+  text-align: center;
+}
+
+.signup h1 {
+  width: fit-content;
+  margin: auto;
+}
