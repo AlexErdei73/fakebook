@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useFirebaseApp } from "reactfire";
 import "firebase/auth";
-import "./Signup.css";
+import "./Login.css";
 
-const Signup = (props) => {
+const Login = (props) => {
   // Import firebase
   var firebase = useFirebaseApp();
 
@@ -15,22 +15,16 @@ const Signup = (props) => {
   // Submit function (Create account)
   const handleSubmit = (e) => {
     e.preventDefault();
+    //signIn code here ...
     firebase
       .auth()
-      .createUserWithEmailAndPassword(props.user.email, props.user.password)
+      .signInWithEmailAndPassword(props.user.email, props.user.password)
       .then((result) => {
-        // Update the nickname
-        result.user.updateProfile({
-          displayName: props.user.nickname,
-        });
-        // Sign out the user
-        firebase.auth().signOut();
-
-        // URL of my website.
-        const myURL = { url: "http://localhost:3000/" };
-
-        // Send Email Verification and redirect to my website.
-        return result.user.sendEmailVerification(myURL);
+        // email has been verified?
+        if (!result.user.emailVerified) {
+          firebase.auth().signOut();
+          throw Error("Please verify your email before to continue");
+        }
       })
       .catch((error) => {
         // Update the error
@@ -40,16 +34,9 @@ const Signup = (props) => {
   };
 
   return (
-    <div className="signup">
-      <h1>Sign up</h1>
+    <div className="login">
+      <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Nickname"
-          name="nickname"
-          onChange={handleChange}
-        />
-        <br />
         <input
           type="text"
           placeholder="Email"
@@ -64,10 +51,10 @@ const Signup = (props) => {
           onChange={handleChange}
         />
         <br />
-        <button type="submit">Sign Up</button>
+        <button type="submit">Log In</button>
       </form>
     </div>
   );
 };
 
-export default Signup;
+export default Login;

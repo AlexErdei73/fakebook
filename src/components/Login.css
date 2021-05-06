@@ -1,0 +1,18 @@
+.login input {
+  margin: 0.5rem;
+}
+
+.login button {
+  margin: 0.5rem auto;
+}
+
+.login form {
+  width: fit-content;
+  margin: auto;
+  text-align: center;
+}
+
+.login h1 {
+  width: fit-content;
+  margin: auto;
+}

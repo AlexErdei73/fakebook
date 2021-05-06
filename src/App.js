@@ -1,15 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
-import { useFirebaseApp } from "reactfire";
 import Signup from "./components/signup";
+import Login from "./components/login";
+import Logout from "./components/logout";
+import { AuthCheck } from "reactfire";
 
 function App() {
-  const firebase = useFirebaseApp();
+  // User State
+  const [user, setUser] = useState({
+    nickname: "",
+    email: "",
+    password: "",
+    error: "",
+  });
+
+  function addError(errorMsg) {
+    setUser({
+      ...user,
+      error: errorMsg,
+    });
+  }
+
+  function updateUser(name, value) {
+    setUser({
+      ...user,
+      [name]: value,
+      error: "",
+    });
+  }
+
   return (
-    <>
+    <div className="App">
       <h1>fakebook</h1>
-      <Signup className="signup"></Signup>;
-    </>
+      <AuthCheck
+        fallback={
+          <>
+            <Login onError={addError} onChange={updateUser} user={user}></Login>
+            <Signup
+              onError={addError}
+              onChange={updateUser}
+              user={user}
+            ></Signup>
+          </>
+        }
+      >
+        <Logout></Logout>
+      </AuthCheck>
+      {user.error && <h4>{user.error}</h4>}
+    </div>
   );
 }
 
