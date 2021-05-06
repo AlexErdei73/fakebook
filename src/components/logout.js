@@ -2,7 +2,7 @@ import React from "react";
 import { useFirebaseApp } from "reactfire";
 import "firebase/auth";
 
-const Logout = () => {
+const Logout = (props) => {
   // Import firebase
   const firebase = useFirebaseApp();
 
@@ -16,6 +16,7 @@ const Logout = () => {
       <button type="button" onClick={handleClick}>
         Log Out
       </button>
+      <h4>Welcome {props.userName}!</h4>
     </>
   );
 };

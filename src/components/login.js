@@ -24,6 +24,8 @@ const Login = (props) => {
         if (!result.user.emailVerified) {
           firebase.auth().signOut();
           throw Error("Please verify your email before to continue");
+        } else {
+          props.onChange("nickname", result.user.displayName);
         }
       })
       .catch((error) => {

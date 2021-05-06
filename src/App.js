@@ -44,7 +44,7 @@ function App() {
           </>
         }
       >
-        <Logout></Logout>
+        <Logout userName={user.nickname}></Logout>
       </AuthCheck>
       {user.error && <h4>{user.error}</h4>}
     </div>
