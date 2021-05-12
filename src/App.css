@@ -1,9 +1,11 @@
-.signup {
-  width: fit-content;
+.login {
+  width: 390px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  box-shadow: 0px 9px 18px 2px lightgrey;
   margin: auto;
 }
 
-.login {
-  width: fit-content;
-  margin: auto;
+.bg-200 {
+  background-color: #e9ecef;
 }
