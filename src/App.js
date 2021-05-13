@@ -10,6 +10,7 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import RecentLogins from "./components/RecentLogins";
 import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 function App() {
   // User State
@@ -35,6 +36,17 @@ function App() {
     });
   }
 
+  //Handle the modal
+  const [show, setShow] = useState(true);
+
+  function handleClose() {
+    setShow(false);
+  }
+
+  function handleShow() {
+    setShow(true);
+  }
+
   return (
     <div className="bg-200 vw-100">
       <Container>
@@ -50,22 +62,34 @@ function App() {
                     onError={addError}
                     onChange={updateUser}
                     user={user}
+                    disabled
                   ></Login>
                   <hr />
                   <Button
                     variant="success"
                     size="lg"
                     className="d-block w-60 mx-auto mt-4"
+                    onClick={handleShow}
                   >
                     <b>Create New Account</b>
                   </Button>
                 </div>
-                {/*<Signup
-              onError={addError}
-              onChange={updateUser}
-              user={user}
-            ></Signup>*/}
               </Col>
+              <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>
+                    <strong className="fs-2">Sign Up</strong>
+                    <div id="title-footer">It's quick and easy.</div>
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <Signup
+                    onError={addError}
+                    onChange={updateUser}
+                    user={user}
+                  ></Signup>
+                </Modal.Body>
+              </Modal>
             </Row>
           }
         >

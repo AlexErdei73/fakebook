@@ -9,3 +9,8 @@
 .bg-200 {
   background-color: #e9ecef;
 }
+
+#title-footer {
+  font-size: small;
+  font-weight: lighter;
+}

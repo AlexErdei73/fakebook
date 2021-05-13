@@ -1,4 +1,4 @@
-import Row from "react-bootstrap/Row";
+import React from "react";
 import "./RecentLogins.css";
 
 const RecentLogins = () => {

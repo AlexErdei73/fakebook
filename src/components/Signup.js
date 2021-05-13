@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useFirebaseApp } from "reactfire";
 import "firebase/auth";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 import "./Signup.css";
 
 const Signup = (props) => {
@@ -40,33 +44,58 @@ const Signup = (props) => {
   };
 
   return (
-    <div className="signup">
-      <h1>Sign up</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Nickname"
-          name="nickname"
-          onChange={handleChange}
-        />
-        <br />
-        <input
-          type="text"
-          placeholder="Email"
-          name="email"
-          onChange={handleChange}
-        />
-        <br />
-        <input
-          type="password"
-          placeholder="Password"
-          name="password"
-          onChange={handleChange}
-        />
-        <br />
-        <button type="submit">Sign Up</button>
-      </form>
-    </div>
+    <Form onSubmit={handleSubmit}>
+      <Form.Row>
+        <Form.Group as={Col}>
+          <Form.Control
+            type="text"
+            placeholder="First name"
+            name="firstname"
+            onChange={handleChange}
+          />
+        </Form.Group>
+        <Form.Group as={Col}>
+          <Form.Control
+            type="text"
+            placeholder="Surename"
+            name="lastname"
+            onChange={handleChange}
+          />
+        </Form.Group>
+      </Form.Row>
+      <Form.Row>
+        <Form.Group as={Col}>
+          <Form.Control
+            type="email"
+            placeholder="Email address"
+            name="email"
+            onChange={handleChange}
+          />
+        </Form.Group>
+      </Form.Row>
+      <Form.Row>
+        <Form.Group as={Col}>
+          <Form.Control
+            type="text"
+            placeholder="New password"
+            name="password"
+            onChange={handleChange}
+          />
+        </Form.Group>
+      </Form.Row>
+      <Form.Row>
+        <p className="text-muted p-1" id="text-legal">
+          Signing Up for fakebook you agree to share the uploaded details with
+          any other user. Please do not upload any sensitive data to the app,
+          which is built strictly for demonstration purposes.
+        </p>
+      </Form.Row>
+      <Row>
+        <Button type="submit" variant="success" className="w-50 mx-auto">
+          <strong>Sign Up</strong>
+        </Button>
+      </Row>
+    </Form>
   );
 };
 

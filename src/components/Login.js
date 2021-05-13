@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useFirebaseApp } from "reactfire";
 import "firebase/auth";
 import Form from "react-bootstrap/Form";
@@ -47,7 +47,7 @@ const Login = (props) => {
         onChange={handleChange}
       />
       <Form.Control
-        type="password"
+        type="text"
         placeholder="Password"
         name="password"
         size="lg"
