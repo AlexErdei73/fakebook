@@ -14,3 +14,7 @@
   font-size: small;
   font-weight: lighter;
 }
+
+#link-button {
+  box-shadow: none;
+}

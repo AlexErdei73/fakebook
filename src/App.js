@@ -14,12 +14,14 @@ import Modal from "react-bootstrap/Modal";
 
 function App() {
   // User State
-  const [user, setUser] = useState({
-    nickname: "",
+  const initUser = {
+    name: "",
     email: "",
     password: "",
     error: "",
-  });
+  };
+
+  const [user, setUser] = useState(initUser);
 
   function addError(errorMsg) {
     setUser({
@@ -36,8 +38,12 @@ function App() {
     });
   }
 
+  function resetUser() {
+    setUser(initUser);
+  }
+
   //Handle the modal
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
 
   function handleClose() {
     setShow(false);
@@ -86,6 +92,7 @@ function App() {
                   <Signup
                     onError={addError}
                     onChange={updateUser}
+                    onSubmit={handleClose}
                     user={user}
                   ></Signup>
                 </Modal.Body>
@@ -93,7 +100,7 @@ function App() {
             </Row>
           }
         >
-          <Logout userName={user.nickname}></Logout>
+          <Logout userName={user.name} resetUser={resetUser}></Logout>
         </AuthCheck>
         <div>{user.error && <h4>{user.error}</h4>}</div>
       </Container>

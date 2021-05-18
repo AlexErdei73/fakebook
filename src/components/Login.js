@@ -26,7 +26,7 @@ const Login = (props) => {
           firebase.auth().signOut();
           throw Error("Please verify your email before to continue");
         } else {
-          props.onChange("nickname", result.user.displayName);
+          props.onChange("name", result.user.displayName);
         }
       })
       .catch((error) => {
@@ -37,30 +37,32 @@ const Login = (props) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit} className="w-100">
-      <Form.Control
-        type="email"
-        placeholder="Email"
-        name="email"
-        size="lg"
-        className="mb-2 w-100"
-        onChange={handleChange}
-      />
-      <Form.Control
-        type="text"
-        placeholder="Password"
-        name="password"
-        size="lg"
-        className="mb-2 w-100"
-        onChange={handleChange}
-      />
-      <Button variant="primary" type="submit" size="lg" className="w-100">
-        <b>Log In</b>
-      </Button>
-      <Button variant="link" type="link" className="w-100">
+    <>
+      <Form onSubmit={handleSubmit} className="w-100">
+        <Form.Control
+          type="email"
+          placeholder="Email"
+          name="email"
+          size="lg"
+          className="mb-2 w-100"
+          onChange={handleChange}
+        />
+        <Form.Control
+          type="text"
+          placeholder="Password"
+          name="password"
+          size="lg"
+          className="mb-2 w-100"
+          onChange={handleChange}
+        />
+        <Button variant="primary" type="submit" size="lg" className="w-100">
+          <b>Log In</b>
+        </Button>
+      </Form>
+      <Button variant="link" type="link" className="w-100" id="link-button">
         Forgotten password?
       </Button>
-    </Form>
+    </>
   );
 };
 

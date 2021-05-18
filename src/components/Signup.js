@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFirebaseApp } from "reactfire";
 import "firebase/auth";
 import Form from "react-bootstrap/Form";
@@ -16,6 +16,20 @@ const Signup = (props) => {
     props.onChange(e.target.name, e.target.value);
   };
 
+  // Handle name change on form differently because of first and last name
+  const [name, setName] = useState({
+    firstname: "",
+    lastname: "",
+  });
+
+  const handleNameChange = (e) => {
+    setName({
+      ...name,
+      [e.target.name]: e.target.value,
+    });
+    props.onChange("name", `${name.firstname} ${name.lastname}`);
+  };
+
   // Submit function (Create account)
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,7 +39,7 @@ const Signup = (props) => {
       .then((result) => {
         // Update the nickname
         result.user.updateProfile({
-          displayName: props.user.nickname,
+          displayName: `${name.firstname} ${name.lastname}`,
         });
         // Sign out the user
         firebase.auth().signOut();
@@ -41,6 +55,7 @@ const Signup = (props) => {
         console.log(error);
         props.onError(error.message);
       });
+    props.onSubmit();
   };
 
   return (
@@ -51,7 +66,7 @@ const Signup = (props) => {
             type="text"
             placeholder="First name"
             name="firstname"
-            onChange={handleChange}
+            onChange={handleNameChange}
           />
         </Form.Group>
         <Form.Group as={Col}>
@@ -59,7 +74,7 @@ const Signup = (props) => {
             type="text"
             placeholder="Surename"
             name="lastname"
-            onChange={handleChange}
+            onChange={handleNameChange}
           />
         </Form.Group>
       </Form.Row>

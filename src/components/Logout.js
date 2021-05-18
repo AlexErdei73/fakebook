@@ -9,6 +9,7 @@ const Logout = (props) => {
   // Log out function
   const handleClick = () => {
     firebase.auth().signOut();
+    props.resetUser();
   };
 
   return (
