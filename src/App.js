@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./App.css";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
-import Logout from "./components/Logout";
 import TitleBar from "./components/Titlebar";
 import Profile from "./components/Profile";
 import { AuthCheck } from "reactfire";
@@ -116,6 +115,7 @@ function App() {
               profileLink={`/${firstname}.${lastname}`}
               user={user}
               updateUser={updateUser}
+              resetUser={resetUser}
             />
             <Switch>
               <Route
@@ -126,7 +126,7 @@ function App() {
               <Route
                 path="/"
                 render={() => (
-                  <Logout userName={user.name} resetUser={resetUser} />
+                  <h1 className="mt-5">Home Page for {user.name}</h1>
                 )}
               />
             </Switch>
