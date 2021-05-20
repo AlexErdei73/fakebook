@@ -3,6 +3,8 @@ import "./App.css";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
+import TitleBar from "./components/Titlebar";
+import Profile from "./components/Profile";
 import { AuthCheck } from "reactfire";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Col from "react-bootstrap/Col";
@@ -11,6 +13,7 @@ import Container from "react-bootstrap/Container";
 import RecentLogins from "./components/RecentLogins";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 function App() {
   // User State
@@ -52,6 +55,14 @@ function App() {
   function handleShow() {
     setShow(true);
   }
+
+  //get the first and lastname for the route of the profile
+
+  const name = user.name.split(" ");
+
+  const lastname = name.pop();
+
+  const firstname = name.join(" ");
 
   return (
     <div className="bg-200 vw-100">
@@ -100,7 +111,26 @@ function App() {
             </Row>
           }
         >
-          <Logout userName={user.name} resetUser={resetUser}></Logout>
+          <BrowserRouter>
+            <TitleBar
+              profileLink={`/${firstname}.${lastname}`}
+              user={user}
+              updateUser={updateUser}
+            />
+            <Switch>
+              <Route
+                path={`/${firstname}.${lastname}`}
+                exact
+                render={() => <Profile user={user} />}
+              />
+              <Route
+                path="/"
+                render={() => (
+                  <Logout userName={user.name} resetUser={resetUser} />
+                )}
+              />
+            </Switch>
+          </BrowserRouter>
         </AuthCheck>
         <div>{user.error && <h4>{user.error}</h4>}</div>
       </Container>

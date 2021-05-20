@@ -14,7 +14,7 @@ const Logout = (props) => {
 
   return (
     <>
-      <button type="button" onClick={handleClick}>
+      <button type="button" onClick={handleClick} className="mt-5">
         Log Out
       </button>
       <h4>Welcome {props.userName}!</h4>
