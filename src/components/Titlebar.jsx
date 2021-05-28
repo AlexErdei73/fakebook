@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import { Navbar, Nav, Button, Dropdown, DropdownButton } from "react-bootstrap";
+import { Navbar, Nav, Dropdown, DropdownButton } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { VscHome } from "react-icons/vsc";
 import { FaFacebook } from "react-icons/fa";
 import { ImExit } from "react-icons/im";
-import { useUser } from "reactfire";
-import { useFirebaseApp } from "reactfire";
-import "firebase/auth";
 import "./Titlebar.css";
+import ProfileLink from "./ProfileLink";
+import { useFirebaseApp, useUser } from "reactfire";
 
 const TitleBar = (props) => {
-  //Update the user if the state does not contain the correct username
+  //update userID to the signed in user
   const { data: user } = useUser();
-  if (props.user.name !== user.displayName) {
-    props.updateUser("name", user.displayName);
+  if (user && user.uid !== props.user.ID) {
+    props.updateUser("ID", user.uid);
   }
 
   // Import firebase
@@ -25,14 +24,16 @@ const TitleBar = (props) => {
     props.resetUser();
   };
 
-  //add the active class to the link DOM elements
+  //add the active status of the link DOM elements
   const [activeLink, setActiveLink] = useState(null);
 
   function handleClickLink(e) {
     const current = e.target;
     const previous = activeLink;
-    current.style.borderBottom = "5px solid dodgerblue";
-    if (previous) previous.style.borderBottom = "5px solid transparent";
+    if (current === previous) return;
+    if (current.id === "profile") return;
+    current.style.borderBottom = "3px solid dodgerblue";
+    if (previous) previous.style.borderBottom = "3px solid transparent";
     setActiveLink(current);
   }
 
@@ -53,21 +54,23 @@ const TitleBar = (props) => {
               />
             </Link>
           </Nav.Item>
-          <Nav.Item className="align-self-center">
-            <Link
-              to={props.profileLink}
-              className="nav-link"
-              onClick={handleClickLink}
-              style={{ paddingBottom: "0.75rem", paddingTop: "0.75rem" }}
-            >
-              <span className="mx-4" style={{ pointerEvents: "none" }}>
-                Profile
-              </span>
-            </Link>
-          </Nav.Item>
         </Nav>
       </Navbar.Collapse>
       <Nav className="w-25 justify-content-end">
+        <Nav.Item className="align-self-center">
+          <Link
+            to={props.profileLink}
+            className="nav-link"
+            onClick={handleClickLink}
+            style={{ paddingBottom: "0.75rem", paddingTop: "0.75rem" }}
+            id="profile"
+          >
+            <ProfileLink
+              userID={props.user.ID}
+              isLoggedIn={props.user.isLoggedIn}
+            />
+          </Link>
+        </Nav.Item>
         <DropdownButton
           id="custom-drop-down-btn"
           title=""

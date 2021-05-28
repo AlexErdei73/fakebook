@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useFirebaseApp } from "reactfire";
 import "firebase/auth";
+import "firebase/firestore";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -41,8 +42,20 @@ const Signup = (props) => {
         result.user.updateProfile({
           displayName: `${name.firstname} ${name.lastname}`,
         });
-        // Sign out the user
-        firebase.auth().signOut();
+        // Create firestore document
+        firebase
+          .firestore()
+          .collection("users")
+          .doc(result.user.uid)
+          .set({
+            firstname: name.firstname,
+            lastname: name.lastname,
+            profilePictureURL: "#",
+          })
+          .then(() => {
+            // Sign out the user
+            firebase.auth().signOut();
+          });
 
         // URL of my website.
         const myURL = { url: "http://localhost:3000/" };
@@ -55,6 +68,7 @@ const Signup = (props) => {
         console.log(error);
         props.onError(error.message);
       });
+
     props.onSubmit();
   };
 

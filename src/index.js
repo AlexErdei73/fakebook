@@ -6,8 +6,8 @@ import "./index.css";
 import App from "./App";
 
 ReactDOM.render(
-  <FirebaseAppProvider firebaseConfig={firebaseConfig}>
-    <Suspense fallback={<h3>Loading...</h3>}>
+  <FirebaseAppProvider firebaseConfig={firebaseConfig} suspense>
+    <Suspense fallback={<div>Loading ...</div>}>
       <React.StrictMode>
         <App />
       </React.StrictMode>

@@ -13,35 +13,47 @@ import RecentLogins from "./components/RecentLogins";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { useUser } from "reactfire";
+import "firebase/auth";
+import "firebase/firestore";
 
 function App() {
+  const { data: user } = useUser();
+
   // User State
   const initUser = {
-    name: "",
+    name: (user && user.displayName) || "",
     email: "",
     password: "",
+    ID: (user && user.uid) || "",
+    firstname: "",
+    lastname: "",
+    profilePictureUrl: "",
+    backgroundPictureUrl: "",
+    isLoggedIn: !!user,
     error: "",
   };
 
-  const [user, setUser] = useState(initUser);
+  const [userState, setUserState] = useState(initUser);
 
   function addError(errorMsg) {
-    setUser({
-      ...user,
+    setUserState({
+      ...userState,
       error: errorMsg,
     });
   }
 
   function updateUser(name, value) {
-    setUser({
-      ...user,
+    setUserState({
+      ...userState,
       [name]: value,
       error: "",
     });
   }
 
   function resetUser() {
-    setUser(initUser);
+    initUser.isLoggedIn = false;
+    setUserState(initUser);
   }
 
   //Handle the modal
@@ -55,13 +67,13 @@ function App() {
     setShow(true);
   }
 
-  //get the first and lastname for the route of the profile
+  //get the first and lastName for the route of the profile
 
-  const name = user.name.split(" ");
+  const name = userState.name.split(" ");
 
-  const lastname = name.pop();
+  const lastName = name.pop();
 
-  const firstname = name.join(" ");
+  const firstName = name.join(" ");
 
   return (
     <div className="bg-200 vw-100">
@@ -77,7 +89,7 @@ function App() {
                   <Login
                     onError={addError}
                     onChange={updateUser}
-                    user={user}
+                    user={userState}
                     disabled
                   ></Login>
                   <hr />
@@ -103,7 +115,7 @@ function App() {
                     onError={addError}
                     onChange={updateUser}
                     onSubmit={handleClose}
-                    user={user}
+                    user={userState}
                   ></Signup>
                 </Modal.Body>
               </Modal>
@@ -112,27 +124,27 @@ function App() {
         >
           <BrowserRouter>
             <TitleBar
-              profileLink={`/${firstname}.${lastname}`}
-              user={user}
+              profileLink={`/${firstName}.${lastName}`}
+              user={userState}
               updateUser={updateUser}
               resetUser={resetUser}
             />
             <Switch>
               <Route
-                path={`/${firstname}.${lastname}`}
+                path={`/${firstName}.${lastName}`}
                 exact
-                render={() => <Profile user={user} />}
+                render={() => <Profile user={userState} />}
               />
               <Route
                 path="/"
                 render={() => (
-                  <h1 className="mt-5">Home Page for {user.name}</h1>
+                  <h1 className="mt-5">Home Page for {userState.name}</h1>
                 )}
               />
             </Switch>
           </BrowserRouter>
         </AuthCheck>
-        <div>{user.error && <h4>{user.error}</h4>}</div>
+        <div>{userState.error && <h4>{userState.error}</h4>}</div>
       </Container>
     </div>
   );
