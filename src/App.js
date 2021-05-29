@@ -133,7 +133,12 @@ function App() {
               <Route
                 path={`/${firstName}.${lastName}`}
                 exact
-                render={() => <Profile user={userState} />}
+                render={() => (
+                  <Profile
+                    userID={userState.ID}
+                    isLoggedIn={userState.isLoggedIn}
+                  />
+                )}
               />
               <Route
                 path="/"

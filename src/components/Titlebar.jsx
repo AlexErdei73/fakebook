@@ -65,10 +65,7 @@ const TitleBar = (props) => {
             style={{ paddingBottom: "0.75rem", paddingTop: "0.75rem" }}
             id="profile"
           >
-            <ProfileLink
-              userID={props.user.ID}
-              isLoggedIn={props.user.isLoggedIn}
-            />
+            <ProfileLink userID={props.user.ID} />
           </Link>
         </Nav.Item>
         <DropdownButton

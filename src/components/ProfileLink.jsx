@@ -1,22 +1,13 @@
 import React, { useState } from "react";
-import { useFirebaseApp, useFirestore, StorageImage } from "reactfire";
+import { useFirestore, useFirestoreDocDataOnce, StorageImage } from "reactfire";
 import "firebase/firestore";
 import "firebase/storage";
 
 const ProfileLink = (props) => {
-  const [firstname, setFirstname] = useState("");
-  const [profilePictureURL, setProfilePictureURL] = useState(
-    "fakebook-avatar.jpeg"
-  );
-
   const userDocRef = useFirestore().collection("users").doc(props.userID);
-  if (props.isLoggedIn) {
-    userDocRef.get().then((doc) => {
-      const { firstname, profilePictureURL } = doc.data();
-      setFirstname(firstname);
-      setProfilePictureURL(profilePictureURL);
-    });
-  }
+  const result = useFirestoreDocDataOnce(userDocRef);
+
+  const { firstname, profilePictureURL } = result.data;
 
   return (
     <>
