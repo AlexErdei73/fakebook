@@ -4,18 +4,33 @@ import "firebase/firestore";
 import "firebase/storage";
 
 const Profile = (props) => {
-  const firestore = useFirestore();
-
-  const profileRef = firestore.collection("users").doc(props.userID);
+  const profileRef = useFirestore().collection("users").doc(props.userID);
   const result = useFirestoreDocDataOnce(profileRef);
 
   const { firstname, lastname, profilePictureURL, backgroundPictureURL } =
     result.data;
 
   return (
-    <h1 className="mt-5">
-      {firstname} {lastname}
-    </h1>
+    <>
+      <StorageImage
+        style={{
+          display: "block",
+          width: "85%",
+          height: "363px",
+          objectFit: "cover",
+          margin: "auto",
+          marginTop: "3.5%",
+          borderRadius: "13px",
+          pointerEvents: "none",
+        }}
+        storagePath={backgroundPictureURL}
+      />
+      <h2 className="text-center mt-4">
+        <b>
+          {firstname} {lastname}
+        </b>
+      </h2>
+    </>
   );
 };
 
