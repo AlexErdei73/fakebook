@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useFirestore, useFirestoreDocDataOnce, StorageImage } from "reactfire";
+import CircularImage from "./CircularImage";
 import "firebase/firestore";
 import "firebase/storage";
 
@@ -11,16 +12,7 @@ const ProfileLink = (props) => {
 
   return (
     <>
-      <StorageImage
-        style={{
-          width: "26px",
-          height: "26px",
-          borderRadius: "13px",
-          display: "inline-block",
-          pointerEvents: "none",
-        }}
-        storagePath={profilePictureURL}
-      />
+      <CircularImage size="26" url={profilePictureURL} />
       <span className="mx-1 text-dark" style={{ pointerEvents: "none" }}>
         <b>{firstname}</b>
       </span>
