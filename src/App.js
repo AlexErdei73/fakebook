@@ -77,14 +77,17 @@ function App() {
 
   return (
     <div className="bg-200 vw-100">
-      <Container>
+      <Container className="w-100 p-0" fluid>
         <AuthCheck
           fallback={
             <Row className="vh-100 align-items-center">
-              <Col lg={6} className="d-flex justify-content-center">
+              <Col
+                lg={{ span: 5, offset: 1 }}
+                className="d-flex justify-content-center"
+              >
                 <RecentLogins></RecentLogins>
               </Col>
-              <Col lg={6} className="d-flex justify-content-center">
+              <Col lg={5} className="d-flex justify-content-center">
                 <div className="login p-3 bg-light">
                   <Login
                     onError={addError}
