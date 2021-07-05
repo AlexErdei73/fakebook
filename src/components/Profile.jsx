@@ -26,6 +26,7 @@ const Profile = (props) => {
               position: "relative",
               height: "42%",
               minHeight: "250px",
+              background: "white",
             }}
           >
             <StorageImage

@@ -50,7 +50,8 @@ const Signup = (props) => {
           .set({
             firstname: name.firstname,
             lastname: name.lastname,
-            profilePictureURL: "#",
+            profilePictureURL: "fakebook-avatar.jpeg",
+            backgroundPictureURL: "background-server.jpg",
           })
           .then(() => {
             // Sign out the user
