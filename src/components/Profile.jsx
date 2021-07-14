@@ -1,6 +1,10 @@
 import React from "react";
 import { useFirestore, useFirestoreDocDataOnce, StorageImage } from "reactfire";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, DropdownButton, Dropdown } from "react-bootstrap";
+import { MdPhotoCamera } from "react-icons/md";
+import { IoTrashOutline } from "react-icons/io5";
+import { ImUpload2 } from "react-icons/im";
+import { HiOutlinePhotograph } from "react-icons/hi";
 import CircularImage from "./CircularImage";
 import "firebase/firestore";
 import "firebase/storage";
@@ -44,6 +48,35 @@ const Profile = (props) => {
               }}
               storagePath={backgroundPictureURL}
             />
+            <DropdownButton
+              variant="light"
+              id="dropdown-basic-button"
+              title={
+                <b>
+                  <MdPhotoCamera className="mr-1" size="20px" />
+                  Edit Cover Photo
+                </b>
+              }
+              style={{
+                position: "absolute",
+                bottom: "5px",
+                right: "30px",
+              }}
+              size="sm"
+            >
+              <Dropdown.Item href="#/action-1">
+                <HiOutlinePhotograph size="20px" className="mr-2" />
+                Select Photo
+              </Dropdown.Item>
+              <Dropdown.Item href="#/action-2">
+                <ImUpload2 size="20px" className="mr-2" />
+                Upload Photo
+              </Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item href="#/action-3">
+                <IoTrashOutline size="20px" className="mr-2" /> Remove
+              </Dropdown.Item>
+            </DropdownButton>
             <div
               style={{
                 border: "5px solid white",
