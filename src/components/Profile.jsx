@@ -1,5 +1,5 @@
 import React from "react";
-import { useFirestore, useFirestoreDocDataOnce, StorageImage } from "reactfire";
+import { useFirestore, useFirestoreDocData, StorageImage } from "reactfire";
 import { Row, Col, DropdownButton, Dropdown } from "react-bootstrap";
 import { MdPhotoCamera } from "react-icons/md";
 import { IoTrashOutline } from "react-icons/io5";
@@ -11,9 +11,9 @@ import "firebase/storage";
 
 const Profile = (props) => {
   const profileRef = useFirestore().collection("users").doc(props.userID);
-  const result = useFirestoreDocDataOnce(profileRef);
+  let result = useFirestoreDocData(profileRef);
 
-  const { firstname, lastname, profilePictureURL, backgroundPictureURL } =
+  let { firstname, lastname, profilePictureURL, backgroundPictureURL } =
     result.data;
 
   return (
