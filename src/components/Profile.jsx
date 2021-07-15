@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFirestore, useFirestoreDocData, StorageImage } from "reactfire";
-import { Row, Col, DropdownButton, Dropdown } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  DropdownButton,
+  Dropdown,
+  Modal,
+  Button,
+} from "react-bootstrap";
 import { MdPhotoCamera } from "react-icons/md";
 import { IoTrashOutline } from "react-icons/io5";
 import { ImUpload2 } from "react-icons/im";
@@ -15,6 +22,27 @@ const Profile = (props) => {
 
   let { firstname, lastname, profilePictureURL, backgroundPictureURL } =
     result.data;
+
+  const [showRemove, setShowRemove] = useState(false);
+
+  function handleShowRemove() {
+    setShowRemove(true);
+  }
+
+  function handleCloseRemove() {
+    setShowRemove(false);
+  }
+
+  function handleSelect(key, event) {
+    if (key === "3") {
+      handleShowRemove();
+    }
+  }
+
+  function handleClickSubmit() {
+    handleCloseRemove();
+    return profileRef.update({ backgroundPictureURL: "background-server.jpg" });
+  }
 
   return (
     <>
@@ -64,16 +92,16 @@ const Profile = (props) => {
               }}
               size="sm"
             >
-              <Dropdown.Item href="#/action-1">
+              <Dropdown.Item eventKey="1">
                 <HiOutlinePhotograph size="20px" className="mr-2" />
                 Select Photo
               </Dropdown.Item>
-              <Dropdown.Item href="#/action-2">
+              <Dropdown.Item eventKey="2">
                 <ImUpload2 size="20px" className="mr-2" />
                 Upload Photo
               </Dropdown.Item>
               <Dropdown.Divider />
-              <Dropdown.Item href="#/action-3">
+              <Dropdown.Item eventKey="3" onSelect={handleSelect}>
                 <IoTrashOutline size="20px" className="mr-2" /> Remove
               </Dropdown.Item>
             </DropdownButton>
@@ -97,6 +125,28 @@ const Profile = (props) => {
           </h2>
         </Col>
       </Row>
+      <Modal show={showRemove} onHide={handleCloseRemove}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <strong className="fs-2">Remove Cover Photo</strong>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>Do you really want to remove the cover photo?</div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="link"
+            style={{ textDecoration: "none" }}
+            onClick={handleCloseRemove}
+          >
+            <b>Cancel</b>
+          </Button>
+          <Button variant="primary" onClick={handleClickSubmit}>
+            <b>Submit</b>
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
