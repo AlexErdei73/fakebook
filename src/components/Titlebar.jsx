@@ -9,11 +9,8 @@ import ProfileLink from "./ProfileLink";
 import { useFirebaseApp, useUser } from "reactfire";
 
 const TitleBar = (props) => {
-  //update userID to the signed in user
+  //get the signed in user
   const { data: user } = useUser();
-  if (user && user.uid !== props.user.ID) {
-    props.updateUser("ID", user.uid);
-  }
 
   // Import firebase
   const firebase = useFirebaseApp();
@@ -21,7 +18,6 @@ const TitleBar = (props) => {
   // Log out function
   const handleClick = () => {
     firebase.auth().signOut();
-    props.resetUser();
   };
 
   //add the active status of the link DOM elements
@@ -65,7 +61,7 @@ const TitleBar = (props) => {
             style={{ paddingBottom: "0.75rem", paddingTop: "0.75rem" }}
             id="profile"
           >
-            <ProfileLink userID={props.user.ID} />
+            {(user && <ProfileLink userID={user.uid} />) || <></>}
           </Link>
         </Nav.Item>
         <DropdownButton

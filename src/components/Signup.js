@@ -28,7 +28,6 @@ const Signup = (props) => {
       ...name,
       [e.target.name]: e.target.value,
     });
-    props.onChange("name", `${name.firstname} ${name.lastname}`);
   };
 
   // Submit function (Create account)
@@ -69,7 +68,6 @@ const Signup = (props) => {
         console.log(error);
         props.onError(error.message);
       });
-
     props.onSubmit();
   };
 

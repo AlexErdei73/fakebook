@@ -22,15 +22,8 @@ function App() {
 
   // User State
   const initUser = {
-    name: (user && user.displayName) || "",
     email: "",
     password: "",
-    ID: (user && user.uid) || "",
-    firstname: "",
-    lastname: "",
-    profilePictureUrl: "",
-    backgroundPictureUrl: "",
-    isLoggedIn: !!user,
     error: "",
   };
 
@@ -51,11 +44,6 @@ function App() {
     });
   }
 
-  function resetUser() {
-    initUser.isLoggedIn = false;
-    setUserState(initUser);
-  }
-
   //Handle the modal
   const [show, setShow] = useState(false);
 
@@ -68,8 +56,8 @@ function App() {
   }
 
   //get the first and lastName for the route of the profile
-
-  const name = userState.name.split(" ");
+  const name =
+    (user && user.displayName && user.displayName.trim().split(" ")) || [];
 
   const lastName = name.pop();
 
@@ -127,26 +115,23 @@ function App() {
         >
           <BrowserRouter>
             <TitleBar
-              profileLink={`/${firstName}.${lastName}`}
-              user={userState}
+              profileLink={`/${lastName}.${firstName}/`}
               updateUser={updateUser}
-              resetUser={resetUser}
             />
             <Switch>
               <Route
-                path={`/${firstName}.${lastName}`}
+                path={`/${lastName}.${firstName}/`}
                 exact
                 render={() => (
-                  <Profile
-                    userID={userState.ID}
-                    isLoggedIn={userState.isLoggedIn}
-                  />
+                  <Profile userID={user.uid} isLoggedIn={user.isLoggedIn} />
                 )}
               />
               <Route
                 path="/"
                 render={() => (
-                  <h1 className="mt-5">Home Page for {userState.name}</h1>
+                  <h1 className="mt-5">
+                    Home Page for {`${firstName} ${lastName}`}
+                  </h1>
                 )}
               />
             </Switch>

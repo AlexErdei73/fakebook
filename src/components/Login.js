@@ -25,10 +25,6 @@ const Login = (props) => {
         if (!result.user.emailVerified) {
           firebase.auth().signOut();
           throw Error("Please verify your email before to continue");
-        } else {
-          props.onChange("name", result.user.displayName);
-          props.onChange("ID", result.user.uid);
-          props.onChange("isLoggedIn", true);
         }
       })
       .catch((error) => {
