@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { useFirestore, useFirestoreDocDataOnce, StorageImage } from "reactfire";
+import React from "react";
+import { useFirestore, useFirestoreDocDataOnce } from "reactfire";
 import CircularImage from "./CircularImage";
-import "firebase/firestore";
-import "firebase/storage";
 
 const ProfileLink = (props) => {
   const userDocRef = useFirestore().collection("users").doc(props.userID);

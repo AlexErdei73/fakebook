@@ -1,5 +1,10 @@
-import React, { useState } from "react";
-import { useFirestore, useFirestoreDocData, StorageImage } from "reactfire";
+import React, { useState, useRef } from "react";
+import {
+  useFirestore,
+  useFirestoreDocData,
+  StorageImage,
+  useStorage,
+} from "reactfire";
 import {
   Row,
   Col,
@@ -25,6 +30,8 @@ const Profile = (props) => {
 
   const [showRemove, setShowRemove] = useState(false);
 
+  const fileInputRef = useRef(null);
+
   function handleShowRemove() {
     setShowRemove(true);
   }
@@ -37,11 +44,31 @@ const Profile = (props) => {
     if (key === "3") {
       handleShowRemove();
     }
+    if (key === "2") {
+      fileInputRef.current.click();
+    }
   }
 
   function handleClickSubmit() {
     handleCloseRemove();
     return profileRef.update({ backgroundPictureURL: "background-server.jpg" });
+  }
+
+  const storage = useStorage();
+
+  function upload(file) {
+    const ref = storage.ref(props.userID).child(file.name);
+    ref.put(file).then(() => {
+      return profileRef.update({
+        backgroundPictureURL: `${props.userID}/${file.name}`,
+      });
+    });
+  }
+
+  function onChangeFile(event) {
+    event.preventDefault();
+    const file = event.target.files[0];
+    upload(file);
   }
 
   return (
@@ -96,7 +123,7 @@ const Profile = (props) => {
                 <HiOutlinePhotograph size="20px" className="mr-2" />
                 Select Photo
               </Dropdown.Item>
-              <Dropdown.Item eventKey="2">
+              <Dropdown.Item eventKey="2" onSelect={handleSelect}>
                 <ImUpload2 size="20px" className="mr-2" />
                 Upload Photo
               </Dropdown.Item>
@@ -147,6 +174,12 @@ const Profile = (props) => {
           </Button>
         </Modal.Footer>
       </Modal>
+      <input
+        type="file"
+        ref={fileInputRef}
+        style={{ display: "none" }}
+        onChange={onChangeFile}
+      />
     </>
   );
 };
