@@ -25,10 +25,12 @@ const Profile = (props) => {
   const profileRef = useFirestore().collection("users").doc(props.userID);
   let result = useFirestoreDocData(profileRef);
 
-  let { firstname, lastname, profilePictureURL, backgroundPictureURL } =
+  let { firstname, lastname, profilePictureURL, backgroundPictureURL, photos } =
     result.data;
 
   const [showRemove, setShowRemove] = useState(false);
+
+  const [showSelectPhoto, setShowSelectPhoto] = useState(false);
 
   const fileInputRef = useRef(null);
 
@@ -46,6 +48,9 @@ const Profile = (props) => {
     }
     if (key === "2") {
       fileInputRef.current.click();
+    }
+    if (key === "1") {
+      setShowSelectPhoto(true);
     }
   }
 
@@ -71,6 +76,14 @@ const Profile = (props) => {
     upload(file);
   }
 
+  function handlePhotoClick(e) {
+    const index = Number(e.target.id);
+    const photo = photos[index];
+    const storagePath = `${props.userID}/${photo.fileName}`;
+    setShowSelectPhoto(false);
+    return profileRef.update({ backgroundPictureURL: storagePath });
+  }
+
   return (
     <>
       <Row className="justify-content-center">
@@ -94,6 +107,7 @@ const Profile = (props) => {
                 width: "100%",
                 height: "105%",
                 minHeight: "250px",
+                maxHeight: "750px",
                 objectFit: "cover",
                 margin: "auto",
                 marginTop: "3.5%",
@@ -119,7 +133,7 @@ const Profile = (props) => {
               }}
               size="sm"
             >
-              <Dropdown.Item eventKey="1">
+              <Dropdown.Item eventKey="1" onSelect={handleSelect}>
                 <HiOutlinePhotograph size="20px" className="mr-2" />
                 Select Photo
               </Dropdown.Item>
@@ -173,6 +187,37 @@ const Profile = (props) => {
             <b>Submit</b>
           </Button>
         </Modal.Footer>
+      </Modal>
+      <Modal
+        show={showSelectPhoto}
+        onHide={() => {
+          setShowSelectPhoto(false);
+        }}
+        scrollable
+      >
+        <Modal.Header closeButton>
+          <Modal.Title style={{ marginLeft: "35%" }}>
+            <strong className="fs-2">Select Photo</strong>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {photos.map((photo, index) => {
+            return (
+              <StorageImage
+                className="m-1"
+                width="31%"
+                height="90px"
+                key={index}
+                id={index}
+                storagePath={`${props.userID}/${photo.fileName}`}
+                style={{
+                  objectFit: "cover",
+                }}
+                onClick={handlePhotoClick}
+              ></StorageImage>
+            );
+          })}
+        </Modal.Body>
       </Modal>
       <input
         type="file"
