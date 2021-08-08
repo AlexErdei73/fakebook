@@ -116,6 +116,7 @@ const Profile = (props) => {
                 zIndex: "-1",
               }}
               storagePath={backgroundPictureURL}
+              alt=""
             />
             <DropdownButton
               variant="light"
@@ -207,6 +208,7 @@ const Profile = (props) => {
                 className="m-1"
                 width="31%"
                 height="90px"
+                alt=""
                 key={index}
                 id={index}
                 storagePath={`${props.userID}/${photo.fileName}`}

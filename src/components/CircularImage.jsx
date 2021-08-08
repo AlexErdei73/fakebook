@@ -12,6 +12,7 @@ const CircularImage = (props) => {
         pointerEvents: "none",
       }}
       storagePath={props.url}
+      alt=""
     />
   );
 };
