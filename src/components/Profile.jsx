@@ -18,8 +18,6 @@ import { IoTrashOutline } from "react-icons/io5";
 import { ImUpload2 } from "react-icons/im";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import CircularImage from "./CircularImage";
-import "firebase/firestore";
-import "firebase/storage";
 
 const Profile = (props) => {
   const profileRef = useFirestore().collection("users").doc(props.userID);
@@ -32,6 +30,10 @@ const Profile = (props) => {
 
   const [showSelectPhoto, setShowSelectPhoto] = useState(false);
 
+  const [showUpdateProfilePic, setShowUpdateProfilePic] = useState(false);
+
+  const [nameOfURL, setNameOfURL] = useState("backgroundPictureURL");
+
   const fileInputRef = useRef(null);
 
   function handleShowRemove() {
@@ -42,11 +44,12 @@ const Profile = (props) => {
     setShowRemove(false);
   }
 
-  function handleSelect(key, event) {
+  function handleSelect(key) {
     if (key === "3") {
       handleShowRemove();
     }
     if (key === "2") {
+      setNameOfURL("backgroundPictureURL");
       fileInputRef.current.click();
     }
     if (key === "1") {
@@ -63,9 +66,15 @@ const Profile = (props) => {
 
   function upload(file) {
     const ref = storage.ref(props.userID).child(file.name);
+    const newPhoto = { fileName: file.name };
+    const filenames = photos.map((photo) => photo.fileName);
+    if (filenames.indexOf(file.name) === -1) {
+      photos.push(newPhoto);
+    }
     ref.put(file).then(() => {
       return profileRef.update({
-        backgroundPictureURL: `${props.userID}/${file.name}`,
+        [nameOfURL]: `${props.userID}/${file.name}`,
+        photos: photos,
       });
     });
   }
@@ -76,12 +85,12 @@ const Profile = (props) => {
     upload(file);
   }
 
-  function handlePhotoClick(e) {
+  function handlePhotoClick(e, name) {
     const index = Number(e.target.id);
     const photo = photos[index];
     const storagePath = `${props.userID}/${photo.fileName}`;
     setShowSelectPhoto(false);
-    return profileRef.update({ backgroundPictureURL: storagePath });
+    return profileRef.update({ [name]: storagePath });
   }
 
   return (
@@ -158,6 +167,20 @@ const Profile = (props) => {
               }}
             >
               <CircularImage size="180" url={profilePictureURL} />
+              <Button
+                variant="light"
+                style={{
+                  borderRadius: "21px",
+                  height: "42px",
+                  width: "42px",
+                  position: "absolute",
+                  bottom: "8%",
+                  left: "75%",
+                }}
+                onClick={() => setShowUpdateProfilePic(true)}
+              >
+                <MdPhotoCamera size="19px" />
+              </Button>
             </div>
           </div>
           <h2 className="text-center mt-5">
@@ -167,6 +190,7 @@ const Profile = (props) => {
           </h2>
         </Col>
       </Row>
+
       <Modal show={showRemove} onHide={handleCloseRemove}>
         <Modal.Header closeButton>
           <Modal.Title>
@@ -189,6 +213,7 @@ const Profile = (props) => {
           </Button>
         </Modal.Footer>
       </Modal>
+
       <Modal
         show={showSelectPhoto}
         onHide={() => {
@@ -198,7 +223,7 @@ const Profile = (props) => {
       >
         <Modal.Header closeButton>
           <Modal.Title style={{ marginLeft: "35%" }}>
-            <strong className="fs-2">Select Photo</strong>
+            <strong>Select Photo</strong>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -215,10 +240,76 @@ const Profile = (props) => {
                 style={{
                   objectFit: "cover",
                 }}
-                onClick={handlePhotoClick}
+                onClick={(e) => handlePhotoClick(e, "backgroundPictureURL")}
               ></StorageImage>
             );
           })}
+        </Modal.Body>
+      </Modal>
+
+      <Modal
+        show={showUpdateProfilePic}
+        onHide={() => {
+          setShowUpdateProfilePic(false);
+        }}
+        size="lg"
+        scrollable
+      >
+        <Modal.Header closeButton>
+          <Modal.Title style={{ margin: "auto" }}>
+            <strong>Update Profile Picture</strong>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Button
+            size="sm"
+            variant="outline-primary"
+            className="w-50 m-2 mb-3"
+            onClick={() => {
+              setNameOfURL("profilePictureURL");
+              fileInputRef.current.click();
+              setShowUpdateProfilePic(false);
+            }}
+          >
+            <b>+ Upload Photo</b>
+          </Button>
+          <br />
+          <b>Suggested Photos</b>
+          <Row className="m-1">
+            {photos.map((photo, index) => {
+              return (
+                <div
+                  key={index}
+                  style={{
+                    display: "inline-block",
+                    margin: "0.5%",
+                    position: "relative",
+                    width: "15%",
+                    height: "0px",
+                    paddingBottom: "14%",
+                  }}
+                >
+                  <StorageImage
+                    alt=""
+                    id={index}
+                    storagePath={`${props.userID}/${photo.fileName}`}
+                    style={{
+                      position: "absolute",
+                      top: "0px",
+                      left: "0px",
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                    onClick={(e) => {
+                      handlePhotoClick(e, "profilePictureURL");
+                      setShowUpdateProfilePic(false);
+                    }}
+                  ></StorageImage>
+                </div>
+              );
+            })}
+          </Row>
         </Modal.Body>
       </Modal>
       <input

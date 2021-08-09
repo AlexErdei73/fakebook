@@ -51,6 +51,7 @@ const Signup = (props) => {
             lastname: name.lastname,
             profilePictureURL: "fakebook-avatar.jpeg",
             backgroundPictureURL: "background-server.jpg",
+            photos: [],
           })
           .then(() => {
             // Sign out the user

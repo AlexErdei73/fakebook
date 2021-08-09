@@ -114,17 +114,12 @@ function App() {
           }
         >
           <BrowserRouter>
-            <TitleBar
-              profileLink={`/${lastName}.${firstName}/`}
-              updateUser={updateUser}
-            />
+            <TitleBar profileLink={`/${lastName}.${firstName}/`} />
             <Switch>
               <Route
                 path={`/${lastName}.${firstName}/`}
                 exact
-                render={() => (
-                  <Profile userID={user.uid} isLoggedIn={user.isLoggedIn} />
-                )}
+                render={() => <Profile userID={user.uid} />}
               />
               <Route
                 path="/"
