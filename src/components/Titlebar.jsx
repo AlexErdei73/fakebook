@@ -24,13 +24,17 @@ const TitleBar = (props) => {
   const [activeLink, setActiveLink] = useState(null);
 
   function handleClickLink(e) {
-    const current = e.target;
+    const current = e.currentTarget;
     const previous = activeLink;
     if (current === previous) return;
+    if (previous) {
+      previous.style.borderBottom = "3px solid transparent";
+      previous.style.color = "";
+    }
+    setActiveLink(current);
     if (current.id === "profile") return;
     current.style.borderBottom = "3px solid dodgerblue";
-    if (previous) previous.style.borderBottom = "3px solid transparent";
-    setActiveLink(current);
+    current.style.color = "dodgerblue";
   }
 
   return (
@@ -40,7 +44,7 @@ const TitleBar = (props) => {
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="w-50 justify-content-start mr-5">
+        <Nav className="w-75 justify-content-start mr-5">
           <Nav.Item>
             <Link to="/" className="nav-link" onClick={handleClickLink}>
               <VscHome
@@ -51,32 +55,32 @@ const TitleBar = (props) => {
             </Link>
           </Nav.Item>
         </Nav>
-      </Navbar.Collapse>
-      <Nav className="w-25 justify-content-end">
-        <Nav.Item className="align-self-center">
-          <Link
-            to={props.profileLink}
-            className="nav-link"
-            onClick={handleClickLink}
-            style={{ paddingBottom: "0.75rem", paddingTop: "0.75rem" }}
-            id="profile"
+        <Nav className="w-25 justify-content-end align-self-center">
+          <Nav.Item className="align-self-center">
+            <Link
+              to={props.profileLink}
+              className="nav-link"
+              onClick={handleClickLink}
+              style={{ paddingBottom: "0.75rem", paddingTop: "0.75rem" }}
+              id="profile"
+            >
+              {(user && <ProfileLink userID={user.uid} />) || <></>}
+            </Link>
+          </Nav.Item>
+          <DropdownButton
+            id="custom-drop-down-btn"
+            title=""
+            className="mr-4"
+            menuAlign="right"
           >
-            {(user && <ProfileLink userID={user.uid} />) || <></>}
-          </Link>
-        </Nav.Item>
-        <DropdownButton
-          id="custom-drop-down-btn"
-          title=""
-          className="mr-4"
-          menuAlign="right"
-        >
-          <Dropdown.Item onClick={handleClick} className="p-0">
-            <ImExit fontSize="1.5em" className="mx-4" />
-            <span>Log Out</span>
-            <div style={{ width: "20em" }}></div>
-          </Dropdown.Item>
-        </DropdownButton>
-      </Nav>
+            <Dropdown.Item onClick={handleClick} className="p-0">
+              <ImExit fontSize="1.5em" className="mx-4" />
+              <span>Log Out</span>
+              <div style={{ width: "20em" }}></div>
+            </Dropdown.Item>
+          </DropdownButton>
+        </Nav>
+      </Navbar.Collapse>
     </Navbar>
   );
 };
