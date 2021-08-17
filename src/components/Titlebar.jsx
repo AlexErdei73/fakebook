@@ -32,9 +32,9 @@ const TitleBar = (props) => {
       previous.style.color = "";
     }
     setActiveLink(current);
+    current.style.color = "dodgerblue";
     if (current.id === "profile") return;
     current.style.borderBottom = "3px solid dodgerblue";
-    current.style.color = "dodgerblue";
   }
 
   return (
