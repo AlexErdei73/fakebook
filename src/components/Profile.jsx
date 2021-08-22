@@ -18,6 +18,7 @@ import { IoTrashOutline } from "react-icons/io5";
 import { ImUpload2 } from "react-icons/im";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import CircularImage from "./CircularImage";
+import "./Profile.css";
 
 const Profile = (props) => {
   const profileRef = useFirestore().collection("users").doc(props.userID);
@@ -36,17 +37,9 @@ const Profile = (props) => {
 
   const fileInputRef = useRef(null);
 
-  function handleShowRemove() {
-    setShowRemove(true);
-  }
-
-  function handleCloseRemove() {
-    setShowRemove(false);
-  }
-
   function handleSelect(key) {
     if (key === "3") {
-      handleShowRemove();
+      setShowRemove(true);
     }
     if (key === "2") {
       setNameOfURL("backgroundPictureURL");
@@ -58,7 +51,7 @@ const Profile = (props) => {
   }
 
   function handleClickSubmit() {
-    handleCloseRemove();
+    setShowRemove(false);
     return profileRef.update({ backgroundPictureURL: "background-server.jpg" });
   }
 
@@ -96,51 +89,22 @@ const Profile = (props) => {
   return (
     <>
       <Row className="justify-content-center">
-        <Col
-          style={{
-            width: "100vw",
-            maxWidth: "960px",
-          }}
-        >
-          <div
-            style={{
-              position: "relative",
-              height: "42%",
-              minHeight: "250px",
-              background: "white",
-            }}
-          >
+        <Col id="profile-col">
+          <div id="background-pic-container">
             <StorageImage
-              style={{
-                display: "block",
-                width: "100%",
-                height: "105%",
-                minHeight: "250px",
-                maxHeight: "750px",
-                objectFit: "cover",
-                margin: "auto",
-                marginTop: "3.5%",
-                borderRadius: "13px",
-                pointerEvents: "none",
-                zIndex: "-1",
-              }}
+              id="background-pic"
               storagePath={backgroundPictureURL}
               alt=""
             />
             <DropdownButton
               variant="light"
-              id="dropdown-basic-button"
+              id="background-pic-button"
               title={
                 <b>
                   <MdPhotoCamera className="mr-1" size="20px" />
                   Edit Cover Photo
                 </b>
               }
-              style={{
-                position: "absolute",
-                bottom: "5px",
-                right: "30px",
-              }}
               size="sm"
             >
               <Dropdown.Item eventKey="1" onSelect={handleSelect}>
@@ -156,27 +120,11 @@ const Profile = (props) => {
                 <IoTrashOutline size="20px" className="mr-2" /> Remove
               </Dropdown.Item>
             </DropdownButton>
-            <div
-              style={{
-                border: "5px solid white",
-                borderRadius: "95px",
-                position: "absolute",
-                bottom: "-12%",
-                left: "50%",
-                marginLeft: "-95px",
-              }}
-            >
+            <div id="profile-pic-container">
               <CircularImage size="180" url={profilePictureURL} />
               <Button
                 variant="light"
-                style={{
-                  borderRadius: "21px",
-                  height: "42px",
-                  width: "42px",
-                  position: "absolute",
-                  bottom: "8%",
-                  left: "75%",
-                }}
+                id="profile-pic-button"
                 onClick={() => setShowUpdateProfilePic(true)}
               >
                 <MdPhotoCamera size="19px" />
@@ -188,10 +136,11 @@ const Profile = (props) => {
               {firstname} {lastname}
             </b>
           </h2>
+          <hr></hr>
         </Col>
       </Row>
 
-      <Modal show={showRemove} onHide={handleCloseRemove}>
+      <Modal show={showRemove} onHide={() => setShowRemove(false)}>
         <Modal.Header closeButton>
           <Modal.Title>
             <strong className="fs-2">Remove Cover Photo</strong>
@@ -204,7 +153,7 @@ const Profile = (props) => {
           <Button
             variant="link"
             style={{ textDecoration: "none" }}
-            onClick={handleCloseRemove}
+            onClick={() => setShowRemove(false)}
           >
             <b>Cancel</b>
           </Button>
