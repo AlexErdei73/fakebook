@@ -12,12 +12,16 @@ import {
   Dropdown,
   Modal,
   Button,
+  Nav,
+  Navbar,
 } from "react-bootstrap";
+import { Link, Switch, Route, useRouteMatch } from "react-router-dom";
 import { MdPhotoCamera } from "react-icons/md";
 import { IoTrashOutline } from "react-icons/io5";
 import { ImUpload2 } from "react-icons/im";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import CircularImage from "./CircularImage";
+import NestedRoute from "./NestedRoute";
 import "./Profile.css";
 
 const Profile = (props) => {
@@ -36,6 +40,8 @@ const Profile = (props) => {
   const [nameOfURL, setNameOfURL] = useState("backgroundPictureURL");
 
   const fileInputRef = useRef(null);
+
+  const { url, path } = useRouteMatch();
 
   function handleSelect(key) {
     if (key === "3") {
@@ -137,6 +143,30 @@ const Profile = (props) => {
             </b>
           </h2>
           <hr></hr>
+          <Navbar bg="light">
+            <Nav>
+              <Nav.Item>
+                <Link to={`${url}/Posts`} className="nav-link">
+                  <b>Posts</b>
+                </Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Link to={`${url}/Friends`} className="nav-link">
+                  <b>Friends</b>
+                </Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Link to={`${url}/Photos`} className="nav-link">
+                  <b>Photos</b>
+                </Link>
+              </Nav.Item>
+            </Nav>
+          </Navbar>
+          <Switch>
+            <Route path={`${path}/:itemId`}>
+              <NestedRoute />
+            </Route>
+          </Switch>
         </Col>
       </Row>
 

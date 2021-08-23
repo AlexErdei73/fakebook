@@ -114,11 +114,10 @@ function App() {
           }
         >
           <BrowserRouter>
-            <TitleBar profileLink={`/${lastName}.${firstName}/`} />
+            <TitleBar profileLink={`/${lastName}.${firstName}`} />
             <Switch>
               <Route
-                path={`/${lastName}.${firstName}/`}
-                exact
+                path={`/${lastName}.${firstName}`}
                 render={() => <Profile userID={user.uid} />}
               />
               <Route
