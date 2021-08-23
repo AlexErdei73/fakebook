@@ -1,3 +1,7 @@
+#grad {
+  background-image: linear-gradient(rgb(48, 48, 48), white, white);
+}
+
 #profile-col {
   width: 100vw;
   max-width: 960px;
@@ -5,9 +9,8 @@
 
 #background-pic-container {
   position: relative;
-  height: 42%;
+  height: 380px;
   min-height: 250px;
-  background: white;
 }
 
 #background-pic {

@@ -22,7 +22,9 @@ import { ImUpload2 } from "react-icons/im";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import CircularImage from "./CircularImage";
 import NestedRoute from "./NestedRoute";
+import ResponsiveImage from "./ResponsiveImage";
 import "./Profile.css";
+import { handleClickLink } from "./helper";
 
 const Profile = (props) => {
   const profileRef = useFirestore().collection("users").doc(props.userID);
@@ -39,20 +41,24 @@ const Profile = (props) => {
 
   const [nameOfURL, setNameOfURL] = useState("backgroundPictureURL");
 
+  const [activeLink, setActiveLink] = useState(null);
+
   const fileInputRef = useRef(null);
 
   const { url, path } = useRouteMatch();
 
   function handleSelect(key) {
-    if (key === "3") {
-      setShowRemove(true);
-    }
-    if (key === "2") {
-      setNameOfURL("backgroundPictureURL");
-      fileInputRef.current.click();
-    }
-    if (key === "1") {
-      setShowSelectPhoto(true);
+    switch (key) {
+      case "3":
+        setShowRemove(true);
+        break;
+      case "2":
+        setNameOfURL("backgroundPictureURL");
+        fileInputRef.current.click();
+        break;
+      case "1":
+        setShowSelectPhoto(true);
+        break;
     }
   }
 
@@ -94,7 +100,7 @@ const Profile = (props) => {
 
   return (
     <>
-      <Row className="justify-content-center">
+      <Row className="justify-content-center" id="grad">
         <Col id="profile-col">
           <div id="background-pic-container">
             <StorageImage
@@ -146,22 +152,38 @@ const Profile = (props) => {
           <Navbar bg="light">
             <Nav>
               <Nav.Item>
-                <Link to={`${url}/Posts`} className="nav-link">
+                <Link
+                  to={`${url}/Posts`}
+                  className="nav-link mx-2"
+                  onClick={(e) => handleClickLink(e, activeLink, setActiveLink)}
+                >
                   <b>Posts</b>
                 </Link>
               </Nav.Item>
               <Nav.Item>
-                <Link to={`${url}/Friends`} className="nav-link">
+                <Link
+                  to={`${url}/Friends`}
+                  className="nav-link mx-2"
+                  onClick={(e) => handleClickLink(e, activeLink, setActiveLink)}
+                >
                   <b>Friends</b>
                 </Link>
               </Nav.Item>
               <Nav.Item>
-                <Link to={`${url}/Photos`} className="nav-link">
+                <Link
+                  to={`${url}/Photos`}
+                  className="nav-link mx-2"
+                  onClick={(e) => handleClickLink(e, activeLink, setActiveLink)}
+                >
                   <b>Photos</b>
                 </Link>
               </Nav.Item>
             </Nav>
           </Navbar>
+        </Col>
+      </Row>
+      <Row className="justify-content-center">
+        <Col id="profile-col">
           <Switch>
             <Route path={`${path}/:itemId`}>
               <NestedRoute />
@@ -257,35 +279,18 @@ const Profile = (props) => {
           <Row className="m-1">
             {photos.map((photo, index) => {
               return (
-                <div
-                  key={index}
-                  style={{
-                    display: "inline-block",
-                    margin: "0.5%",
-                    position: "relative",
-                    width: "15%",
-                    height: "0px",
-                    paddingBottom: "14%",
+                <ResponsiveImage
+                  width="15%"
+                  height="15%"
+                  userID={props.userID}
+                  photo={photo}
+                  index={index}
+                  onClick={(e) => {
+                    handlePhotoClick(e, "profilePictureURL");
+                    setShowUpdateProfilePic(false);
                   }}
-                >
-                  <StorageImage
-                    alt=""
-                    id={index}
-                    storagePath={`${props.userID}/${photo.fileName}`}
-                    style={{
-                      position: "absolute",
-                      top: "0px",
-                      left: "0px",
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                    onClick={(e) => {
-                      handlePhotoClick(e, "profilePictureURL");
-                      setShowUpdateProfilePic(false);
-                    }}
-                  ></StorageImage>
-                </div>
+                  className="m-1"
+                />
               );
             })}
           </Row>

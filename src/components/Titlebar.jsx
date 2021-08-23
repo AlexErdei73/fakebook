@@ -7,6 +7,7 @@ import { ImExit } from "react-icons/im";
 import "./Titlebar.css";
 import ProfileLink from "./ProfileLink";
 import { useFirebaseApp, useUser } from "reactfire";
+import { handleClickLink } from "./helper";
 
 const TitleBar = (props) => {
   //get the signed in user
@@ -23,20 +24,6 @@ const TitleBar = (props) => {
   //add the active status of the link DOM elements
   const [activeLink, setActiveLink] = useState(null);
 
-  function handleClickLink(e) {
-    const current = e.currentTarget;
-    const previous = activeLink;
-    if (current === previous) return;
-    if (previous) {
-      previous.style.borderBottom = "3px solid transparent";
-      previous.style.color = "";
-    }
-    setActiveLink(current);
-    current.style.color = "dodgerblue";
-    if (current.id === "profile") return;
-    current.style.borderBottom = "3px solid dodgerblue";
-  }
-
   return (
     <Navbar bg="light" fixed="top" expand="sm" className="p-0">
       <Navbar.Brand as={Link} to="/">
@@ -46,7 +33,11 @@ const TitleBar = (props) => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="w-75 justify-content-start mr-5">
           <Nav.Item>
-            <Link to="/" className="nav-link" onClick={handleClickLink}>
+            <Link
+              to="/"
+              className="nav-link"
+              onClick={(e) => handleClickLink(e, activeLink, setActiveLink)}
+            >
               <VscHome
                 fontSize="2rem"
                 className="mx-4"
@@ -60,7 +51,7 @@ const TitleBar = (props) => {
             <Link
               to={props.profileLink}
               className="nav-link"
-              onClick={handleClickLink}
+              onClick={(e) => handleClickLink(e, activeLink, setActiveLink)}
               style={{ paddingBottom: "0.75rem", paddingTop: "0.75rem" }}
               id="profile"
             >
