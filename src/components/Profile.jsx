@@ -186,7 +186,7 @@ const Profile = (props) => {
         <Col id="profile-col">
           <Switch>
             <Route path={`${path}/:itemId`}>
-              <NestedRoute />
+              <NestedRoute photos={photos} userID={props.userID} />
             </Route>
           </Switch>
         </Col>
