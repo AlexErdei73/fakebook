@@ -4,6 +4,7 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import TitleBar from "./components/Titlebar";
 import Profile from "./components/Profile";
+import PhotoViewer from "./components/PhotoViewer";
 import { AuthCheck } from "reactfire";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Col from "react-bootstrap/Col";
@@ -117,8 +118,8 @@ function App() {
             <TitleBar profileLink={`/${lastName}.${firstName}`} />
             <Switch>
               <Route
-                path={`/${lastName}.${firstName}/photo`}
-                render={() => <h1 className="mt-5">Photo</h1>}
+                path={`/${lastName}.${firstName}/photo/:userID/:n`}
+                render={() => <PhotoViewer />}
               />
               <Route
                 path={`/${lastName}.${firstName}`}
