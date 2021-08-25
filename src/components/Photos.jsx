@@ -7,10 +7,6 @@ const Photos = (props) => {
   const { url } = useRouteMatch();
   const { userID, photos } = props;
 
-  function getPhotoURL(url, index) {
-    return url.replace("Photos", `photo/${userID}/${index}`);
-  }
-
   return (
     <Card variant="light" className="w-100">
       <Card.Body>
@@ -23,7 +19,7 @@ const Photos = (props) => {
           {photos.map((photo, index) => {
             return (
               <Col xs={6} sm={4} md={3} lg={2} className="px-1" key={index}>
-                <Link to={getPhotoURL(url, index)}>
+                <Link to={`/photo/${userID}/${index}`}>
                   <ResponsiveImage
                     width="100%"
                     height="100%"

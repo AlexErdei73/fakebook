@@ -118,7 +118,7 @@ function App() {
             <TitleBar profileLink={`/${lastName}.${firstName}`} />
             <Switch>
               <Route
-                path={`/${lastName}.${firstName}/photo/:userID/:n`}
+                path={`/photo/:userID/:n`}
                 render={() => <PhotoViewer />}
               />
               <Route

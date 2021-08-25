@@ -1,18 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFirestore, useFirestoreDocData, StorageImage } from "reactfire";
 import { Row, Col, Carousel, Card } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 
 const PhotoViewer = () => {
   const { userID, n } = useParams();
-  console.log("userID: ", userID);
-  console.log("n: ", n);
 
   const profileRef = useFirestore().collection("users").doc(userID);
   let result = useFirestoreDocData(profileRef);
 
   let { photos } = result.data;
-  console.log(photos);
+
+  const [activeIndex, setActiveIndex] = useState(Number(n));
+
+  const history = useHistory();
+
+  const handleSelect = (selectedIndex, e) => {
+    setActiveIndex(selectedIndex);
+    history.push(`/photo/${userID}/${activeIndex}`);
+  };
 
   return (
     <Row
@@ -23,7 +29,14 @@ const PhotoViewer = () => {
       }}
     >
       <Col md={9} className="h-100" style={{ backgroundColor: "black" }}>
-        <Carousel className="w-100 h-100" indicators={false}>
+        <Carousel
+          className="w-100 h-100"
+          indicators={false}
+          slide={false}
+          touch={false}
+          activeIndex={activeIndex}
+          onSelect={handleSelect}
+        >
           {photos.map((photo, index) => {
             return (
               <Carousel.Item
