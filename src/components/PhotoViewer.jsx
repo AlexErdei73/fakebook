@@ -15,16 +15,37 @@ const PhotoViewer = () => {
   console.log(photos);
 
   return (
-    <Row>
-      <Col md={8} className="bg-dark">
-        <Carousel className="w-100">
+    <Row
+      style={{
+        position: "relative",
+        zIndex: "2000",
+        height: "98vh",
+      }}
+    >
+      <Col md={9} className="h-100" style={{ backgroundColor: "black" }}>
+        <Carousel className="w-100 h-100" indicators={false}>
           {photos.map((photo, index) => {
             return (
-              <Carousel.Item key={index}>
+              <Carousel.Item
+                key={index}
+                style={{
+                  width: "100%",
+                  height: "98vh",
+                }}
+              >
                 <StorageImage
                   storagePath={`${userID}/${photo.fileName}`}
                   alt=""
-                  className="d-block m-auto vh-100"
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: "100%",
+                    maxWidth: "600px",
+                    height: "100%",
+                    objectFit: "contain",
+                  }}
                 ></StorageImage>
               </Carousel.Item>
             );
