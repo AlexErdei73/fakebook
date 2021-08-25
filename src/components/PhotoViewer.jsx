@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFirestore, useFirestoreDocData, StorageImage } from "reactfire";
 import { Row, Col, Carousel, Card } from "react-bootstrap";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams, useLocation } from "react-router-dom";
 
 const PhotoViewer = () => {
   const { userID, n } = useParams();
@@ -15,9 +15,16 @@ const PhotoViewer = () => {
 
   const history = useHistory();
 
+  const location = useLocation();
+
+  useEffect(() => {
+    const locArr = location.pathname.split("/");
+    const index = Number(locArr.pop());
+    setActiveIndex(index);
+  }, [location]);
+
   const handleSelect = (selectedIndex, e) => {
-    setActiveIndex(selectedIndex);
-    history.push(`/photo/${userID}/${activeIndex}`);
+    history.push(`/photo/${userID}/${selectedIndex}`);
   };
 
   return (
@@ -31,9 +38,8 @@ const PhotoViewer = () => {
       <Col md={9} className="h-100" style={{ backgroundColor: "black" }}>
         <Carousel
           className="w-100 h-100"
+          interval={null}
           indicators={false}
-          slide={false}
-          touch={false}
           activeIndex={activeIndex}
           onSelect={handleSelect}
         >
