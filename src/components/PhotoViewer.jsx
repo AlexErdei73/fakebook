@@ -31,8 +31,8 @@ const PhotoViewer = () => {
     <Row
       style={{
         position: "relative",
-        zIndex: "2000",
-        height: "98vh",
+        top: "50px",
+        height: "89vh",
       }}
     >
       <Col md={9} className="h-100" style={{ backgroundColor: "black" }}>
@@ -49,7 +49,7 @@ const PhotoViewer = () => {
                 key={index}
                 style={{
                   width: "100%",
-                  height: "98vh",
+                  height: "89vh",
                 }}
               >
                 <StorageImage
