@@ -5,9 +5,12 @@ import Photos from "./Photos";
 const NestedRoute = (props) => {
   const { itemId } = useParams();
 
-  const { photos, userID } = props;
+  const { photos, userID, openFileInput } = props;
 
-  if (itemId === "Photos") return <Photos photos={photos} userID={userID} />;
+  if (itemId === "Photos")
+    return (
+      <Photos photos={photos} userID={userID} openFileInput={openFileInput} />
+    );
   else return <h3>Clicked Item: {itemId}</h3>;
 };
 

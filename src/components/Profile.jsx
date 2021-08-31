@@ -47,14 +47,18 @@ const Profile = (props) => {
 
   const { url, path } = useRouteMatch();
 
+  function openFileInput(nameOfURL) {
+    setNameOfURL(nameOfURL);
+    fileInputRef.current.click();
+  }
+
   function handleSelect(key) {
     switch (key) {
       case "3":
         setShowRemove(true);
         break;
       case "2":
-        setNameOfURL("backgroundPictureURL");
-        fileInputRef.current.click();
+        openFileInput("backgroundPictureURL");
         break;
       case "1":
         setShowSelectPhoto(true);
@@ -76,11 +80,11 @@ const Profile = (props) => {
     if (filenames.indexOf(file.name) === -1) {
       photos.push(newPhoto);
     }
+    const newProfile = { photos: photos };
+    if (nameOfURL !== "")
+      newProfile[nameOfURL] = `${props.userID}/${file.name}`;
     ref.put(file).then(() => {
-      return profileRef.update({
-        [nameOfURL]: `${props.userID}/${file.name}`,
-        photos: photos,
-      });
+      return profileRef.update(newProfile);
     });
   }
 
@@ -153,6 +157,7 @@ const Profile = (props) => {
             <Nav>
               <Nav.Item>
                 <Link
+                  key="1"
                   to={`${url}/Posts`}
                   className="nav-link mx-2"
                   onClick={(e) => handleClickLink(e, activeLink, setActiveLink)}
@@ -162,6 +167,7 @@ const Profile = (props) => {
               </Nav.Item>
               <Nav.Item>
                 <Link
+                  key="2"
                   to={`${url}/Friends`}
                   className="nav-link mx-2"
                   onClick={(e) => handleClickLink(e, activeLink, setActiveLink)}
@@ -171,6 +177,7 @@ const Profile = (props) => {
               </Nav.Item>
               <Nav.Item>
                 <Link
+                  key="3"
                   to={`${url}/Photos`}
                   className="nav-link mx-2"
                   onClick={(e) => handleClickLink(e, activeLink, setActiveLink)}
@@ -186,7 +193,11 @@ const Profile = (props) => {
         <Col id="profile-col">
           <Switch>
             <Route path={`${path}/:itemId`}>
-              <NestedRoute photos={photos} userID={props.userID} />
+              <NestedRoute
+                photos={photos}
+                userID={props.userID}
+                openFileInput={() => openFileInput("")}
+              />
             </Route>
           </Switch>
         </Col>
