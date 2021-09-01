@@ -1,0 +1,18 @@
+#popup-card {
+  position: relative;
+  width: 400px;
+  height: 200px;
+  background: white;
+  border: 2px solid lightgray;
+  border-radius: 10px;
+}
+
+#name-tag {
+  position: absolute;
+  top: 20px;
+  left: 160px;
+}
+
+#profile-picture {
+  object-fit: cover;
+}
