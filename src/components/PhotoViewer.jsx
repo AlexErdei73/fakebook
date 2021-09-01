@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useFirestore, useFirestoreDocData, StorageImage } from "reactfire";
-import { Row, Col, Carousel, Card } from "react-bootstrap";
-import { Link, useHistory, useParams, useLocation } from "react-router-dom";
+import { Row, Col, Carousel } from "react-bootstrap";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 
 const PhotoViewer = () => {
   const { userID, n } = useParams();

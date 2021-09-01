@@ -63,6 +63,8 @@ const Profile = (props) => {
       case "1":
         setShowSelectPhoto(true);
         break;
+      default:
+        return;
     }
   }
 
@@ -278,8 +280,7 @@ const Profile = (props) => {
             variant="outline-primary"
             className="w-50 m-2 mb-3"
             onClick={() => {
-              setNameOfURL("profilePictureURL");
-              fileInputRef.current.click();
+              openFileInput("profilePictureURL");
               setShowUpdateProfilePic(false);
             }}
           >
@@ -291,6 +292,7 @@ const Profile = (props) => {
             {photos.map((photo, index) => {
               return (
                 <ResponsiveImage
+                  key={index}
                   width="15%"
                   height="15%"
                   userID={props.userID}
