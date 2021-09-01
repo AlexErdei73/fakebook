@@ -6,13 +6,13 @@ import Friends from "./Friends";
 const NestedRoute = (props) => {
   const { itemId } = useParams();
 
-  const { photos, userID, openFileInput } = props;
+  const { photos, userID, openFileInput, users } = props;
 
   if (itemId === "Photos")
     return (
       <Photos photos={photos} userID={userID} openFileInput={openFileInput} />
     );
-  if (itemId === "Friends") return <Friends />;
+  if (itemId === "Friends") return <Friends users={users} />;
   else return <h3>Clicked Item: {itemId}</h3>;
 };
 

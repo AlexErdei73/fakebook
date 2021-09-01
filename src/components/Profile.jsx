@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import {
   useFirestore,
   useFirestoreDocData,
+  useFirestoreCollectionData,
   StorageImage,
   useStorage,
 } from "reactfire";
@@ -27,7 +28,14 @@ import "./Profile.css";
 import { handleClickLink } from "./helper";
 
 const Profile = (props) => {
-  const profileRef = useFirestore().collection("users").doc(props.userID);
+  const firestore = useFirestore();
+  const usersCollection = firestore.collection("users");
+
+  const { data: users } = useFirestoreCollectionData(usersCollection, {
+    idField: "userID",
+  });
+
+  const profileRef = firestore.collection("users").doc(props.userID);
   let result = useFirestoreDocData(profileRef);
 
   let { firstname, lastname, profilePictureURL, backgroundPictureURL, photos } =
@@ -198,6 +206,7 @@ const Profile = (props) => {
               <NestedRoute
                 photos={photos}
                 userID={props.userID}
+                users={users}
                 openFileInput={() => openFileInput("")}
               />
             </Route>
