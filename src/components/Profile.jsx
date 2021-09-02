@@ -24,6 +24,7 @@ import { HiOutlinePhotograph } from "react-icons/hi";
 import CircularImage from "./CircularImage";
 import NestedRoute from "./NestedRoute";
 import ResponsiveImage from "./ResponsiveImage";
+import RemoveCoverPhotoDlg from "./RemoveCoverPhotoDlg";
 import "./Profile.css";
 import { handleClickLink } from "./helper";
 
@@ -41,7 +42,7 @@ const Profile = (props) => {
   let { firstname, lastname, profilePictureURL, backgroundPictureURL, photos } =
     result.data;
 
-  const [showRemove, setShowRemove] = useState(false);
+  const [showRemoveCoverPhotoDlg, setShowRemoveCoverPhotoDlg] = useState(false);
 
   const [showSelectPhoto, setShowSelectPhoto] = useState(false);
 
@@ -63,7 +64,7 @@ const Profile = (props) => {
   function handleSelect(key) {
     switch (key) {
       case "3":
-        setShowRemove(true);
+        setShowRemoveCoverPhotoDlg(true);
         break;
       case "2":
         openFileInput("backgroundPictureURL");
@@ -76,8 +77,12 @@ const Profile = (props) => {
     }
   }
 
-  function handleClickSubmit() {
-    setShowRemove(false);
+  function closeDlg() {
+    setShowRemoveCoverPhotoDlg(false);
+  }
+
+  function removeCoverPhoto() {
+    closeDlg();
     return profileRef.update({ backgroundPictureURL: "background-server.jpg" });
   }
 
@@ -214,28 +219,11 @@ const Profile = (props) => {
         </Col>
       </Row>
 
-      <Modal show={showRemove} onHide={() => setShowRemove(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>
-            <strong className="fs-2">Remove Cover Photo</strong>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div>Do you really want to remove the cover photo?</div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="link"
-            style={{ textDecoration: "none" }}
-            onClick={() => setShowRemove(false)}
-          >
-            <b>Cancel</b>
-          </Button>
-          <Button variant="primary" onClick={handleClickSubmit}>
-            <b>Submit</b>
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <RemoveCoverPhotoDlg
+        show={showRemoveCoverPhotoDlg}
+        removeCoverPhoto={removeCoverPhoto}
+        closeDlg={closeDlg}
+      />
 
       <Modal
         show={showSelectPhoto}
