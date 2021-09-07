@@ -5,7 +5,7 @@ import ResponsiveImage from "./ResponsiveImage";
 
 const Photos = (props) => {
   const { url } = useRouteMatch();
-  const { userID, photos, openFileInput } = props;
+  const { userID, photos, openFileInput, isCurrentUser } = props;
 
   return (
     <Card variant="light" className="w-100">
@@ -14,16 +14,18 @@ const Photos = (props) => {
           <Link to={url} className="text-body">
             <b>Photos</b>
           </Link>
-          <Button
-            variant="link"
-            style={{
-              textDecoration: "none",
-              float: "right",
-            }}
-            onClick={openFileInput}
-          >
-            <b>Add Photos</b>
-          </Button>
+          {isCurrentUser && (
+            <Button
+              variant="link"
+              style={{
+                textDecoration: "none",
+                float: "right",
+              }}
+              onClick={openFileInput}
+            >
+              <b>Add Photos</b>
+            </Button>
+          )}
         </Card.Title>
         <Row className="w-100">
           {photos.map((photo, index) => {

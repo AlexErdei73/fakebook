@@ -11,12 +11,17 @@ import {
   Col,
   DropdownButton,
   Dropdown,
-  Modal,
   Button,
   Nav,
   Navbar,
 } from "react-bootstrap";
-import { Link, Switch, Route, useRouteMatch } from "react-router-dom";
+import {
+  Link,
+  Switch,
+  Route,
+  useRouteMatch,
+  useParams,
+} from "react-router-dom";
 import { MdPhotoCamera } from "react-icons/md";
 import { IoTrashOutline } from "react-icons/io5";
 import { ImUpload2 } from "react-icons/im";
@@ -37,7 +42,18 @@ const Profile = (props) => {
     idField: "userID",
   });
 
-  const profileRef = firestore.collection("users").doc(props.userID);
+  const { userName } = useParams();
+
+  const userID = () => {
+    const userNames = users.map((user) => `${user.lastname}.${user.firstname}`);
+    const index = userNames.indexOf(userName);
+    const user = users[index];
+    return user.userID;
+  };
+
+  const isCurrentUser = props.userID === userID();
+
+  const profileRef = firestore.collection("users").doc(userID());
   let result = useFirestoreDocData(profileRef);
 
   let { firstname, lastname, profilePictureURL, backgroundPictureURL, photos } =
@@ -150,39 +166,43 @@ const Profile = (props) => {
               storagePath={backgroundPictureURL}
               alt=""
             />
-            <DropdownButton
-              variant="light"
-              id="background-pic-button"
-              title={
-                <b>
-                  <MdPhotoCamera className="mr-1" size="20px" />
-                  Edit Cover Photo
-                </b>
-              }
-              size="sm"
-            >
-              <Dropdown.Item eventKey="1" onSelect={handleSelect}>
-                <HiOutlinePhotograph size="20px" className="mr-2" />
-                Select Photo
-              </Dropdown.Item>
-              <Dropdown.Item eventKey="2" onSelect={handleSelect}>
-                <ImUpload2 size="20px" className="mr-2" />
-                Upload Photo
-              </Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item eventKey="3" onSelect={handleSelect}>
-                <IoTrashOutline size="20px" className="mr-2" /> Remove
-              </Dropdown.Item>
-            </DropdownButton>
+            {isCurrentUser && (
+              <DropdownButton
+                variant="light"
+                id="background-pic-button"
+                title={
+                  <b>
+                    <MdPhotoCamera className="mr-1" size="20px" />
+                    Edit Cover Photo
+                  </b>
+                }
+                size="sm"
+              >
+                <Dropdown.Item eventKey="1" onSelect={handleSelect}>
+                  <HiOutlinePhotograph size="20px" className="mr-2" />
+                  Select Photo
+                </Dropdown.Item>
+                <Dropdown.Item eventKey="2" onSelect={handleSelect}>
+                  <ImUpload2 size="20px" className="mr-2" />
+                  Upload Photo
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item eventKey="3" onSelect={handleSelect}>
+                  <IoTrashOutline size="20px" className="mr-2" /> Remove
+                </Dropdown.Item>
+              </DropdownButton>
+            )}
             <div id="profile-pic-container">
               <CircularImage size="180" url={profilePictureURL} />
-              <Button
-                variant="light"
-                id="profile-pic-button"
-                onClick={() => setShowUpdateProfilePic(true)}
-              >
-                <MdPhotoCamera size="19px" />
-              </Button>
+              {isCurrentUser && (
+                <Button
+                  variant="light"
+                  id="profile-pic-button"
+                  onClick={() => setShowUpdateProfilePic(true)}
+                >
+                  <MdPhotoCamera size="19px" />
+                </Button>
+              )}
             </div>
           </div>
           <h2 className="text-center mt-5">
@@ -233,9 +253,10 @@ const Profile = (props) => {
             <Route path={`${path}/:itemId`}>
               <NestedRoute
                 photos={photos}
-                userID={props.userID}
+                userID={userID()}
                 users={users}
                 openFileInput={() => openFileInput("")}
+                isCurrentUser={isCurrentUser}
               />
             </Route>
           </Switch>

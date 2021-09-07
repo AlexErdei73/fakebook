@@ -1,18 +1,25 @@
 import React, { useState } from "react";
 import { Col, OverlayTrigger } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import CircularImage from "./CircularImage";
 import { StorageImage } from "reactfire";
 import "./FriendCard.css";
 
 const FriendCard = (props) => {
-  const { user, key } = props;
+  const { user } = props;
 
-  const userName = `${props.user.firstname} ${props.user.lastname}`;
+  const userName = `${user.firstname} ${user.lastname}`;
 
   const [showOverlay, setShowOverlay] = useState(false);
 
+  const history = useHistory();
+
+  function handleClick() {
+    history.push(`/${user.lastname}.${user.firstname}`);
+  }
+
   return (
-    <Col key={key} xs={6} className="my-3">
+    <Col xs={6} className="my-3">
       <OverlayTrigger
         placement="auto"
         show={showOverlay}
@@ -21,6 +28,7 @@ const FriendCard = (props) => {
             id="popup-card"
             onMouseEnter={() => setShowOverlay(true)}
             onMouseLeave={() => setShowOverlay(false)}
+            onClick={handleClick}
           >
             <div className="m-3">
               <CircularImage size="120" url={user.profilePictureURL} />
@@ -39,9 +47,12 @@ const FriendCard = (props) => {
           id="profile-picture"
           onMouseEnter={() => setShowOverlay(true)}
           onMouseLeave={() => setShowOverlay(false)}
+          onClick={handleClick}
         />
       </OverlayTrigger>
-      <b className="ml-3">{userName}</b>
+      <b className="ml-3" onClick={handleClick}>
+        {userName}
+      </b>
     </Col>
   );
 };

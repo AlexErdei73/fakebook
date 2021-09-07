@@ -122,7 +122,7 @@ function App() {
                 render={() => <PhotoViewer />}
               />
               <Route
-                path={`/${lastName}.${firstName}`}
+                path={`/:userName`}
                 render={() => <Profile userID={user.uid} />}
               />
               <Route
