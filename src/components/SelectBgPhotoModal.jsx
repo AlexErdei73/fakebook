@@ -3,10 +3,10 @@ import { Modal } from "react-bootstrap";
 import { StorageImage } from "reactfire";
 
 const SelectBgPhotoModal = (props) => {
-  const { show, hideModal, onPhotoClick, userID, photos } = props;
+  const { show, onHide, onPhotoClick, userID, photos } = props;
 
   return (
-    <Modal show={show} onHide={hideModal} scrollable>
+    <Modal show={show} onHide={onHide} scrollable>
       <Modal.Header closeButton>
         <Modal.Title style={{ marginLeft: "35%" }}>
           <strong>Select Photo</strong>

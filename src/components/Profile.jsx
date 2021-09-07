@@ -23,9 +23,9 @@ import { ImUpload2 } from "react-icons/im";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import CircularImage from "./CircularImage";
 import NestedRoute from "./NestedRoute";
-import ResponsiveImage from "./ResponsiveImage";
 import RemoveCoverPhotoDlg from "./RemoveCoverPhotoDlg";
 import SelectBgPhotoModal from "./SelectBgPhotoModal";
+import UpdateProfilePicModal from "./UpdateProfilePicModal";
 import "./Profile.css";
 import { handleClickLink } from "./helper";
 
@@ -94,6 +94,20 @@ const Profile = (props) => {
   function handleBgPhotoClick(event) {
     hideBgPhotoModal();
     handlePhotoClick(event, "backgroundPictureURL");
+  }
+
+  function hideProfilePicModal() {
+    setShowUpdateProfilePic(false);
+  }
+
+  function handleUploadProfilePicClick() {
+    hideProfilePicModal();
+    openFileInput("profilePictureURL");
+  }
+
+  function handleProfilePicClick(event) {
+    hideProfilePicModal();
+    handlePhotoClick(event, "profilePictureURL");
   }
 
   const storage = useStorage();
@@ -236,60 +250,21 @@ const Profile = (props) => {
 
       <SelectBgPhotoModal
         show={showSelectPhoto}
-        hideModal={hideBgPhotoModal}
+        onHide={hideBgPhotoModal}
         onPhotoClick={handleBgPhotoClick}
         userID={props.userID}
         photos={photos}
       />
 
-      <Modal
+      <UpdateProfilePicModal
         show={showUpdateProfilePic}
-        onHide={() => {
-          setShowUpdateProfilePic(false);
-        }}
-        size="lg"
-        scrollable
-      >
-        <Modal.Header closeButton>
-          <Modal.Title style={{ margin: "auto" }}>
-            <strong>Update Profile Picture</strong>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Button
-            size="sm"
-            variant="outline-primary"
-            className="w-50 m-2 mb-3"
-            onClick={() => {
-              openFileInput("profilePictureURL");
-              setShowUpdateProfilePic(false);
-            }}
-          >
-            <b>+ Upload Photo</b>
-          </Button>
-          <br />
-          <b>Suggested Photos</b>
-          <Row className="m-1">
-            {photos.map((photo, index) => {
-              return (
-                <ResponsiveImage
-                  key={index}
-                  width="15%"
-                  height="15%"
-                  userID={props.userID}
-                  photo={photo}
-                  index={index}
-                  onClick={(e) => {
-                    handlePhotoClick(e, "profilePictureURL");
-                    setShowUpdateProfilePic(false);
-                  }}
-                  className="m-1"
-                />
-              );
-            })}
-          </Row>
-        </Modal.Body>
-      </Modal>
+        onHide={hideProfilePicModal}
+        onBtnClick={handleUploadProfilePicClick}
+        onPhotoClick={handleProfilePicClick}
+        userID={props.userID}
+        photos={photos}
+      />
+
       <input
         type="file"
         ref={fileInputRef}
