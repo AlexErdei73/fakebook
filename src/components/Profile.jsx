@@ -25,6 +25,7 @@ import CircularImage from "./CircularImage";
 import NestedRoute from "./NestedRoute";
 import ResponsiveImage from "./ResponsiveImage";
 import RemoveCoverPhotoDlg from "./RemoveCoverPhotoDlg";
+import SelectBgPhotoModal from "./SelectBgPhotoModal";
 import "./Profile.css";
 import { handleClickLink } from "./helper";
 
@@ -86,6 +87,15 @@ const Profile = (props) => {
     return profileRef.update({ backgroundPictureURL: "background-server.jpg" });
   }
 
+  function hideBgPhotoModal() {
+    setShowSelectPhoto(false);
+  }
+
+  function handleBgPhotoClick(event) {
+    hideBgPhotoModal();
+    handlePhotoClick(event, "backgroundPictureURL");
+  }
+
   const storage = useStorage();
 
   function upload(file) {
@@ -113,7 +123,6 @@ const Profile = (props) => {
     const index = Number(e.target.id);
     const photo = photos[index];
     const storagePath = `${props.userID}/${photo.fileName}`;
-    setShowSelectPhoto(false);
     return profileRef.update({ [name]: storagePath });
   }
 
@@ -225,38 +234,13 @@ const Profile = (props) => {
         closeDlg={closeDlg}
       />
 
-      <Modal
+      <SelectBgPhotoModal
         show={showSelectPhoto}
-        onHide={() => {
-          setShowSelectPhoto(false);
-        }}
-        scrollable
-      >
-        <Modal.Header closeButton>
-          <Modal.Title style={{ marginLeft: "35%" }}>
-            <strong>Select Photo</strong>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {photos.map((photo, index) => {
-            return (
-              <StorageImage
-                className="m-1"
-                width="31%"
-                height="90px"
-                alt=""
-                key={index}
-                id={index}
-                storagePath={`${props.userID}/${photo.fileName}`}
-                style={{
-                  objectFit: "cover",
-                }}
-                onClick={(e) => handlePhotoClick(e, "backgroundPictureURL")}
-              ></StorageImage>
-            );
-          })}
-        </Modal.Body>
-      </Modal>
+        hideModal={hideBgPhotoModal}
+        onPhotoClick={handleBgPhotoClick}
+        userID={props.userID}
+        photos={photos}
+      />
 
       <Modal
         show={showUpdateProfilePic}
