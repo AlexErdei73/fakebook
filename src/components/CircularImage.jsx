@@ -1,5 +1,6 @@
 import React from "react";
 import { StorageImage } from "reactfire";
+import "firebase/storage";
 
 const CircularImage = (props) => {
   return (

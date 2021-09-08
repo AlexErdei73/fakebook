@@ -7,7 +7,7 @@ const PhotoViewer = () => {
   const { userID, n } = useParams();
 
   const profileRef = useFirestore().collection("users").doc(userID);
-  let result = useFirestoreDocData(profileRef);
+  let result = useFirestoreDocData(profileRef, { initialData: { photos: [] } });
 
   let { photos } = result.data;
 

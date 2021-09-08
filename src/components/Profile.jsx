@@ -38,13 +38,14 @@ const Profile = (props) => {
   const firestore = useFirestore();
   const usersCollection = firestore.collection("users");
 
-  const { data: users } = useFirestoreCollectionData(usersCollection, {
+  const { status, data: users } = useFirestoreCollectionData(usersCollection, {
     idField: "userID",
   });
 
   const { userName } = useParams();
 
   const userID = () => {
+    if (status !== "success") return props.userID;
     const userNames = users.map((user) => `${user.lastname}.${user.firstname}`);
     const index = userNames.indexOf(userName);
     const user = users[index];
@@ -54,7 +55,15 @@ const Profile = (props) => {
   const isCurrentUser = props.userID === userID();
 
   const profileRef = firestore.collection("users").doc(userID());
-  let result = useFirestoreDocData(profileRef);
+  let result = useFirestoreDocData(profileRef, {
+    initialData: {
+      firstname: "",
+      lastname: "",
+      profilePictureURL: "fakebook-avatar.jpeg",
+      backgroundPictureURL: "background-server.jpg",
+      photos: [],
+    },
+  });
 
   let { firstname, lastname, profilePictureURL, backgroundPictureURL, photos } =
     result.data;
