@@ -6,12 +6,12 @@ import { FaFacebook } from "react-icons/fa";
 import { ImExit } from "react-icons/im";
 import "./Titlebar.css";
 import ProfileLink from "./ProfileLink";
-import { useFirebaseApp, useUser } from "reactfire";
+import { useFirebaseApp } from "reactfire";
 import { handleClickLink } from "./helper";
 
 const TitleBar = (props) => {
   //get the signed in user
-  const { data: user } = useUser();
+  const user = props.user;
 
   // Import firebase
   const firebase = useFirebaseApp();
@@ -55,7 +55,7 @@ const TitleBar = (props) => {
               style={{ paddingBottom: "0.75rem", paddingTop: "0.75rem" }}
               id="profile"
             >
-              {(user && <ProfileLink userID={user.uid} />) || <></>}
+              <ProfileLink user={user} />
             </Link>
           </Nav.Item>
           <DropdownButton
@@ -64,7 +64,12 @@ const TitleBar = (props) => {
             className="mr-4"
             menuAlign="right"
           >
-            <Dropdown.Item onClick={handleClick} className="p-0">
+            <Dropdown.Item
+              as={Link}
+              to="/"
+              onClick={handleClick}
+              className="p-0"
+            >
               <ImExit fontSize="1.5em" className="mx-4" />
               <span>Log Out</span>
               <div style={{ width: "20em" }}></div>

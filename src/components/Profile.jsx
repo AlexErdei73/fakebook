@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import {
   useFirestore,
-  useFirestoreDocData,
   useFirestoreCollectionData,
   StorageImage,
   useStorage,
@@ -44,29 +43,23 @@ const Profile = (props) => {
 
   const { userName } = useParams();
 
-  const userID = () => {
-    if (status !== "success") return props.userID;
+  const user = () => {
+    console.log(status);
+    if (status !== "success") return props.user;
     const userNames = users.map((user) => `${user.lastname}.${user.firstname}`);
     const index = userNames.indexOf(userName);
     const user = users[index];
-    return user.userID;
+    return user;
   };
+
+  const userID = () => user().userID;
 
   const isCurrentUser = props.userID === userID();
 
-  const profileRef = firestore.collection("users").doc(userID());
-  let result = useFirestoreDocData(profileRef, {
-    initialData: {
-      firstname: "",
-      lastname: "",
-      profilePictureURL: "fakebook-avatar.jpeg",
-      backgroundPictureURL: "background-server.jpg",
-      photos: [],
-    },
-  });
-
   let { firstname, lastname, profilePictureURL, backgroundPictureURL, photos } =
-    result.data;
+    user();
+
+  const profileRef = useFirestore().collection("users").doc(userID());
 
   const [showRemoveCoverPhotoDlg, setShowRemoveCoverPhotoDlg] = useState(false);
 

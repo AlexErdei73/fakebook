@@ -2,10 +2,6 @@ import React, { useState } from "react";
 import "./App.css";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
-import TitleBar from "./components/Titlebar";
-import Profile from "./components/Profile";
-import PhotoViewer from "./components/PhotoViewer";
-import HomePage from "./components/HomePage";
 import { useSigninCheck } from "reactfire";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Col from "react-bootstrap/Col";
@@ -14,10 +10,10 @@ import Container from "react-bootstrap/Container";
 import RecentLogins from "./components/RecentLogins";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useUser } from "reactfire";
 import "firebase/auth";
 import "firebase/firestore";
+import UserAccount from "./UserAccount";
 
 function App() {
   const { data: user } = useUser();
@@ -65,6 +61,8 @@ function App() {
 
   const firstName = name.join(" ");
 
+  const profileLink = `/${lastName}.${firstName}`;
+
   const { status, data: signInCheckResult } = useSigninCheck();
 
   if (status === "loading") {
@@ -72,41 +70,23 @@ function App() {
   }
 
   if (signInCheckResult.signedIn === true) {
+    //Reactfire is still buggy in ver 3.0.0
+    //Even if user is signed in, the useUser
+    //hook can give back null for the current
+    //user. In this case the user has not
+    //premission to read firebase and the error
+    //is not caught by reactfire. Strangely
+    //refreshing the browser solves the issue.
+    if (!user) {
+      window.location.reload(false);
+    }
+
     return (
-      <div className="bg-200 vw-100">
-        <Container className="w-100 p-0" fluid>
-          <BrowserRouter>
-            <TitleBar profileLink={`/${lastName}.${firstName}`} />
-            <Switch>
-              <Route
-                path={`/photo/:userID/:n`}
-                render={() => <PhotoViewer />}
-              />
-              <Route
-                path={`/:userName`}
-                render={() => {
-                  if (!user) {
-                    window.location.reload(false);
-                    return;
-                  } else return <Profile userID={user.uid} />;
-                }}
-              />
-              <Route
-                path="/"
-                render={() => (
-                  <>
-                    {/*<h1 className="mt-5">
-                      Home Page for {`${firstName} ${lastName}`}
-                </h1>*/}
-                    <HomePage className="mt-5" />
-                  </>
-                )}
-              />
-            </Switch>
-          </BrowserRouter>
-          <div>{userState.error && <h4>{userState.error}</h4>}</div>
-        </Container>
-      </div>
+      <UserAccount
+        userID={user.uid}
+        profileLink={profileLink}
+        userState={userState}
+      />
     );
   } else {
     return (

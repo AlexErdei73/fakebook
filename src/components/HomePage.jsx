@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
+import LeftNavbar from "./LeftNavbar";
 
 const HomePage = (props) => {
   const LG_WINDOW = 992;
@@ -38,7 +39,11 @@ const HomePage = (props) => {
 
   return (
     <Row {...props}>
-      {dimension.width > LG_WINDOW && <Col>col - 1</Col>}
+      {dimension.width > LG_WINDOW && (
+        <Col>
+          <LeftNavbar profileLink={props.profileLink} />
+        </Col>
+      )}
       <Col sm={12} md={9} lg={6}>
         window size: {dimension.width} x {dimension.height}
       </Col>
