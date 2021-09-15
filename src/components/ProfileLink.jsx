@@ -1,16 +1,25 @@
 import React from "react";
 import CircularImage from "./CircularImage";
+import { Container, Row, Col } from "react-bootstrap";
 
 const ProfileLink = (props) => {
-  const { firstname, profilePictureURL } = props.user;
+  const { size, fullname } = props;
+
+  const { firstname, lastname, profilePictureURL } = props.user;
+
+  let name;
+  if (fullname === "true") name = `${firstname} ${lastname}`;
+  else name = `${firstname}`;
 
   return (
-    <div style={{ width: "100px" }}>
-      <CircularImage size="26" url={profilePictureURL} />
-      <span className="mx-1" style={{ pointerEvents: "none" }}>
-        <b>{firstname}</b>
-      </span>
-    </div>
+    <Row {...props} style={{ minWidth: "150px" }}>
+      <Col xs={1}>
+        <CircularImage size={size} url={profilePictureURL} />
+      </Col>
+      <Col className="text-dark ml-1 align-self-center">
+        {!fullname ? <b>{name}</b> : name}
+      </Col>
+    </Row>
   );
 };
 

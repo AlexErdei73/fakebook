@@ -13,7 +13,7 @@ import Modal from "react-bootstrap/Modal";
 import { useUser } from "reactfire";
 import "firebase/auth";
 import "firebase/firestore";
-import UserAccount from "./UserAccount";
+import UserAccount from "./components/UserAccount";
 
 function App() {
   const { data: user } = useUser();

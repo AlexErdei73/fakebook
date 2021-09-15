@@ -44,7 +44,6 @@ const Profile = (props) => {
   const { userName } = useParams();
 
   const user = () => {
-    console.log(status);
     if (status !== "success") return props.user;
     const userNames = users.map((user) => `${user.lastname}.${user.firstname}`);
     const index = userNames.indexOf(userName);

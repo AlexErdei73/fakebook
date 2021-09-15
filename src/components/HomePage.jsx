@@ -41,7 +41,7 @@ const HomePage = (props) => {
     <Row {...props}>
       {dimension.width > LG_WINDOW && (
         <Col>
-          <LeftNavbar profileLink={props.profileLink} />
+          <LeftNavbar user={props.user} profileLink={props.profileLink} />
         </Col>
       )}
       <Col sm={12} md={9} lg={6}>

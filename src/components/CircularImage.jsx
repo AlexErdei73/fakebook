@@ -14,6 +14,7 @@ const CircularImage = (props) => {
       }}
       storagePath={props.url}
       alt=""
+      {...props}
     />
   );
 };

@@ -8,6 +8,11 @@ const Friends = (props) => {
 
   const { users } = props;
 
+  //copyUsers never undefined to avoid error
+  let copyUsers;
+  if (!users) copyUsers = [];
+  else copyUsers = users;
+
   return (
     <Card>
       <Card.Body>
@@ -18,7 +23,7 @@ const Friends = (props) => {
         </Card.Title>
 
         <Row>
-          {users.map((user, index) => {
+          {copyUsers.map((user, index) => {
             return <FriendCard user={user} key={index} />;
           })}
         </Row>

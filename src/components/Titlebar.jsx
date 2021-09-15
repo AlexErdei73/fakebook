@@ -46,6 +46,7 @@ const TitleBar = (props) => {
             </Link>
           </Nav.Item>
         </Nav>
+
         <Nav className="w-25 justify-content-end align-self-center">
           <Nav.Item className="align-self-center">
             <Link
@@ -55,26 +56,28 @@ const TitleBar = (props) => {
               style={{ paddingBottom: "0.75rem", paddingTop: "0.75rem" }}
               id="profile"
             >
-              <ProfileLink user={user} />
+              <ProfileLink user={user} size="26" fullname="false" />
             </Link>
           </Nav.Item>
-          <DropdownButton
-            id="custom-drop-down-btn"
-            title=""
-            className="mr-4"
-            menuAlign="right"
-          >
-            <Dropdown.Item
-              as={Link}
-              to="/"
-              onClick={handleClick}
-              className="p-0"
+          <Nav.Item className="align-self-center">
+            <DropdownButton
+              id="custom-drop-down-btn"
+              title=""
+              className="mr-4"
+              menuAlign="right"
             >
-              <ImExit fontSize="1.5em" className="mx-4" />
-              <span>Log Out</span>
-              <div style={{ width: "20em" }}></div>
-            </Dropdown.Item>
-          </DropdownButton>
+              <Dropdown.Item
+                as={Link}
+                to="/"
+                onClick={handleClick}
+                className="p-0"
+              >
+                <ImExit fontSize="1.5em" className="mx-4" />
+                <span>Log Out</span>
+                <div style={{ width: "20em" }}></div>
+              </Dropdown.Item>
+            </DropdownButton>
+          </Nav.Item>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
