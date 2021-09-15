@@ -1,10 +1,5 @@
 import React, { useState, useRef } from "react";
-import {
-  useFirestore,
-  useFirestoreCollectionData,
-  StorageImage,
-  useStorage,
-} from "reactfire";
+import { useFirestore, StorageImage, useStorage } from "reactfire";
 import {
   Row,
   Col,
@@ -34,31 +29,25 @@ import "./Profile.css";
 import { handleClickLink } from "./helper";
 
 const Profile = (props) => {
-  const firestore = useFirestore();
-  const usersCollection = firestore.collection("users");
-
-  const { status, data: users } = useFirestoreCollectionData(usersCollection, {
-    idField: "userID",
-  });
-
   const { userName } = useParams();
 
+  const { users, userID } = props;
+
   const user = () => {
-    if (status !== "success") return props.user;
     const userNames = users.map((user) => `${user.lastname}.${user.firstname}`);
     const index = userNames.indexOf(userName);
     const user = users[index];
     return user;
   };
 
-  const userID = () => user().userID;
+  const userId = () => user(users).userID;
 
-  const isCurrentUser = props.userID === userID();
+  const isCurrentUser = userID === userId();
 
   let { firstname, lastname, profilePictureURL, backgroundPictureURL, photos } =
     user();
 
-  const profileRef = useFirestore().collection("users").doc(userID());
+  const profileRef = useFirestore().collection("users").doc(userId());
 
   const [showRemoveCoverPhotoDlg, setShowRemoveCoverPhotoDlg] = useState(false);
 
@@ -130,15 +119,14 @@ const Profile = (props) => {
   const storage = useStorage();
 
   function upload(file) {
-    const ref = storage.ref(props.userID).child(file.name);
+    const ref = storage.ref(userID).child(file.name);
     const newPhoto = { fileName: file.name };
     const filenames = photos.map((photo) => photo.fileName);
     if (filenames.indexOf(file.name) === -1) {
       photos.push(newPhoto);
     }
     const newProfile = { photos: photos };
-    if (nameOfURL !== "")
-      newProfile[nameOfURL] = `${props.userID}/${file.name}`;
+    if (nameOfURL !== "") newProfile[nameOfURL] = `${userID}/${file.name}`;
     ref.put(file).then(() => {
       return profileRef.update(newProfile);
     });
@@ -153,7 +141,7 @@ const Profile = (props) => {
   function handlePhotoClick(e, name) {
     const index = Number(e.target.id);
     const photo = photos[index];
-    const storagePath = `${props.userID}/${photo.fileName}`;
+    const storagePath = `${userID}/${photo.fileName}`;
     return profileRef.update({ [name]: storagePath });
   }
 
@@ -254,7 +242,7 @@ const Profile = (props) => {
             <Route path={`${path}/:itemId`}>
               <NestedRoute
                 photos={photos}
-                userID={userID()}
+                userID={userId()}
                 users={users}
                 openFileInput={() => openFileInput("")}
                 isCurrentUser={isCurrentUser}
@@ -274,7 +262,7 @@ const Profile = (props) => {
         show={showSelectPhoto}
         onHide={hideBgPhotoModal}
         onPhotoClick={handleBgPhotoClick}
-        userID={props.userID}
+        userID={userID}
         photos={photos}
       />
 
@@ -283,7 +271,7 @@ const Profile = (props) => {
         onHide={hideProfilePicModal}
         onBtnClick={handleUploadProfilePicClick}
         onPhotoClick={handleProfilePicClick}
-        userID={props.userID}
+        userID={userID}
         photos={photos}
       />
 
