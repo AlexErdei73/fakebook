@@ -10,8 +10,8 @@ import { useFirebaseApp } from "reactfire";
 import { handleClickLink } from "./helper";
 
 const TitleBar = (props) => {
-  //get the signed in user
-  const user = props.user;
+  //get the signed in user and closeFriendsListPage function
+  const { user, closeFriendsListPage } = props;
 
   // Import firebase
   const firebase = useFirebaseApp();
@@ -50,13 +50,16 @@ const TitleBar = (props) => {
         <Nav className="w-25 justify-content-end align-self-center">
           <Nav.Item className="align-self-center">
             <Link
-              to={props.profileLink}
+              to={props.profilelink}
               className="nav-link"
-              onClick={(e) => handleClickLink(e, activeLink, setActiveLink)}
+              onClick={(e) => {
+                closeFriendsListPage();
+                handleClickLink(e, activeLink, setActiveLink);
+              }}
               style={{ paddingBottom: "0.75rem", paddingTop: "0.75rem" }}
               id="profile"
             >
-              <ProfileLink user={user} size="26" fullname="false" />
+              <ProfileLink user={user} size="26" fullname="false" bold="true" />
             </Link>
           </Nav.Item>
           <Nav.Item className="align-self-center">

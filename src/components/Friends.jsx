@@ -23,9 +23,9 @@ const Friends = (props) => {
         </Card.Title>
 
         <Row>
-          {copyUsers.map((user, index) => {
-            return <FriendCard user={user} key={index} />;
-          })}
+          {copyUsers.map((user, index) => (
+            <FriendCard user={user} key={index} />
+          ))}
         </Row>
       </Card.Body>
     </Card>

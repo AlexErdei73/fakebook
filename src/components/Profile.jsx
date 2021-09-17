@@ -148,7 +148,7 @@ const Profile = (props) => {
   return (
     <>
       <Row className="justify-content-center" id="grad">
-        <Col id="profile-col">
+        <Col id="profile-col" className="m-0 p-0">
           <div id="background-pic-container">
             <StorageImage
               id="background-pic"

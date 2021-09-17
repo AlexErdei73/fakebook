@@ -1,3 +1,22 @@
 #friends-list {
   margin-top: 50px;
 }
+
+#col-1 {
+  width: 300px;
+}
+
+#col-2 {
+  overflow-x: hidden;
+}
+
+#profile-container {
+  width: 98%;
+  min-width: 600px;
+  margin-top: -3.5%;
+  padding-right: 25px;
+}
+
+.nav-link:hover {
+  background-color: lightgray;
+}

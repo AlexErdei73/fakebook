@@ -1,9 +1,9 @@
 import React from "react";
 import CircularImage from "./CircularImage";
-import { Container, Row, Col } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
 const ProfileLink = (props) => {
-  const { size, fullname } = props;
+  const { size, fullname, bold } = props;
 
   const { firstname, lastname, profilePictureURL } = props.user;
 
@@ -13,11 +13,11 @@ const ProfileLink = (props) => {
 
   return (
     <Row {...props} style={{ minWidth: "150px" }}>
-      <Col xs={1}>
+      <Col xs="auto">
         <CircularImage size={size} url={profilePictureURL} />
       </Col>
-      <Col className="text-dark ml-1 align-self-center">
-        {!fullname ? <b>{name}</b> : name}
+      <Col className="text-dark align-self-center p-0">
+        {bold === "true" ? <b>{name}</b> : name}
       </Col>
     </Row>
   );

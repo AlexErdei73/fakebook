@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TitleBar from "./Titlebar";
 import Profile from "./Profile";
 import PhotoViewer from "./PhotoViewer";
@@ -37,34 +37,74 @@ const UserAccount = (props) => {
     idField: "userID",
   });
 
+  const [isFriendsListPage, setIsFriendsListPage] = useState(false);
+
+  function closeFriendsListPage() {
+    setIsFriendsListPage(false);
+  }
+
   if (status !== "success") return <div>...Loading</div>;
   else
     return (
       <div className="bg-200 vw-100">
         <Container className="w-100 p-0" fluid>
           <BrowserRouter>
-            <TitleBar profileLink={profileLink} user={currentUser} />
+            <TitleBar
+              profilelink={profileLink}
+              user={currentUser}
+              closeFriendsListPage={closeFriendsListPage}
+            />
             <Switch>
-              <Route path="/friends/list" render={() => <FriendsListPage />} />
+              <Route
+                path="/friends/list"
+                render={() => {
+                  setIsFriendsListPage(true);
+                  return (
+                    <FriendsListPage
+                      users={users}
+                      user={currentUser}
+                      userID={userID}
+                    />
+                  );
+                }}
+              />
               <Route
                 path={`/photo/:userID/:n`}
                 render={() => <PhotoViewer />}
               />
               <Route
                 path={`/:userName`}
-                render={() => (
-                  <Profile user={currentUser} userID={userID} users={users} />
-                )}
+                render={() => {
+                  if (isFriendsListPage)
+                    return (
+                      <FriendsListPage
+                        users={users}
+                        user={currentUser}
+                        userID={userID}
+                      />
+                    );
+                  else
+                    return (
+                      <Profile
+                        user={currentUser}
+                        userID={userID}
+                        users={users}
+                      />
+                    );
+                }}
               />
               <Route
                 path="/"
-                render={() => (
-                  <HomePage
-                    className="mt-5"
-                    profileLink={profileLink}
-                    user={currentUser}
-                  />
-                )}
+                render={() => {
+                  setIsFriendsListPage(false);
+                  return (
+                    <HomePage
+                      className="mt-5"
+                      profileLink={profileLink}
+                      user={currentUser}
+                    />
+                  );
+                }}
               />
             </Switch>
           </BrowserRouter>
