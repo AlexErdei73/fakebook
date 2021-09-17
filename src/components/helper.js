@@ -7,7 +7,7 @@ export function handleClickLink(e, linkState, setLinkState) {
     previous.style.color = "";
   }
   setLinkState(current);
-  current.style.color = "dodgerblue";
   if (current.id === "profile") return;
+  current.style.color = "dodgerblue";
   current.style.borderBottom = "3px solid dodgerblue";
 }

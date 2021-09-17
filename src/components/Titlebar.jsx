@@ -56,10 +56,9 @@ const TitleBar = (props) => {
                 closeFriendsListPage();
                 handleClickLink(e, activeLink, setActiveLink);
               }}
-              style={{ paddingBottom: "0.75rem", paddingTop: "0.75rem" }}
               id="profile"
             >
-              <ProfileLink user={user} size="26" fullname="false" bold="true" />
+              <ProfileLink user={user} size="30" fullname="false" bold="true" />
             </Link>
           </Nav.Item>
           <Nav.Item className="align-self-center">
@@ -69,6 +68,19 @@ const TitleBar = (props) => {
               className="mr-4"
               menuAlign="right"
             >
+              <Dropdown.Item
+                as={Link}
+                to={props.profilelink}
+                onClick={() => closeFriendsListPage()}
+              >
+                <ProfileLink
+                  user={user}
+                  size="60"
+                  fullname="true"
+                  bold="true"
+                />
+              </Dropdown.Item>
+              <Dropdown.Divider />
               <Dropdown.Item
                 as={Link}
                 to="/"

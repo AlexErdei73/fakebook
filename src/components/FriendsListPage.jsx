@@ -23,7 +23,7 @@ const FriendsListPage = (props) => {
               <Link
                 key={index}
                 to={`/${user.lastname}.${user.firstname}`}
-                className="nav-link"
+                className="nav-link text-dark"
               >
                 <ProfileLink
                   user={user}

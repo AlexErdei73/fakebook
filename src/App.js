@@ -73,7 +73,7 @@ function App() {
     //Reactfire is still buggy in ver 3.0.0
     //Even if user is signed in, the useUser
     //hook can give back null for the current
-    //user. In this case the user has not
+    //user. In this case the user has no
     //premission to read firebase and the error
     //is not caught by reactfire. Strangely
     //refreshing the browser solves the issue.

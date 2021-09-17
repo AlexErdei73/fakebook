@@ -12,11 +12,16 @@ const ProfileLink = (props) => {
   else name = `${firstname}`;
 
   return (
-    <Row {...props} style={{ minWidth: "150px" }}>
-      <Col xs="auto">
+    <Row
+      style={{
+        minWidth: "150px",
+        color: "inherited",
+      }}
+    >
+      <Col xs="auto" className="px-2 ml-2">
         <CircularImage size={size} url={profilePictureURL} />
       </Col>
-      <Col className="text-dark align-self-center p-0">
+      <Col className="align-self-center p-0" style={{ color: "inherited" }}>
         {bold === "true" ? <b>{name}</b> : name}
       </Col>
     </Row>
