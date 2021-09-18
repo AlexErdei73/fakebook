@@ -1,0 +1,23 @@
+#card {
+  position: relative;
+  height: 145px;
+}
+
+#text-div {
+  background: #e9ecef;
+  border-radius: 20px;
+  position: absolute;
+  top: 20px;
+  left: 80px;
+  color: gray;
+}
+
+#text-div:hover {
+  background: lightgray;
+}
+
+#photo-btn {
+  display: block;
+  width: 150px;
+  margin: auto;
+}
