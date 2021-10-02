@@ -35,7 +35,7 @@ const CreatePost = (props) => {
         </Card.Body>
       </Card>
 
-      <PostModal show={showPostModal} onClose={handleClose} />
+      <PostModal show={showPostModal} onClose={handleClose} user={props.user} />
     </>
   );
 };
