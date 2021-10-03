@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import { useFirestore, StorageImage, useStorage } from "reactfire";
+import React, { useState } from "react";
+import { useFirestore, StorageImage } from "reactfire";
 import {
   Row,
   Col,
@@ -25,6 +25,7 @@ import NestedRoute from "./NestedRoute";
 import RemoveCoverPhotoDlg from "./RemoveCoverPhotoDlg";
 import SelectBgPhotoModal from "./SelectBgPhotoModal";
 import UpdateProfilePicModal from "./UpdateProfilePicModal";
+import UploadPhoto from "./UploadPhoto";
 import "./Profile.css";
 import { handleClickLink } from "./helper";
 
@@ -55,17 +56,17 @@ const Profile = (props) => {
 
   const [showUpdateProfilePic, setShowUpdateProfilePic] = useState(false);
 
+  const [showUploadPhotoDlg, setShowUploadPhotoDlg] = useState(false);
+
   const [nameOfURL, setNameOfURL] = useState("backgroundPictureURL");
 
   const [activeLink, setActiveLink] = useState(null);
-
-  const fileInputRef = useRef(null);
 
   const { url, path } = useRouteMatch();
 
   function openFileInput(nameOfURL) {
     setNameOfURL(nameOfURL);
-    fileInputRef.current.click();
+    setShowUploadPhotoDlg(true);
   }
 
   function handleSelect(key) {
@@ -116,10 +117,7 @@ const Profile = (props) => {
     handlePhotoClick(event, "profilePictureURL");
   }
 
-  const storage = useStorage();
-
-  function upload(file) {
-    const ref = storage.ref(userID).child(file.name);
+  function updatePhotos(file) {
     const newPhoto = { fileName: file.name };
     const filenames = photos.map((photo) => photo.fileName);
     if (filenames.indexOf(file.name) === -1) {
@@ -127,15 +125,7 @@ const Profile = (props) => {
     }
     const newProfile = { photos: photos };
     if (nameOfURL !== "") newProfile[nameOfURL] = `${userID}/${file.name}`;
-    ref.put(file).then(() => {
-      return profileRef.update(newProfile);
-    });
-  }
-
-  function onChangeFile(event) {
-    event.preventDefault();
-    const file = event.target.files[0];
-    upload(file);
+    return profileRef.update(newProfile);
   }
 
   function handlePhotoClick(e, name) {
@@ -275,11 +265,11 @@ const Profile = (props) => {
         photos={photos}
       />
 
-      <input
-        type="file"
-        ref={fileInputRef}
-        style={{ display: "none" }}
-        onChange={onChangeFile}
+      <UploadPhoto
+        show={showUploadPhotoDlg}
+        setShow={setShowUploadPhotoDlg}
+        updateDatabase={updatePhotos}
+        userID={userID}
       />
     </>
   );
