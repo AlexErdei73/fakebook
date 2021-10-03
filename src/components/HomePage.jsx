@@ -39,7 +39,7 @@ const HomePage = (props) => {
   });
 
   return (
-    <Row {...props}>
+    <Row className={props.className}>
       {dimension.width > LG_WINDOW && (
         <Col>
           <LeftNavbar user={props.user} profileLink={props.profileLink} />
@@ -47,7 +47,7 @@ const HomePage = (props) => {
       )}
       <Col sm={12} md={9} lg={6}>
         window size: {dimension.width} x {dimension.height}
-        <CreatePost user={props.user} />
+        <CreatePost user={props.user} userID={props.userID} />
       </Col>
       {dimension.width > MD_WINDOW && (
         <Col className="bg-dark text-light">col - 3</Col>

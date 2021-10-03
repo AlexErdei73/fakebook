@@ -102,6 +102,7 @@ const UserAccount = (props) => {
                       className="mt-5"
                       profileLink={profileLink}
                       user={currentUser}
+                      userID={userID}
                     />
                   );
                 }}

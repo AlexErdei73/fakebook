@@ -11,6 +11,7 @@ const UploadPhoto = (props) => {
   useEffect(() => {
     if (!show) return;
     fileInputRef.current.click();
+    setShow(false);
   }, [show]);
 
   function onChange(event) {
@@ -28,7 +29,6 @@ const UploadPhoto = (props) => {
       ref={fileInputRef}
       style={{ display: "none" }}
       onChange={onChange}
-      onClose={() => setShow(false)}
     />
   );
 };

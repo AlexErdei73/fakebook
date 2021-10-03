@@ -8,9 +8,22 @@ import { HiOutlinePhotograph } from "react-icons/hi";
 const CreatePost = (props) => {
   const [showPostModal, setShowPostModal] = useState(false);
 
+  const [text, setText] = useState("");
+
   const handleClose = () => setShowPostModal(false);
 
   const handleClick = () => setShowPostModal(true);
+
+  function getText() {
+    const MAX_LENGTH = 55;
+    const length = text.length;
+    if (length === 0) return `What's on your mind ${props.user.firstname}?`;
+    else {
+      let newText = text.slice(0, MAX_LENGTH);
+      if (length > MAX_LENGTH) newText += "...";
+      return newText;
+    }
+  }
 
   return (
     <>
@@ -18,8 +31,12 @@ const CreatePost = (props) => {
         <Card.Body>
           <Card.Title>
             <CircularImage size="40" url={props.user.profilePictureURL} />
-            <div id="text-div" className="p-2 w-75" onClick={handleClick}>
-              What's on your mind {props.user.firstname}?
+            <div
+              id="text-div"
+              className="p-2 w-75 text-dark"
+              onClick={handleClick}
+            >
+              {getText()}
             </div>
           </Card.Title>
           <hr></hr>
@@ -35,7 +52,13 @@ const CreatePost = (props) => {
         </Card.Body>
       </Card>
 
-      <PostModal show={showPostModal} onClose={handleClose} user={props.user} />
+      <PostModal
+        show={showPostModal}
+        onClose={handleClose}
+        user={props.user}
+        userID={props.userID}
+        setText={setText}
+      />
     </>
   );
 };
