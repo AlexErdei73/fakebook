@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 import { Modal, Button, CloseButton } from "react-bootstrap";
-import { StorageImage, useStorage } from "reactfire";
+import { StorageImage, useStorage, useFirestore } from "reactfire";
 import ProfileLink from "./ProfileLink";
 import UploadPhoto from "./UploadPhoto";
 import { HiOutlinePhotograph } from "react-icons/hi";
+import * as fb from "firebase"; //this is only needed, because we want to use server timestamps
+import "./PostModal.css";
 
 const PostModal = (props) => {
   const { show, onClose, user, userID, setText } = props;
 
   const WELCOME_TEXT = `What's on your mind, ${user.firstname}?`;
-  const [post, setPost] = useState({
+  const INIT_POST = {
     userID: `${userID}`,
     text: "",
     isPhoto: false,
     photoURL: "",
-  });
+  };
+  const [post, setPost] = useState(INIT_POST);
 
   function handleChange(e) {
     let value = e.target.value;
@@ -60,6 +63,35 @@ const PostModal = (props) => {
     });
   }
 
+  const firestore = useFirestore();
+
+  function uploadPost() {
+    const refPosts = firestore.collection("posts");
+    refPosts
+      .add({
+        ...post,
+        timestamp: fb.default.firestore.FieldValue.serverTimestamp(),
+      })
+      .then((docRef) => {
+        const postID = docRef.id;
+        updateUserPosts(postID);
+        setPost(INIT_POST);
+        setText("");
+        onClose();
+      });
+  }
+
+  function updateUserPosts(postID) {
+    let newPosts;
+    if (user.posts) newPosts = [...user.posts];
+    else newPosts = [];
+    newPosts.push(postID);
+    const refUser = firestore.collection("users").doc(userID);
+    refUser.update({
+      posts: newPosts,
+    });
+  }
+
   return (
     <>
       <Modal show={show} onHide={onClose}>
@@ -72,92 +104,49 @@ const PostModal = (props) => {
         </Modal.Header>
         <Modal.Body>
           <ProfileLink user={user} size="45" fullname="true" bold="true" />
-          <div
-            className="mt-2"
-            style={{
-              width: "102.5%",
-              maxHeight: "250px",
-              overflowY: "scroll",
-            }}
-          >
+          <div className="mt-2" id="scrolling-container">
             <textarea
               type="text"
               onChange={handleChange}
               className="w-100 mt-2"
               placeholder={WELCOME_TEXT}
               rows="3"
-              style={{
-                outline: "none",
-                border: "none",
-                resize: "none",
-                overflowY: "hidden",
-              }}
+              id="textarea"
               value={post.text}
             ></textarea>
             {post.isPhoto && (
-              <div
-                className="mb-2"
-                style={{
-                  width: "100%",
-                  border: "2px solid lightgray",
-                  borderRadius: "10px",
-                  padding: "10px",
-                  position: "relative",
-                }}
-              >
+              <div className="mb-2" id="img-container">
                 <StorageImage
                   alt=""
                   storagePath={`/${post.photoURL}`}
                   className="w-100"
-                  style={{
-                    borderRadius: "10px",
-                  }}
+                  id="img-to-post"
                 />
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    background: "white",
-                    width: "26px",
-                    height: "26px",
-                    borderRadius: "50%",
-                    position: "absolute",
-                    top: "20px",
-                    right: "20px",
-                  }}
-                >
+                <div id="close-btn-container">
                   <CloseButton onClick={deletePhoto} />
                 </div>
               </div>
             )}
           </div>
-          <div
-            className="w-100 my-2"
-            style={{
-              border: "2px solid lightgray",
-              borderRadius: "10px",
-              padding: "16px",
-              fontSize: "14px",
-            }}
-          >
-            {" "}
+          <div className="w-100 my-2" id="add-to-post">
             <b>Add to your post</b>
             <Button
               className="ml-5"
               variant="light"
               size="sm"
-              style={{
-                borderRadius: "50%",
-                border: "none",
-              }}
+              id="add-photo-btn"
               onClick={() => setShowUploadPhotoDlg(true)}
               disabled={post.isPhoto}
             >
               <HiOutlinePhotograph size="26px" className="text-success" />
             </Button>
           </div>
-          <Button variant={variant} className="w-100 mt-3" disabled={disabled}>
+          <Button
+            variant={variant}
+            className="w-100 mt-3"
+            disabled={disabled}
+            onClick={uploadPost}
+          >
             <b>Post</b>
           </Button>
         </Modal.Body>
