@@ -103,6 +103,7 @@ const UserAccount = (props) => {
                       profileLink={profileLink}
                       user={currentUser}
                       userID={userID}
+                      users={users}
                     />
                   );
                 }}
