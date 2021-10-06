@@ -49,3 +49,8 @@
   bottom: 8%;
   left: 75%;
 }
+
+/*removes caret from background-pic-button*/
+#background-pic-button::after {
+  content: none;
+}

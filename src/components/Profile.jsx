@@ -238,6 +238,9 @@ const Profile = (props) => {
                 isCurrentUser={isCurrentUser}
               />
             </Route>
+            <Route path={path}>
+              <h5>This is direct rendering without NestedRoute</h5>
+            </Route>
           </Switch>
         </Col>
       </Row>
