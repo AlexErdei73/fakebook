@@ -4,6 +4,7 @@ import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import CreatePost from "./CreatePost";
 import DisplayPost from "./DisplayPost";
 import LeftNavbar from "./LeftNavbar";
+import "./HomePage.css";
 
 const HomePage = (props) => {
   const LG_WINDOW = 992;
@@ -50,13 +51,18 @@ const HomePage = (props) => {
   if (status !== "success") return <div>...loading</div>;
   else
     return (
-      <Row className={props.className}>
+      <Row className={`${props.className} overflow-hidden vh-100`}>
         {dimension.width > LG_WINDOW && (
-          <Col>
+          <Col className="mh-100 overflow-auto">
             <LeftNavbar user={props.user} profileLink={props.profileLink} />
           </Col>
         )}
-        <Col sm={12} md={9} lg={6}>
+        <Col
+          sm={12}
+          md={9}
+          lg={6}
+          className="mh-100 overflow-auto hide-scrollbar"
+        >
           window size: {dimension.width} x {dimension.height}
           <CreatePost user={props.user} userID={props.userID} />
           {posts.map((post, index) => {
@@ -64,7 +70,7 @@ const HomePage = (props) => {
           })}
         </Col>
         {dimension.width > MD_WINDOW && (
-          <Col className="bg-dark text-light">col - 3</Col>
+          <Col className="bg-dark text-light mh-100 overflow-auto">col - 3</Col>
         )}
       </Row>
     );

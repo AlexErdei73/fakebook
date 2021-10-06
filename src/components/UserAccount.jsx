@@ -99,7 +99,7 @@ const UserAccount = (props) => {
                   setIsFriendsListPage(false);
                   return (
                     <HomePage
-                      className="mt-5"
+                      className="pt-5"
                       profileLink={profileLink}
                       user={currentUser}
                       userID={userID}
