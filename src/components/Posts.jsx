@@ -2,6 +2,8 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { useFirestore, useFirestoreDocData } from "reactfire";
 import DisplayPost from "./DisplayPost";
+import CreatePost from "./CreatePost";
+import MiniPhotos from "./MiniPhotos";
 
 const Posts = (props) => {
   const { userID, users } = props;
@@ -26,22 +28,14 @@ const Posts = (props) => {
   });
 
   return (
-    <Row className="w-100 mh-100">
-      <Col sm={4} className="bg-dark mh-100 ">
-        col - 1
-        <div
-          style={{
-            background: "white",
-            widtgh: "50%",
-            height: "800px",
-            margin: "auto",
-          }}
-        ></div>
+    <Row className="w-100 vh-100">
+      <Col sm={5} className="mh-100 ">
+        <MiniPhotos user={user} userID={userID} />
       </Col>
-      <Col sm={8} className="bg-info mh-100 overflow-auto">
-        col - 2
+      <Col sm={7} className="mh-100 overflow-auto hide-scrollbar">
+        <CreatePost user={user} userID={userID} />
         {posts.map((post) => (
-          <DisplayPost post={post} users={users} />
+          <DisplayPost post={post} users={users} className="mx-auto my-2" />
         ))}
       </Col>
     </Row>

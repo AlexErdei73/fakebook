@@ -64,9 +64,20 @@ const HomePage = (props) => {
           className="mh-100 overflow-auto hide-scrollbar"
         >
           window size: {dimension.width} x {dimension.height}
-          <CreatePost user={props.user} userID={props.userID} />
+          <CreatePost
+            user={props.user}
+            userID={props.userID}
+            className="w-75 m-auto p-0"
+          />
           {posts.map((post, index) => {
-            return <DisplayPost key={index} post={post} users={props.users} />;
+            return (
+              <DisplayPost
+                key={index}
+                post={post}
+                users={props.users}
+                className="w-75 mx-auto my-2"
+              />
+            );
           })}
         </Col>
         {dimension.width > MD_WINDOW && (

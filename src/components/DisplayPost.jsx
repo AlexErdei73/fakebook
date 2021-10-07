@@ -4,12 +4,12 @@ import { StorageImage } from "reactfire";
 import ProfileLink from "./ProfileLink";
 
 const DisplayPost = (props) => {
-  const { post, users } = props;
+  const { post, users, ...rest } = props;
 
   const user = users.find((user) => user.userID === post.userID);
 
   return (
-    <Card className="w-75 mx-auto p-0 my-2">
+    <Card {...rest}>
       <Card.Header>
         <ProfileLink user={user} size="40" fullname="true" bold="true" />
         <span

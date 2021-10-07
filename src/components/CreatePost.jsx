@@ -25,12 +25,14 @@ const CreatePost = (props) => {
     }
   }
 
+  const { user, userID, ...rest } = props;
+
   return (
     <>
-      <Card className="w-75 m-auto p-0" id="card">
+      <Card id="card" {...rest}>
         <Card.Body>
           <Card.Title>
-            <CircularImage size="40" url={props.user.profilePictureURL} />
+            <CircularImage size="40" url={user.profilePictureURL} />
             <div
               id="text-div"
               className="p-2 w-75 text-dark"
@@ -55,8 +57,8 @@ const CreatePost = (props) => {
       <PostModal
         show={showPostModal}
         onClose={handleClose}
-        user={props.user}
-        userID={props.userID}
+        user={user}
+        userID={userID}
         setText={setText}
       />
     </>
