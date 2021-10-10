@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useFirestore, StorageImage } from "reactfire";
 import {
   Row,
@@ -26,6 +26,7 @@ import RemoveCoverPhotoDlg from "./RemoveCoverPhotoDlg";
 import SelectBgPhotoModal from "./SelectBgPhotoModal";
 import UpdateProfilePicModal from "./UpdateProfilePicModal";
 import UploadPhoto from "./UploadPhoto";
+import Posts from "./Posts";
 import "./Profile.css";
 import { handleClickLink } from "./helper";
 
@@ -60,7 +61,18 @@ const Profile = (props) => {
 
   const [nameOfURL, setNameOfURL] = useState("backgroundPictureURL");
 
+  const postsLinkRef = useRef(null);
+
   const [activeLink, setActiveLink] = useState(null);
+
+  //We call the function to make the posts the default activeLink when the component mounts
+  useEffect(() => {
+    handleClickLink(
+      { currentTarget: postsLinkRef.current },
+      activeLink,
+      setActiveLink
+    );
+  }, []);
 
   const { url, path } = useRouteMatch();
 
@@ -198,6 +210,7 @@ const Profile = (props) => {
                   to={`${url}/Posts`}
                   className="nav-link mx-2"
                   onClick={(e) => handleClickLink(e, activeLink, setActiveLink)}
+                  ref={postsLinkRef}
                 >
                   <b>Posts</b>
                 </Link>
@@ -239,7 +252,7 @@ const Profile = (props) => {
               />
             </Route>
             <Route path={path}>
-              <h5>This is direct rendering without NestedRoute</h5>
+              <Posts userID={userId()} users={users} />
             </Route>
           </Switch>
         </Col>

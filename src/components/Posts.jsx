@@ -16,8 +16,9 @@ const Posts = (props) => {
       </Col>
       <Col sm={7} className="mh-100 overflow-auto hide-scrollbar">
         <CreatePost user={user} userID={userID} />
-        {user.posts.map((postID) => (
+        {user.posts.map((postID, index) => (
           <DisplayUserPost
+            key={index}
             postID={postID}
             userID={userID}
             users={users}

@@ -15,8 +15,8 @@ const FriendsListPage = (props) => {
   const isNoUser = FRIENDS_LIST_PAGE_PATH === location.pathname;
 
   return (
-    <Row id="friends-list">
-      <Col xs="auto">
+    <Row id="friends-list" className="overflow-hidden">
+      <Col xs="auto" className="overflow-auto mh-100">
         <div id="col-1" className="m-2">
           {users.map((user, index) => {
             return (
@@ -37,7 +37,7 @@ const FriendsListPage = (props) => {
           })}
         </div>
       </Col>
-      <Col id="col-2">
+      <Col id="col-2" className="overflow-auto mh-100 hide-scrollbar">
         {isNoUser ? (
           "Select people's names to preview their profile."
         ) : (

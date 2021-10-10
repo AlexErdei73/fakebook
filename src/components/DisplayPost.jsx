@@ -4,7 +4,7 @@ import { StorageImage } from "reactfire";
 import ProfileLink from "./ProfileLink";
 
 const DisplayPost = (props) => {
-  const { post, users, ...rest } = props;
+  const { post, users, userID, ...rest } = props;
 
   const user = users.find((user) => user.userID === post.userID);
 

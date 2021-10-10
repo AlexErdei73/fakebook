@@ -25,6 +25,7 @@ const MiniPhotos = (props) => {
             return (
               index < NUMBER_OF_PHOTOS && (
                 <Col
+                  key={index}
                   xs={4}
                   className="m-0"
                   style={{

@@ -28,6 +28,7 @@ const UserAccount = (props) => {
       profilePictureURL: "fakebook-avatar.jpeg",
       backgroundPictureURL: "background-server.jpg",
       photos: [],
+      posts: [],
     },
   });
 
