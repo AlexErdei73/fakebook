@@ -7,7 +7,16 @@ import Posts from "./Posts";
 const NestedRoute = (props) => {
   const { itemId } = useParams();
 
-  const { photos, userID, openFileInput, users, isCurrentUser } = props;
+  const {
+    photos,
+    userID,
+    openFileInput,
+    users,
+    isCurrentUser,
+    photosLinkRef,
+    activeLink,
+    setActiveLink,
+  } = props;
 
   if (itemId === "Photos")
     return (
@@ -19,7 +28,16 @@ const NestedRoute = (props) => {
       />
     );
   if (itemId === "Friends") return <Friends users={users} />;
-  else return <Posts userID={userID} users={users}></Posts>;
+  else
+    return (
+      <Posts
+        userID={userID}
+        users={users}
+        photosLinkRef={photosLinkRef}
+        activeLink={activeLink}
+        setActiveLink={setActiveLink}
+      ></Posts>
+    );
 };
 
 export default NestedRoute;

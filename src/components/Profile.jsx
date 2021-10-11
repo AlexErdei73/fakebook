@@ -65,6 +65,8 @@ const Profile = (props) => {
 
   const [activeLink, setActiveLink] = useState(null);
 
+  const photosLinkRef = useRef(null);
+
   //We call the function to make the posts the default activeLink when the component mounts
   useEffect(() => {
     handleClickLink(
@@ -231,6 +233,7 @@ const Profile = (props) => {
                   to={`${url}/Photos`}
                   className="nav-link mx-2"
                   onClick={(e) => handleClickLink(e, activeLink, setActiveLink)}
+                  ref={photosLinkRef}
                 >
                   <b>Photos</b>
                 </Link>
@@ -249,10 +252,19 @@ const Profile = (props) => {
                 users={users}
                 openFileInput={() => openFileInput("")}
                 isCurrentUser={isCurrentUser}
+                photosLinkRef={photosLinkRef}
+                activeLink={activeLink}
+                setActiveLink={setActiveLink}
               />
             </Route>
             <Route path={path}>
-              <Posts userID={userId()} users={users} />
+              <Posts
+                userID={userId()}
+                users={users}
+                photosLinkRef={photosLinkRef}
+                activeLink={activeLink}
+                setActiveLink={setActiveLink}
+              />
             </Route>
           </Switch>
         </Col>
