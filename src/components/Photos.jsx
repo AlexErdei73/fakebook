@@ -1,11 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Row, Col, Card, Button } from "react-bootstrap";
 import { Link, useRouteMatch } from "react-router-dom";
 import ResponsiveImage from "./ResponsiveImage";
+import { handleClickLink } from "./helper";
 
 const Photos = (props) => {
   const { url } = useRouteMatch();
-  const { userID, photos, openFileInput, isCurrentUser } = props;
+  const {
+    userID,
+    photos,
+    openFileInput,
+    isCurrentUser,
+    photosLinkRef,
+    activeLink,
+    setActiveLink,
+  } = props;
+
+  useEffect(() => {
+    handleClickLink(
+      { currentTarget: photosLinkRef.current },
+      activeLink,
+      setActiveLink
+    );
+  }, []);
 
   return (
     <Card variant="light" className="w-100">

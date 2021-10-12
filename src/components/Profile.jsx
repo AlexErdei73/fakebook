@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useFirestore, StorageImage } from "reactfire";
 import {
   Row,
@@ -28,7 +28,6 @@ import UpdateProfilePicModal from "./UpdateProfilePicModal";
 import UploadPhoto from "./UploadPhoto";
 import Posts from "./Posts";
 import "./Profile.css";
-import { handleClickLink } from "./helper";
 
 const Profile = (props) => {
   const { userName } = useParams();
@@ -61,22 +60,16 @@ const Profile = (props) => {
 
   const [nameOfURL, setNameOfURL] = useState("backgroundPictureURL");
 
-  const postsLinkRef = useRef(null);
-
   const [activeLink, setActiveLink] = useState(null);
 
+  //we need the refs to handle the activeLink changes
   const photosLinkRef = useRef(null);
-
-  //We call the function to make the posts the default activeLink when the component mounts
-  useEffect(() => {
-    handleClickLink(
-      { currentTarget: postsLinkRef.current },
-      activeLink,
-      setActiveLink
-    );
-  }, []);
+  const friendsLinkRef = useRef(null);
+  const postsLinkRef = useRef(null);
 
   const { url, path } = useRouteMatch();
+
+  const { itemId } = useParams();
 
   function openFileInput(nameOfURL) {
     setNameOfURL(nameOfURL);
@@ -211,7 +204,6 @@ const Profile = (props) => {
                   key="1"
                   to={`${url}/Posts`}
                   className="nav-link mx-2"
-                  onClick={(e) => handleClickLink(e, activeLink, setActiveLink)}
                   ref={postsLinkRef}
                 >
                   <b>Posts</b>
@@ -222,7 +214,7 @@ const Profile = (props) => {
                   key="2"
                   to={`${url}/Friends`}
                   className="nav-link mx-2"
-                  onClick={(e) => handleClickLink(e, activeLink, setActiveLink)}
+                  ref={friendsLinkRef}
                 >
                   <b>Friends</b>
                 </Link>
@@ -232,7 +224,6 @@ const Profile = (props) => {
                   key="3"
                   to={`${url}/Photos`}
                   className="nav-link mx-2"
-                  onClick={(e) => handleClickLink(e, activeLink, setActiveLink)}
                   ref={photosLinkRef}
                 >
                   <b>Photos</b>
@@ -252,7 +243,10 @@ const Profile = (props) => {
                 users={users}
                 openFileInput={() => openFileInput("")}
                 isCurrentUser={isCurrentUser}
+                //we only need the rest to handle the changes of the activeLink
                 photosLinkRef={photosLinkRef}
+                friendsLinkRef={friendsLinkRef}
+                postsLinkRef={postsLinkRef}
                 activeLink={activeLink}
                 setActiveLink={setActiveLink}
               />
@@ -261,7 +255,10 @@ const Profile = (props) => {
               <Posts
                 userID={userId()}
                 users={users}
+                //we only need the rest to handle the changes of the activeLink
                 photosLinkRef={photosLinkRef}
+                friendsLinkRef={friendsLinkRef}
+                postsLinkRef={postsLinkRef}
                 activeLink={activeLink}
                 setActiveLink={setActiveLink}
               />

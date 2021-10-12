@@ -2,7 +2,20 @@ import React from "react";
 import { StorageImage } from "reactfire";
 
 const ResponsiveImage = (props) => {
-  const { width, height, index, userID, photo, onClick, className } = props;
+  const {
+    width,
+    height,
+    index,
+    userID,
+    photo,
+    onClick,
+    className,
+    useStoragePath,
+  } = props;
+
+  let storagePath;
+  if (useStoragePath === "true") storagePath = photo;
+  else storagePath = `${userID}/${photo.fileName}`;
 
   return (
     <div
@@ -19,7 +32,7 @@ const ResponsiveImage = (props) => {
       <StorageImage
         alt=""
         id={index}
-        storagePath={`${userID}/${photo.fileName}`}
+        storagePath={storagePath}
         style={{
           position: "absolute",
           top: "0px",

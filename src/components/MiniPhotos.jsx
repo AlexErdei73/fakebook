@@ -5,7 +5,8 @@ import ResponsiveImage from "./ResponsiveImage";
 import { handleClickLink } from "./helper";
 
 const MiniPhotos = (props) => {
-  const { user, userID, photosLinkRef, activeLink, setActiveLink } = props;
+  const { user, userID, photosLinkRef, activeLink, setActiveLink, ...rest } =
+    props;
 
   const photos = user.photos;
 
@@ -13,7 +14,7 @@ const MiniPhotos = (props) => {
 
   const photosLink = `/${user.lastname}.${user.firstname}/Photos`;
 
-  function onClick() {
+  function handleClick() {
     handleClickLink(
       { currentTarget: photosLinkRef.current },
       activeLink,
@@ -22,16 +23,17 @@ const MiniPhotos = (props) => {
   }
 
   return (
-    <Card>
+    <Card {...rest}>
       <Card.Body>
         <Card.Title>
-          <Link to={photosLink} className="text-body" onClick={onClick}>
+          <Link to={photosLink} className="text-body" onClick={handleClick}>
             <b>Photos</b>
           </Link>
         </Card.Title>
         <Row>
           {photos.map((photo, index) => {
             return (
+              //we only render maximum 9 photos
               index < NUMBER_OF_PHOTOS && (
                 <Col
                   key={index}
@@ -47,7 +49,7 @@ const MiniPhotos = (props) => {
                   <Link
                     to={`photo/${userID}/${index}`}
                     className="text-body"
-                    onClick={onClick}
+                    onClick={handleClick}
                   >
                     <ResponsiveImage
                       photo={photo}

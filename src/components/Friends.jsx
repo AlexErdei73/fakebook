@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, Row } from "react-bootstrap";
 import { Link, useRouteMatch } from "react-router-dom";
 import FriendCard from "./FriendCard";
+import { handleClickLink } from "./helper";
 
 const Friends = (props) => {
   const { url } = useRouteMatch();
 
-  const { users } = props;
+  const { users, friendsLinkRef, activeLink, setActiveLink } = props;
+
+  useEffect(() => {
+    handleClickLink(
+      { currentTarget: friendsLinkRef.current },
+      activeLink,
+      setActiveLink
+    );
+  }, []);
 
   //copyUsers never undefined to avoid error
   let copyUsers;

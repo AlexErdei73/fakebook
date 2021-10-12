@@ -6,6 +6,9 @@ import ProfileLink from "./ProfileLink";
 const DisplayPost = (props) => {
   const { post, users, userID, ...rest } = props;
 
+  //We avoid error if post is undefind
+  if (!post) return <></>;
+
   const user = users.find((user) => user.userID === post.userID);
 
   return (
