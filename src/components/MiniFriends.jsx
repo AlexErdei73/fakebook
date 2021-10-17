@@ -35,11 +35,13 @@ const MiniFriends = (props) => {
             <b>Friends</b>
           </Link>
         </Card.Title>
+        <Card.Subtitle className="text-muted">
+          {users.length} friends
+        </Card.Subtitle>
         <Row>
           {users.map((user, index) => {
             const userProfileURL = `/${user.lastname}.${user.firstname}`;
             const userName = `${user.firstname} ${user.lastname}`;
-            console.log(user.profilePictureURL);
             return (
               //we render maximum 9 friends
               index < NUMBER_OF_FRIENDS && (

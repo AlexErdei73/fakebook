@@ -69,8 +69,6 @@ const Profile = (props) => {
 
   const { url, path } = useRouteMatch();
 
-  const { itemId } = useParams();
-
   function openFileInput(nameOfURL) {
     setNameOfURL(nameOfURL);
     setShowUploadPhotoDlg(true);
@@ -216,7 +214,7 @@ const Profile = (props) => {
                   className="nav-link mx-2"
                   ref={friendsLinkRef}
                 >
-                  <b>Friends</b>
+                  <b>Friends</b> {users.length}
                 </Link>
               </Nav.Item>
               <Nav.Item>

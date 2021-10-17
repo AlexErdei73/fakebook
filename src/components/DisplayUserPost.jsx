@@ -10,13 +10,14 @@ const DisplayUserPost = (props) => {
     text: "",
     isPhoto: false,
     photoURL: "",
+    likes: [],
   };
 
   const firestore = useFirestore();
   const postRef = firestore.collection("posts").doc(postID);
   const post = useFirestoreDocData(postRef, { initialData: INIT_POST }).data;
 
-  return <DisplayPost post={post} userID={userID} {...rest} />;
+  return <DisplayPost post={post} postID={postID} userID={userID} {...rest} />;
 };
 
 export default DisplayUserPost;

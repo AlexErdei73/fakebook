@@ -45,7 +45,8 @@ const HomePage = (props) => {
   const postsRef = firestore.collection("posts");
 
   const { status, data: posts } = useFirestoreCollectionData(
-    postsRef.orderBy("timestamp")
+    postsRef.orderBy("timestamp"),
+    { idField: "postID" }
   );
 
   if (status !== "success") return <div>...loading</div>;
@@ -74,7 +75,9 @@ const HomePage = (props) => {
               <DisplayPost
                 key={index}
                 post={post}
+                postID={post.postID}
                 users={props.users}
+                userID={props.userID}
                 className="w-75 mx-auto my-2"
               />
             );

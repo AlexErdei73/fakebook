@@ -18,7 +18,6 @@ const Posts = (props) => {
   } = props;
 
   const user = users.find((user) => user.userID === userID);
-  console.log(user);
 
   useEffect(() => {
     handleClickLink(
