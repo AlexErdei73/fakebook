@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Button } from "react-bootstrap";
 import { StorageImage, useFirestore } from "reactfire";
 import ProfileLink from "./ProfileLink";
+import LikesModal from "./LikesModal";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 
 const DisplayPost = (props) => {
   const { post, postID, users, userID, ...rest } = props;
+
+  const [show, setShow] = useState(false);
+
+  function handleHide() {
+    setShow(false);
+  }
 
   const firestore = useFirestore();
 
@@ -55,7 +62,11 @@ const DisplayPost = (props) => {
         )}
       </Card.Body>
       <Card.Footer>
-        <Button variant="link" className="text-muted">
+        <Button
+          variant="link"
+          className="text-muted"
+          onClick={() => setShow(true)}
+        >
           <AiFillLike
             className="bg-primary text-light mr-2"
             style={{ borderRadius: "50%" }}
@@ -76,6 +87,13 @@ const DisplayPost = (props) => {
           <b> Like</b>
         </Button>
       </Card.Footer>
+
+      <LikesModal
+        show={show}
+        onHide={handleHide}
+        users={users}
+        likes={post.likes}
+      />
     </Card>
   );
 };
