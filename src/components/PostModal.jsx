@@ -4,18 +4,22 @@ import { StorageImage, useStorage, useFirestore } from "reactfire";
 import ProfileLink from "./ProfileLink";
 import UploadPhoto from "./UploadPhoto";
 import { HiOutlinePhotograph } from "react-icons/hi";
+import { AiFillCopy, AiFillYoutube } from "react-icons/ai";
 import * as fb from "firebase"; //this is only needed, because we want to use server timestamps
 import "./PostModal.css";
 
 const PostModal = (props) => {
   const { show, onClose, user, userID, setText } = props;
 
-  const WELCOME_TEXT = `What's on your mind, ${user.firstname}?`;
+  const WELCOME_TEXT = `What's on your mind, ${user.firstname}? - For adding YouTube video copy link here ...`;
   const INIT_POST = {
     userID: `${userID}`,
     text: "",
     isPhoto: false,
     photoURL: "",
+    isYoutube: false,
+    youtubeURL: "",
+    likes: [],
   };
   const [post, setPost] = useState(INIT_POST);
 
@@ -59,7 +63,7 @@ const PostModal = (props) => {
       newPost.isPhoto = false;
       newPost.photoURL = "";
       setPost(newPost);
-      if (post.text === "") setBtnEnabled(false);
+      if (post.text === "" && !post.isYoutube) setBtnEnabled(false);
     });
   }
 
@@ -90,6 +94,29 @@ const PostModal = (props) => {
     refUser.update({
       posts: newPosts,
     });
+  }
+
+  function addYoutubeVideo() {
+    const url = post.text;
+    const URL_PATTERN = "https://www.youtube.com/watch?v=";
+    const patternLength = URL_PATTERN.length;
+    if (!url.startsWith(URL_PATTERN)) return;
+    const videoID = url.slice(patternLength);
+    const youtubeURL = `https://www.youtube.com/embed/${videoID}`;
+    const newPost = { ...post };
+    newPost.isYoutube = true;
+    newPost.youtubeURL = youtubeURL;
+    newPost.text = "";
+    setPost(newPost);
+    setBtnEnabled(true);
+  }
+
+  function deleteYoutubeVideo() {
+    const newPost = { ...post };
+    newPost.isYoutube = false;
+    newPost.youtubeURL = "";
+    setPost(newPost);
+    if (post.text === "" && !post.isPhoto) setBtnEnabled(false);
   }
 
   return (
@@ -127,16 +154,40 @@ const PostModal = (props) => {
                 </div>
               </div>
             )}
+            {post.isYoutube && (
+              <div className="mb-2" id="video-container">
+                <iframe
+                  src={post.youtubeURL}
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+                  allowfullscreen
+                ></iframe>
+                <div id="close-btn-container">
+                  <CloseButton onClick={deleteYoutubeVideo} />
+                </div>
+              </div>
+            )}
           </div>
           <div className="w-100 my-2" id="add-to-post">
             <b>Add to your post</b>
             <Button
-              className="ml-5"
+              className="ml-2"
+              variant="light"
+              size="sm"
+              id="add-photo-btn"
+              onClick={addYoutubeVideo}
+              disabled={post.isPhoto || post.isYoutube}
+            >
+              <AiFillYoutube size="26px" className="text-danger" />
+            </Button>
+            <Button
+              className="ml-2"
               variant="light"
               size="sm"
               id="add-photo-btn"
               onClick={() => setShowUploadPhotoDlg(true)}
-              disabled={post.isPhoto}
+              disabled={post.isPhoto || post.isYoutube}
             >
               <HiOutlinePhotograph size="26px" className="text-success" />
             </Button>

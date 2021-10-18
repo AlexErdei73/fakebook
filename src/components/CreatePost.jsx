@@ -4,6 +4,7 @@ import CircularImage from "./CircularImage";
 import PostModal from "./PostModal";
 import "./CreatePost.css";
 import { HiOutlinePhotograph } from "react-icons/hi";
+import { AiFillYoutube } from "react-icons/ai";
 
 const CreatePost = (props) => {
   const [showPostModal, setShowPostModal] = useState(false);
@@ -42,6 +43,15 @@ const CreatePost = (props) => {
             </div>
           </Card.Title>
           <hr></hr>
+          <Button
+            variant="light"
+            id="youtube-btn"
+            size="sm"
+            onClick={handleClick}
+          >
+            <AiFillYoutube size="28px" className="text-danger" />
+            YouTube
+          </Button>
           <Button
             variant="light"
             id="photo-btn"

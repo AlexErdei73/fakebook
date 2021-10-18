@@ -18,6 +18,12 @@
 
 #photo-btn {
   display: block;
-  width: 150px;
-  margin: auto;
+  width: 33%;
+  float: left;
+}
+
+#youtube-btn {
+  display: block;
+  width: 33%;
+  float: left;
 }

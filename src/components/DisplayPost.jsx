@@ -60,12 +60,25 @@ const DisplayPost = (props) => {
         {post.isPhoto && (
           <StorageImage alt="" storagePath={post.photoURL} className="w-100" />
         )}
+        {post.isYoutube && (
+          <div id="video-container">
+            <iframe
+              src={post.youtubeURL}
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+              allowFullScreen
+            ></iframe>
+          </div>
+        )}
       </Card.Body>
       <Card.Footer>
         <Button
           variant="link"
           className="text-muted"
-          onClick={() => setShow(true)}
+          onClick={() => {
+            if (post.likes.length > 0) setShow(true);
+          }}
         >
           <AiFillLike
             className="bg-primary text-light mr-2"
