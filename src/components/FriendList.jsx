@@ -4,7 +4,9 @@ import { Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const FriendList = (props) => {
-  const { users } = props;
+  const { users, variant } = props;
+
+  const isModal = variant === "modal";
 
   return (
     <Col xs="auto" className="overflow-auto mh-100">
@@ -14,12 +16,12 @@ const FriendList = (props) => {
             <Link
               key={index}
               to={`/${user.lastname}.${user.firstname}`}
-              className="nav-link text-dark"
+              className={isModal ? "p-1 text-dark" : "nav-link text-dark"}
             >
               <ProfileLink
                 user={user}
                 fullname="true"
-                size="60"
+                size={isModal ? "40" : "60"}
                 bold="true"
                 className="pb-1"
               />

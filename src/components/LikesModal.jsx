@@ -11,8 +11,11 @@ const LikesModal = (props) => {
 
   return (
     <Modal show={show} onHide={onHide}>
+      <Modal.Header closeButton>
+        <Modal.Title className="text-primary">All</Modal.Title>
+      </Modal.Header>
       <Modal.Body className="overflow-hidden">
-        <FriendList users={usersWhoLike} />
+        <FriendList users={usersWhoLike} variant="modal" />
       </Modal.Body>
     </Modal>
   );
