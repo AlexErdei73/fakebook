@@ -3,12 +3,16 @@ import { Card, Button } from "react-bootstrap";
 import { StorageImage, useFirestore } from "reactfire";
 import ProfileLink from "./ProfileLink";
 import LikesModal from "./LikesModal";
+import Comments from "./Comments";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
+import { GoComment } from "react-icons/go";
 
 const DisplayPost = (props) => {
   const { post, postID, users, userID, ...rest } = props;
 
   const [show, setShow] = useState(false);
+
+  const [showComments, setShowComments] = useState(false);
 
   function handleHide() {
     setShow(false);
@@ -20,6 +24,8 @@ const DisplayPost = (props) => {
   if (!post) return <></>;
 
   const user = users.find((user) => user.userID === post.userID);
+
+  const currentUser = users.find((user) => user.userID === userID);
 
   const postRef = firestore.collection("posts").doc(postID);
 
@@ -41,6 +47,10 @@ const DisplayPost = (props) => {
     if (index === -1) likes.push(userID);
     else likes.splice(index, 1);
     updatePost({ likes: likes });
+  }
+
+  function handleCommentClick() {
+    setShowComments(true);
   }
 
   return (
@@ -99,6 +109,15 @@ const DisplayPost = (props) => {
           )}
           <b> Like</b>
         </Button>
+        <Button
+          variant="light"
+          className="text-muted w-50"
+          onClick={handleCommentClick}
+        >
+          <GoComment size="22px" />
+          <b> Comment</b>
+        </Button>
+        {showComments && <Comments user={currentUser} />}
       </Card.Footer>
 
       <LikesModal
