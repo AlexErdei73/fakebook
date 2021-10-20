@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Col, Row, CloseButton } from "react-bootstrap";
-import { StorageImage } from "reactfire";
+import { Col, Row, CloseButton, Button } from "react-bootstrap";
+import { StorageImage, useStorage, useFirestore } from "reactfire";
 import CircularImage from "./CircularImage";
+import UploadPhoto from "./UploadPhoto";
+import { MdPhotoCamera } from "react-icons/md";
 
 const Comments = (props) => {
   const { user } = props;
@@ -24,7 +26,9 @@ const Comments = (props) => {
     lineHeight: "0.8em",
   };
   const [style, setStyle] = useState(TEXTAREA_STYLE_INIT);
-  const [textarea, setTextarea] = useState(null);
+  const [textarea, setTextarea] = useState(null); //We save the textarea in the state, so the effect hook can use it
+
+  const [show, setShow] = useState(false);
 
   function handleChange(e) {
     const textarea = e.target;
@@ -48,13 +52,34 @@ const Comments = (props) => {
   //When the component has rerendered and the height is auto
   //we set the height to the scrollHeight property of textarea
   //This way when the height of the content decreses the textarea
-  //can follow it down too
+  //can follow it down too. Without this trick the textarea can
+  //grow but unable to shrink back.
   useEffect(() => {
     if (style.height !== "auto") return;
     const newStyle = { ...style };
     newStyle.height = textarea.scrollHeight + "px";
     setStyle(newStyle);
   }, [style.height]);
+
+  function addPhotoToComment(file) {
+    const newComment = { ...comment };
+    newComment.isPhoto = true;
+    newComment.photoURL = `${user.userID}/${file.name}`;
+    setComment(newComment);
+  }
+
+  const storage = useStorage();
+
+  function deletePhoto() {
+    const photoURL = comment.photoURL;
+    const ref = storage.ref().child(photoURL);
+    ref.delete().then(() => {
+      const newComment = { ...comment };
+      newComment.isPhoto = false;
+      newComment.photoURL = "";
+      setComment(newComment);
+    });
+  }
 
   return (
     <Col>
@@ -79,11 +104,22 @@ const Comments = (props) => {
                 placeholder={WELCOME_TEXT}
                 rows="1"
                 style={style}
-                //id="textarea"
                 value={comment.text}
               ></textarea>
             </Col>
-            <Col xs={1}></Col>
+            <Col xs={1}>
+              <Row className="justify-content-center align-items-baseline">
+                <Button
+                  variant="light"
+                  size="sm"
+                  id="add-photo-btn"
+                  onClick={() => setShow(true)}
+                  disabled={comment.isPhoto}
+                >
+                  <MdPhotoCamera size="23px" className="text-muted" />
+                </Button>
+              </Row>
+            </Col>
           </Row>
           {comment.isPhoto && (
             <div className="mb-2" id="img-container">
@@ -94,12 +130,19 @@ const Comments = (props) => {
                 id="img-to-post"
               />
               <div id="close-btn-container">
-                <CloseButton /*onClick={deletePhoto}*/ />
+                <CloseButton onClick={deletePhoto} />
               </div>
             </div>
           )}
         </Col>
       </Row>
+
+      <UploadPhoto
+        show={show}
+        setShow={setShow}
+        updateDatabase={addPhotoToComment}
+        userID={user.userID}
+      />
     </Col>
   );
 };

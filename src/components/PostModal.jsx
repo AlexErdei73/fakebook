@@ -4,7 +4,7 @@ import { StorageImage, useStorage, useFirestore } from "reactfire";
 import ProfileLink from "./ProfileLink";
 import UploadPhoto from "./UploadPhoto";
 import { HiOutlinePhotograph } from "react-icons/hi";
-import { AiFillCopy, AiFillYoutube } from "react-icons/ai";
+import { AiFillYoutube } from "react-icons/ai";
 import * as fb from "firebase"; //this is only needed, because we want to use server timestamps
 import "./PostModal.css";
 
