@@ -72,13 +72,25 @@ const Comments = (props) => {
 
   function deletePhoto() {
     const photoURL = comment.photoURL;
+    //we only remove the photo from the storage if it's not in the photos of the user
+    const photoURLs = user.photos.map(
+      (photo) => `${user.userID}/${photo.fileName}`
+    );
+    if (photoURLs.indexOf(photoURL) !== -1) {
+      removePhotoFromComment();
+      return;
+    }
     const ref = storage.ref().child(photoURL);
     ref.delete().then(() => {
-      const newComment = { ...comment };
-      newComment.isPhoto = false;
-      newComment.photoURL = "";
-      setComment(newComment);
+      removePhotoFromComment();
     });
+  }
+
+  function removePhotoFromComment() {
+    const newComment = { ...comment };
+    newComment.isPhoto = false;
+    newComment.photoURL = "";
+    setComment(newComment);
   }
 
   return (

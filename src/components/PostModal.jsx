@@ -57,14 +57,24 @@ const PostModal = (props) => {
 
   function deletePhoto() {
     const photoURL = post.photoURL;
+    //we only remove the photo from the storage if it's not in the photos of the user
+    const photoURLs = user.photos.map((photo) => `${userID}/${photo.fileName}`);
+    if (photoURLs.indexOf(photoURL) !== -1) {
+      removePhotoFromPost();
+      return;
+    }
     const ref = storage.ref().child(photoURL);
     ref.delete().then(() => {
-      const newPost = { ...post };
-      newPost.isPhoto = false;
-      newPost.photoURL = "";
-      setPost(newPost);
-      if (post.text === "" && !post.isYoutube) setBtnEnabled(false);
+      removePhotoFromPost();
     });
+  }
+
+  function removePhotoFromPost() {
+    const newPost = { ...post };
+    newPost.isPhoto = false;
+    newPost.photoURL = "";
+    setPost(newPost);
+    if (post.text === "" && !post.isYoutube) setBtnEnabled(false);
   }
 
   const firestore = useFirestore();
