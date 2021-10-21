@@ -118,7 +118,12 @@ const DisplayPost = (props) => {
           <b> Comment</b>
         </Button>
         {showComments && (
-          <Comments user={currentUser} post={post} updatePost={updatePost} />
+          <Comments
+            user={currentUser}
+            post={post}
+            updatePost={updatePost}
+            users={users}
+          />
         )}
       </Card.Footer>
 

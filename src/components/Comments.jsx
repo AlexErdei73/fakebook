@@ -3,12 +3,13 @@ import { Col, Row, CloseButton, Button } from "react-bootstrap";
 import { StorageImage, useStorage, useFirestore } from "reactfire";
 import CircularImage from "./CircularImage";
 import UploadPhoto from "./UploadPhoto";
+import DisplayComment from "./DisplayComment";
 import { MdPhotoCamera } from "react-icons/md";
 import { addPhoto, handleTextareaChange, delPhoto } from "./helper";
 import "./Comments.css";
 
 const Comments = (props) => {
-  const { user, post, updatePost } = props;
+  const { user, post, updatePost, users } = props;
 
   const WELCOME_TEXT = "Write a comment ...";
   const INIT_COMMENT = {
@@ -88,6 +89,7 @@ const Comments = (props) => {
   function handleKeyPress(e) {
     const code = e.code;
     if (code !== "Enter") return;
+    e.preventDefault();
     saveComment();
   }
 
@@ -102,6 +104,15 @@ const Comments = (props) => {
   return (
     <Col>
       <hr />
+      {post.comments &&
+        post.comments.map((comment, index) => (
+          <DisplayComment
+            key={index}
+            comment={comment}
+            users={users}
+            className="mb-2"
+          />
+        ))}
       <Row>
         <Col xs={1}>
           <CircularImage size="36" url={user.profilePictureURL} />
