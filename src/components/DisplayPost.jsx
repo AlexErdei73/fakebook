@@ -96,6 +96,13 @@ const DisplayPost = (props) => {
           />
           {post.likes.length}
         </Button>
+        <Button
+          variant="link"
+          className="text-muted float-right"
+          onClick={() => setShowComments(!showComments)}
+        >
+          comments({post.comments ? post.comments.length : 0})
+        </Button>
         <hr />
         <Button
           variant="light"
