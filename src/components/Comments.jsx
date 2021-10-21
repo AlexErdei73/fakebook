@@ -8,7 +8,7 @@ import { addPhoto, handleTextareaChange, delPhoto } from "./helper";
 import "./Comments.css";
 
 const Comments = (props) => {
-  const { user } = props;
+  const { user, post, updatePost } = props;
 
   const WELCOME_TEXT = "Write a comment ...";
   const INIT_COMMENT = {
@@ -85,6 +85,20 @@ const Comments = (props) => {
     });
   }
 
+  function handleKeyPress(e) {
+    const code = e.code;
+    if (code !== "Enter") return;
+    saveComment();
+  }
+
+  function saveComment() {
+    const newPost = { ...post };
+    if (!post.comments) newPost.comments = [];
+    newPost.comments.push(comment);
+    updatePost(newPost);
+    setComment(INIT_COMMENT);
+  }
+
   return (
     <Col>
       <hr />
@@ -104,6 +118,7 @@ const Comments = (props) => {
               <textarea
                 type="text"
                 onChange={handleChange}
+                onKeyPress={handleKeyPress}
                 className="w-100 mt-2"
                 placeholder={WELCOME_TEXT}
                 rows="1"

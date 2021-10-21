@@ -117,7 +117,9 @@ const DisplayPost = (props) => {
           <GoComment size="22px" />
           <b> Comment</b>
         </Button>
-        {showComments && <Comments user={currentUser} />}
+        {showComments && (
+          <Comments user={currentUser} post={post} updatePost={updatePost} />
+        )}
       </Card.Footer>
 
       <LikesModal
