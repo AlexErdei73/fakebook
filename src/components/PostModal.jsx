@@ -7,6 +7,7 @@ import { HiOutlinePhotograph } from "react-icons/hi";
 import { AiFillYoutube } from "react-icons/ai";
 import * as fb from "firebase"; //this is only needed, because we want to use server timestamps
 import "./PostModal.css";
+import { handleTextareaChange, addPhoto, delPhoto } from "./helper";
 
 const PostModal = (props) => {
   const { show, onClose, user, userID, setText } = props;
@@ -24,10 +25,15 @@ const PostModal = (props) => {
   const [post, setPost] = useState(INIT_POST);
 
   function handleChange(e) {
-    let value = e.target.value;
-    const newPost = { ...post };
-    newPost.text = value;
-    setPost(newPost);
+    const value = handleTextareaChange({
+      e: e,
+      state: post,
+      setState: setPost,
+    });
+    setPostBtnEnabled(value);
+  }
+
+  function setPostBtnEnabled(value) {
     if (value === "") setBtnEnabled(false);
     else setBtnEnabled(true);
     setText(value);
@@ -46,34 +52,29 @@ const PostModal = (props) => {
   const [showUploadPhotoDlg, setShowUploadPhotoDlg] = useState(false);
 
   function addPhotoToPost(file) {
-    const newPost = { ...post };
-    newPost.isPhoto = true;
-    newPost.photoURL = `${userID}/${file.name}`;
-    setPost(newPost);
+    addPhoto({
+      state: post,
+      setState: setPost,
+      file: file,
+      userID: userID,
+    });
     setBtnEnabled(true);
   }
 
   const storage = useStorage();
 
   function deletePhoto() {
-    const photoURL = post.photoURL;
-    //we only remove the photo from the storage if it's not in the photos of the user
-    const photoURLs = user.photos.map((photo) => `${userID}/${photo.fileName}`);
-    if (photoURLs.indexOf(photoURL) !== -1) {
-      removePhotoFromPost();
-      return;
-    }
-    const ref = storage.ref().child(photoURL);
-    ref.delete().then(() => {
-      removePhotoFromPost();
+    delPhoto({
+      state: post,
+      setState: setPost,
+      user: user,
+      userID: userID,
+      storage: storage,
+      sideEffect: setPostBtnAsSideEffect,
     });
   }
 
-  function removePhotoFromPost() {
-    const newPost = { ...post };
-    newPost.isPhoto = false;
-    newPost.photoURL = "";
-    setPost(newPost);
+  function setPostBtnAsSideEffect() {
     if (post.text === "" && !post.isYoutube) setBtnEnabled(false);
   }
 

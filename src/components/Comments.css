@@ -1,0 +1,9 @@
+#comment-img-container {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+}
+
+#img-to-comment {
+  width: 30%;
+}

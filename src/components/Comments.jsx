@@ -4,6 +4,8 @@ import { StorageImage, useStorage, useFirestore } from "reactfire";
 import CircularImage from "./CircularImage";
 import UploadPhoto from "./UploadPhoto";
 import { MdPhotoCamera } from "react-icons/md";
+import { addPhoto, handleTextareaChange, delPhoto } from "./helper";
+import "./Comments.css";
 
 const Comments = (props) => {
   const { user } = props;
@@ -31,11 +33,12 @@ const Comments = (props) => {
   const [show, setShow] = useState(false);
 
   function handleChange(e) {
+    handleTextareaChange({
+      e: e,
+      state: comment,
+      setState: setComment,
+    });
     const textarea = e.target;
-    let value = textarea.value;
-    const newComment = { ...comment };
-    newComment.text = value;
-    setComment(newComment);
     setTextarea(textarea);
     restyleTextarea(textarea);
   }
@@ -62,35 +65,24 @@ const Comments = (props) => {
   }, [style.height]);
 
   function addPhotoToComment(file) {
-    const newComment = { ...comment };
-    newComment.isPhoto = true;
-    newComment.photoURL = `${user.userID}/${file.name}`;
-    setComment(newComment);
+    addPhoto({
+      state: comment,
+      setState: setComment,
+      file: file,
+      userID: user.userID,
+    });
   }
 
   const storage = useStorage();
 
   function deletePhoto() {
-    const photoURL = comment.photoURL;
-    //we only remove the photo from the storage if it's not in the photos of the user
-    const photoURLs = user.photos.map(
-      (photo) => `${user.userID}/${photo.fileName}`
-    );
-    if (photoURLs.indexOf(photoURL) !== -1) {
-      removePhotoFromComment();
-      return;
-    }
-    const ref = storage.ref().child(photoURL);
-    ref.delete().then(() => {
-      removePhotoFromComment();
+    delPhoto({
+      state: comment,
+      setState: setComment,
+      user: user,
+      userID: user.userID,
+      storage: storage,
     });
-  }
-
-  function removePhotoFromComment() {
-    const newComment = { ...comment };
-    newComment.isPhoto = false;
-    newComment.photoURL = "";
-    setComment(newComment);
   }
 
   return (
@@ -134,12 +126,11 @@ const Comments = (props) => {
             </Col>
           </Row>
           {comment.isPhoto && (
-            <div className="mb-2" id="img-container">
+            <div id="comment-img-container">
               <StorageImage
                 alt=""
                 storagePath={`/${comment.photoURL}`}
-                className="w-100"
-                id="img-to-post"
+                id="img-to-comment"
               />
               <div id="close-btn-container">
                 <CloseButton onClick={deletePhoto} />
