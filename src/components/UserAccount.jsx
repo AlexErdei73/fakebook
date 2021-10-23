@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TitleBar from "./Titlebar";
 import Profile from "./Profile";
 import PhotoViewer from "./PhotoViewer";
@@ -43,6 +43,38 @@ const UserAccount = (props) => {
   function closeFriendsListPage() {
     setIsFriendsListPage(false);
   }
+
+  //This part is responsible for responsive behaviour only
+  const [dimension, setDimension] = useState({
+    height: window.innerHeight,
+    width: window.innerWidth,
+  });
+
+  function debounce(fn, ms) {
+    let timer;
+    return () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        fn();
+        clearTimeout(timer);
+      }, ms);
+    };
+  }
+
+  useEffect(() => {
+    const debouncedHandleResize = debounce(function handleResize() {
+      setDimension({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
+    }, 100);
+
+    window.addEventListener("resize", debouncedHandleResize);
+
+    return () => {
+      window.removeEventListener("resize", debouncedHandleResize);
+    };
+  });
 
   if (status !== "success") return <div>...Loading</div>;
   else
@@ -95,6 +127,23 @@ const UserAccount = (props) => {
                 }}
               />
               <Route
+                path="/watch"
+                render={() => {
+                  setIsFriendsListPage(false);
+                  return (
+                    <HomePage
+                      className="pt-5"
+                      profileLink={profileLink}
+                      user={currentUser}
+                      userID={userID}
+                      users={users}
+                      dimension={dimension}
+                      isWatch={true}
+                    />
+                  );
+                }}
+              />
+              <Route
                 path="/"
                 render={() => {
                   setIsFriendsListPage(false);
@@ -105,6 +154,8 @@ const UserAccount = (props) => {
                       user={currentUser}
                       userID={userID}
                       users={users}
+                      dimension={dimension}
+                      isWatch={false}
                     />
                   );
                 }}

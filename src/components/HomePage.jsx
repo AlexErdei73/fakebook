@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import CreatePost from "./CreatePost";
@@ -10,36 +10,7 @@ const HomePage = (props) => {
   const LG_WINDOW = 992;
   const MD_WINDOW = 768;
 
-  const [dimension, setDimension] = useState({
-    height: window.innerHeight,
-    width: window.innerWidth,
-  });
-
-  function debounce(fn, ms) {
-    let timer;
-    return () => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        fn();
-        clearTimeout(timer);
-      }, ms);
-    };
-  }
-
-  useEffect(() => {
-    const debouncedHandleResize = debounce(function handleResize() {
-      setDimension({
-        height: window.innerHeight,
-        width: window.innerWidth,
-      });
-    }, 100);
-
-    window.addEventListener("resize", debouncedHandleResize);
-
-    return () => {
-      window.removeEventListener("resize", debouncedHandleResize);
-    };
-  });
+  const { dimension, user, userID, users, profileLink, className } = props;
 
   const firestore = useFirestore();
   const postsRef = firestore.collection("posts");
@@ -52,10 +23,10 @@ const HomePage = (props) => {
   if (status !== "success") return <div>...loading</div>;
   else
     return (
-      <Row className={`${props.className} overflow-hidden vh-100`}>
+      <Row className={`${className} overflow-hidden vh-100`}>
         {dimension.width > LG_WINDOW && (
           <Col className="mh-100 overflow-auto">
-            <LeftNavbar user={props.user} profileLink={props.profileLink} />
+            <LeftNavbar user={user} profileLink={profileLink} />
           </Col>
         )}
         <Col
@@ -65,19 +36,15 @@ const HomePage = (props) => {
           className="mh-100 overflow-auto hide-scrollbar"
         >
           window size: {dimension.width} x {dimension.height}
-          <CreatePost
-            user={props.user}
-            userID={props.userID}
-            className="w-75 m-auto p-0"
-          />
+          <CreatePost user={user} userID={userID} className="w-75 m-auto p-0" />
           {posts.map((post, index) => {
             return (
               <DisplayPost
                 key={index}
                 post={post}
                 postID={post.postID}
-                users={props.users}
-                userID={props.userID}
+                users={users}
+                userID={userID}
                 className="w-75 mx-auto my-2"
               />
             );

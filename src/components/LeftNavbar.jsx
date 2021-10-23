@@ -3,6 +3,7 @@ import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ProfileLink from "./ProfileLink";
 import { FaUserFriends } from "react-icons/fa";
+import { MdOndemandVideo } from "react-icons/md";
 import "./LeftNavbar.css";
 
 const LeftNavbar = (props) => {
@@ -21,6 +22,12 @@ const LeftNavbar = (props) => {
         <Nav.Link as={Link} to="/friends/list" className="text-dark">
           <FaUserFriends size="26px" className="text-info mr-2" />
           <div className="d-inline">Friends</div>
+        </Nav.Link>
+      </div>
+      <div className="navitem">
+        <Nav.Link as={Link} to="/watch" className="text-dark">
+          <MdOndemandVideo size="26px" className="text-info mr-2" />
+          <div className="d-inline">Watch</div>
         </Nav.Link>
       </div>
     </Nav>
