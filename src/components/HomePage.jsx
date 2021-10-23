@@ -3,13 +3,15 @@ import { Row, Col } from "react-bootstrap";
 import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import PostView from "./PostView";
 import LeftNavbar from "./LeftNavbar";
+import VideoView from "./VideoView";
 import "./HomePage.css";
 
 const HomePage = (props) => {
   const LG_WINDOW = 992;
   const MD_WINDOW = 768;
 
-  const { dimension, user, userID, users, profileLink, className } = props;
+  const { dimension, user, userID, users, profileLink, className, isWatch } =
+    props;
 
   const firestore = useFirestore();
   const postsRef = firestore.collection("posts");
@@ -35,7 +37,10 @@ const HomePage = (props) => {
           className="mh-100 overflow-auto hide-scrollbar"
         >
           window size: {dimension.width} x {dimension.height}
-          <PostView user={user} userID={userID} posts={posts} users={users} />
+          {!isWatch && (
+            <PostView user={user} userID={userID} posts={posts} users={users} />
+          )}
+          {isWatch && <VideoView users={users} posts={posts} userID={userID} />}
         </Col>
         {dimension.width > MD_WINDOW && (
           <Col className="bg-dark text-light mh-100 overflow-auto">col - 3</Col>

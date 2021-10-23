@@ -106,6 +106,23 @@ const UserAccount = (props) => {
                 render={() => <PhotoViewer />}
               />
               <Route
+                path="/watch"
+                render={() => {
+                  setIsFriendsListPage(false);
+                  return (
+                    <HomePage
+                      className="pt-5"
+                      profileLink={profileLink}
+                      user={currentUser}
+                      userID={userID}
+                      users={users}
+                      dimension={dimension}
+                      isWatch={true}
+                    />
+                  );
+                }}
+              />
+              <Route
                 path={`/:userName`}
                 render={() => {
                   if (isFriendsListPage)
@@ -124,23 +141,6 @@ const UserAccount = (props) => {
                         users={users}
                       />
                     );
-                }}
-              />
-              <Route
-                path="/watch"
-                render={() => {
-                  setIsFriendsListPage(false);
-                  return (
-                    <HomePage
-                      className="pt-5"
-                      profileLink={profileLink}
-                      user={currentUser}
-                      userID={userID}
-                      users={users}
-                      dimension={dimension}
-                      isWatch={true}
-                    />
-                  );
                 }}
               />
               <Route
