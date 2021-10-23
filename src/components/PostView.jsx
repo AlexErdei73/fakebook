@@ -1,7 +1,9 @@
 import React from "react";
+import CreatePost from "./CreatePost";
+import DisplayPost from "./DisplayPost";
 
 const PostView = (props) => {
-  const { user, userID, posts } = props;
+  const { user, userID, posts, users } = props;
 
   return (
     <>

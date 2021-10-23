@@ -1,8 +1,7 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { useFirestore, useFirestoreCollectionData } from "reactfire";
-import CreatePost from "./CreatePost";
-import DisplayPost from "./DisplayPost";
+import PostView from "./PostView";
 import LeftNavbar from "./LeftNavbar";
 import "./HomePage.css";
 
@@ -36,7 +35,7 @@ const HomePage = (props) => {
           className="mh-100 overflow-auto hide-scrollbar"
         >
           window size: {dimension.width} x {dimension.height}
-          <PostView user={user} userID={userID} posts={posts} />
+          <PostView user={user} userID={userID} posts={posts} users={users} />
         </Col>
         {dimension.width > MD_WINDOW && (
           <Col className="bg-dark text-light mh-100 overflow-auto">col - 3</Col>
