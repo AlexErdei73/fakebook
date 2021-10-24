@@ -15,6 +15,7 @@ const VideoView = (props) => {
           postID={video.postID}
           users={users}
           userID={userID}
+          className="w-75 mx-auto my-2"
         />
       ))}
     </>

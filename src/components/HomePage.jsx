@@ -32,8 +32,8 @@ const HomePage = (props) => {
         )}
         <Col
           sm={12}
-          md={9}
-          lg={6}
+          md={isWatch ? 12 : 9}
+          lg={isWatch ? 9 : 6}
           className="mh-100 overflow-auto hide-scrollbar"
         >
           window size: {dimension.width} x {dimension.height}
@@ -42,7 +42,7 @@ const HomePage = (props) => {
           )}
           {isWatch && <VideoView users={users} posts={posts} userID={userID} />}
         </Col>
-        {dimension.width > MD_WINDOW && (
+        {dimension.width > MD_WINDOW && !isWatch && (
           <Col className="bg-dark text-light mh-100 overflow-auto">col - 3</Col>
         )}
       </Row>
