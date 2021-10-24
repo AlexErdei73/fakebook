@@ -1,19 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Profile from "./Profile";
 import FriendList from "./FriendList";
 import { Row, Col } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import "./FriendsListPage.css";
 import imgFriends from "../images/friends.jpg";
+import { handleClickLink } from "./helper";
 
 const FriendsListPage = (props) => {
-  const { users, user, userID } = props;
+  const { users, user, userID, linkRef, activeLink, setActiveLink } = props;
 
   const FRIENDS_LIST_PAGE_PATH = "/friends/list";
 
   const location = useLocation();
 
   const isNoUser = FRIENDS_LIST_PAGE_PATH === location.pathname;
+
+  //we set the active link to the friends link when it renders
+  useEffect(() => {
+    handleClickLink(
+      { currentTarget: linkRef.current },
+      activeLink,
+      setActiveLink
+    );
+  }, []);
 
   return (
     <Row id="friends-list" className="overflow-hidden">
@@ -33,7 +43,14 @@ const FriendsListPage = (props) => {
           </div>
         ) : (
           <div id="profile-container">
-            <Profile user={user} userID={userID} users={users} />
+            <Profile
+              user={user}
+              userID={userID}
+              users={users}
+              linkRef={linkRef}
+              activeMainLink={activeLink}
+              setActiveMainLink={setActiveLink}
+            />
           </div>
         )}
       </Col>

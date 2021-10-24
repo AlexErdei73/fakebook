@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TitleBar from "./Titlebar";
 import Profile from "./Profile";
 import PhotoViewer from "./PhotoViewer";
@@ -76,6 +76,22 @@ const UserAccount = (props) => {
     };
   });
 
+  //code responsible for changing activelink with url changes
+
+  const refs = {
+    home: useRef(null),
+    friends: useRef(null),
+    watch: useRef(null),
+    profile: useRef(null),
+  };
+
+  //add the active status of the link DOM elements
+  const [activeLink, setActiveLink] = useState(null);
+
+  useEffect(() => {
+    console.log("UserAccount activeLink:", activeLink);
+  }, [activeLink]);
+
   if (status !== "success") return <div>...Loading</div>;
   else
     return (
@@ -86,6 +102,8 @@ const UserAccount = (props) => {
               profilelink={profileLink}
               user={currentUser}
               closeFriendsListPage={closeFriendsListPage}
+              refs={refs}
+              dimension={dimension}
             />
             <Switch>
               <Route
@@ -97,6 +115,10 @@ const UserAccount = (props) => {
                       users={users}
                       user={currentUser}
                       userID={userID}
+                      // the components need the above props to change the active link
+                      linkRef={refs.friends}
+                      activeLink={activeLink}
+                      setActiveLink={setActiveLink}
                     />
                   );
                 }}
@@ -118,6 +140,10 @@ const UserAccount = (props) => {
                       users={users}
                       dimension={dimension}
                       isWatch={true}
+                      // the components need the above props to change the active link
+                      linkRef={refs.watch}
+                      activeLink={activeLink}
+                      setActiveLink={setActiveLink}
                     />
                   );
                 }}
@@ -131,6 +157,10 @@ const UserAccount = (props) => {
                         users={users}
                         user={currentUser}
                         userID={userID}
+                        // the components need the above props to change the active link
+                        linkRef={refs.friends}
+                        activeLink={activeLink}
+                        setActiveLink={setActiveLink}
                       />
                     );
                   else
@@ -139,6 +169,10 @@ const UserAccount = (props) => {
                         user={currentUser}
                         userID={userID}
                         users={users}
+                        // the components need the above props to change the active link
+                        linkRef={refs.profile}
+                        activeMainLink={activeLink}
+                        setActiveMainLink={setActiveLink}
                       />
                     );
                 }}
@@ -156,6 +190,10 @@ const UserAccount = (props) => {
                       users={users}
                       dimension={dimension}
                       isWatch={false}
+                      // the components need the above props to change the active link
+                      linkRef={refs.home}
+                      activeLink={activeLink}
+                      setActiveLink={setActiveLink}
                     />
                   );
                 }}

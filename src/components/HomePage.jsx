@@ -1,17 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import PostView from "./PostView";
 import LeftNavbar from "./LeftNavbar";
 import VideoView from "./VideoView";
 import "./HomePage.css";
+import { handleClickLink } from "./helper";
 
 const HomePage = (props) => {
   const LG_WINDOW = 992;
   const MD_WINDOW = 768;
 
-  const { dimension, user, userID, users, profileLink, className, isWatch } =
-    props;
+  const {
+    dimension,
+    user,
+    userID,
+    users,
+    profileLink,
+    className,
+    isWatch,
+    linkRef,
+    activeLink,
+    setActiveLink,
+  } = props;
 
   const firestore = useFirestore();
   const postsRef = firestore.collection("posts");
@@ -20,6 +31,18 @@ const HomePage = (props) => {
     postsRef.orderBy("timestamp"),
     { idField: "postID" }
   );
+
+  console.log("props.activeLink :", activeLink);
+
+  //we set the active link to the friends link when it renders
+  useEffect(() => {
+    console.log("activeLink: ", activeLink);
+    handleClickLink(
+      { currentTarget: linkRef.current },
+      activeLink,
+      setActiveLink
+    );
+  }, [isWatch]);
 
   if (status !== "success") return <div>...loading</div>;
   else

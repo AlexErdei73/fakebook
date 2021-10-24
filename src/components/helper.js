@@ -2,13 +2,19 @@ export function handleClickLink(e, linkState, setLinkState) {
   const current = e.currentTarget;
   const previous = linkState;
   if (current === previous) return;
+  console.log("previous: ", previous);
+  console.log("current: ", current);
   if (previous) {
+    if (previous.id === "profile") previous.style.backgroundColor = "#e9ecef";
     previous.style.borderBottom = "3px solid transparent";
     previous.style.color = "";
   }
   setLinkState(current);
-  if (current.id === "profile") return;
   current.style.color = "dodgerblue";
+  if (current.id === "profile") {
+    current.style.backgroundColor = "lightblue";
+    return;
+  }
   current.style.borderBottom = "3px solid dodgerblue";
 }
 

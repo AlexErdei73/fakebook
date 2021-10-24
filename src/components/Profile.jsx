@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useFirestore, StorageImage } from "reactfire";
 import {
   Row,
@@ -28,11 +28,12 @@ import UpdateProfilePicModal from "./UpdateProfilePicModal";
 import UploadPhoto from "./UploadPhoto";
 import Posts from "./Posts";
 import "./Profile.css";
+import { handleClickLink } from "./helper";
 
 const Profile = (props) => {
   const { userName } = useParams();
 
-  const { users, userID } = props;
+  const { users, userID, linkRef, activeMainLink, setActiveMainLink } = props;
 
   const user = () => {
     const userNames = users.map((user) => `${user.lastname}.${user.firstname}`);
@@ -139,6 +140,15 @@ const Profile = (props) => {
     const storagePath = `${userID}/${photo.fileName}`;
     return profileRef.update({ [name]: storagePath });
   }
+
+  //we set the active link to the friends link when it renders
+  useEffect(() => {
+    handleClickLink(
+      { currentTarget: linkRef.current },
+      activeMainLink,
+      setActiveMainLink
+    );
+  }, []);
 
   return (
     <>

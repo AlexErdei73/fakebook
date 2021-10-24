@@ -30,8 +30,3 @@
 #profile:hover {
   background: lightgray;
 }
-
-#profile:focus {
-  color: dodgerblue;
-  background-color: lightblue;
-}
