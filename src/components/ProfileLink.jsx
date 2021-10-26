@@ -5,7 +5,7 @@ import { Row, Col } from "react-bootstrap";
 const ProfileLink = (props) => {
   const { size, fullname, bold } = props;
 
-  const { firstname, lastname, profilePictureURL } = props.user;
+  const { firstname, lastname, profilePictureURL, isOnline } = props.user;
 
   let name;
   if (fullname === "true") name = `${firstname} ${lastname}`;
@@ -19,7 +19,11 @@ const ProfileLink = (props) => {
       }}
     >
       <Col xs="auto" className="px-2 ml-2">
-        <CircularImage size={size} url={profilePictureURL} />
+        <CircularImage
+          size={size}
+          url={profilePictureURL}
+          isOnline={isOnline}
+        />
       </Col>
       <Col className="align-self-center p-0" style={{ color: "inherited" }}>
         {bold === "true" ? <b>{name}</b> : name}
