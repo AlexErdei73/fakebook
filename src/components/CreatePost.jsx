@@ -7,26 +7,44 @@ import { HiOutlinePhotograph } from "react-icons/hi";
 import { AiFillYoutube } from "react-icons/ai";
 
 const CreatePost = (props) => {
+  const { user, userID, firstname, isCurrentUser, ...rest } = props;
+
+  const PLACEHOLDER_FOR_CURRENT_USER = `What's on your mind ${user.firstname}?`;
+  const PLACEHOLDER_FOR_ANOTHER_USER = `Write something to ${firstname}`;
+
   const [showPostModal, setShowPostModal] = useState(false);
+  const [isYoutubeBtnPressed, setYoutubeBtnPressed] = useState(false);
 
   const [text, setText] = useState("");
 
-  const handleClose = () => setShowPostModal(false);
+  const handleClose = () => {
+    setShowPostModal(false);
+    setYoutubeBtnPressed(false);
+  }
 
   const handleClick = () => setShowPostModal(true);
+
+  const handleYoutubeBtnClick = () => {
+    setYoutubeBtnPressed(true);
+    setShowPostModal(true);
+  }
+
+
+  function getPlaceholder() {
+    if (isCurrentUser) return PLACEHOLDER_FOR_CURRENT_USER;
+      else return PLACEHOLDER_FOR_ANOTHER_USER;
+  }
 
   function getText() {
     const MAX_LENGTH = 55;
     const length = text.length;
-    if (length === 0) return `What's on your mind ${props.user.firstname}?`;
+    if (length === 0) return getPlaceholder();
     else {
       let newText = text.slice(0, MAX_LENGTH);
       if (length > MAX_LENGTH) newText += "...";
       return newText;
     }
   }
-
-  const { user, userID, ...rest } = props;
 
   return (
     <>
@@ -47,7 +65,7 @@ const CreatePost = (props) => {
             variant="light"
             id="youtube-btn"
             size="sm"
-            onClick={handleClick}
+            onClick={handleYoutubeBtnClick}
           >
             <AiFillYoutube size="28px" className="text-danger" />
             YouTube
@@ -70,6 +88,8 @@ const CreatePost = (props) => {
         user={user}
         userID={userID}
         setText={setText}
+        isYoutubeBtnPressed={isYoutubeBtnPressed}
+        placeholder={getPlaceholder()}
       />
     </>
   );

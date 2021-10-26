@@ -10,9 +10,9 @@ import "./PostModal.css";
 import { handleTextareaChange, addPhoto, delPhoto } from "./helper";
 
 const PostModal = (props) => {
-  const { show, onClose, user, userID, setText } = props;
+  const { show, onClose, user, userID, setText, isYoutubeBtnPressed, placeholder } = props;
 
-  const WELCOME_TEXT = `What's on your mind, ${user.firstname}? - For adding YouTube video copy link here ...`;
+  const WELCOME_TEXT = 'For adding YouTube video copy link here ...';
   const INIT_POST = {
     userID: `${userID}`,
     text: "",
@@ -130,6 +130,11 @@ const PostModal = (props) => {
     if (post.text === "" && !post.isPhoto) setBtnEnabled(false);
   }
 
+  function getPlaceholder() {
+    if (isYoutubeBtnPressed && !post.isYoutube) return WELCOME_TEXT;
+      else return placeholder; 
+  }
+
   return (
     <>
       <Modal show={show} onHide={onClose}>
@@ -147,7 +152,7 @@ const PostModal = (props) => {
               type="text"
               onChange={handleChange}
               className="w-100 mt-2"
-              placeholder={WELCOME_TEXT}
+              placeholder={getPlaceholder()}
               rows="3"
               id="textarea"
               value={post.text}

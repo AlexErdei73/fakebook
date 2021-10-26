@@ -263,6 +263,8 @@ const Profile = (props) => {
               <Posts
                 userID={userId()}
                 users={users}
+                currentUser={users.find((user) => user.userID === userID)}
+                isCurrentUser={isCurrentUser}
                 //we only need the rest to handle the changes of the activeLink
                 photosLinkRef={photosLinkRef}
                 friendsLinkRef={friendsLinkRef}

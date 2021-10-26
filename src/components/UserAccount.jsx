@@ -88,10 +88,6 @@ const UserAccount = (props) => {
   //add the active status of the link DOM elements
   const [activeLink, setActiveLink] = useState(null);
 
-  useEffect(() => {
-    console.log("UserAccount activeLink:", activeLink);
-  }, [activeLink]);
-
   if (status !== "success") return <div>...Loading</div>;
   else
     return (
