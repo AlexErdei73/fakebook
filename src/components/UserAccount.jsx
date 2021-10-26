@@ -8,7 +8,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import {
   useFirestore,
-  useFirestoreDocDataOnce,
+  useFirestoreDocData,
   useFirestoreCollectionData,
 } from "reactfire";
 import "firebase/auth";
@@ -21,7 +21,7 @@ const UserAccount = (props) => {
   const usersCollection = firestore.collection("users");
 
   const userDocRef = usersCollection.doc(userID);
-  const result = useFirestoreDocDataOnce(userDocRef, {
+  const result = useFirestoreDocData(userDocRef, {
     initialData: {
       firstname: "",
       lastname: "",
