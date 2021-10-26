@@ -53,6 +53,7 @@ const Signup = (props) => {
             backgroundPictureURL: "background-server.jpg",
             photos: [],
             posts: [],
+            isOnline: false,
           })
           .then(() => {
             // Sign out the user

@@ -32,11 +32,8 @@ const HomePage = (props) => {
     { idField: "postID" }
   );
 
-  console.log("props.activeLink :", activeLink);
-
   //we set the active link to the friends link when it renders
   useEffect(() => {
-    console.log("activeLink: ", activeLink);
     handleClickLink(
       { currentTarget: linkRef.current },
       activeLink,

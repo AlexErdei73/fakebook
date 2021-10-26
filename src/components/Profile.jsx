@@ -46,7 +46,7 @@ const Profile = (props) => {
 
   const isCurrentUser = userID === userId();
 
-  let { firstname, lastname, profilePictureURL, backgroundPictureURL, photos } =
+  let { firstname, lastname, profilePictureURL, backgroundPictureURL, photos, isOnline } =
     user();
 
   const profileRef = useFirestore().collection("users").doc(userId());
@@ -141,8 +141,8 @@ const Profile = (props) => {
     return profileRef.update({ [name]: storagePath });
   }
 
-  //we set the active link to the friends link when it renders
   useEffect(() => {
+    //we set the active link to the friends link when it renders
     handleClickLink(
       { currentTarget: linkRef.current },
       activeMainLink,

@@ -29,6 +29,7 @@ const UserAccount = (props) => {
       backgroundPictureURL: "background-server.jpg",
       photos: [],
       posts: [],
+      isOnline: false,
     },
   });
 
@@ -43,6 +44,15 @@ const UserAccount = (props) => {
   function closeFriendsListPage() {
     setIsFriendsListPage(false);
   }
+
+  function setUserOffline(signoutFn) {
+    userDocRef.update({ isOnline: false }).then(() => signoutFn());
+  }
+
+  useEffect(() => {
+    //Update the online status if the current user does not seem to be online
+    if (!currentUser.isOnline) userDocRef.update({ isOnline: true });  
+  }, []);
 
   //This part is responsible for responsive behaviour only
   const [dimension, setDimension] = useState({
@@ -98,6 +108,7 @@ const UserAccount = (props) => {
               profilelink={profileLink}
               user={currentUser}
               closeFriendsListPage={closeFriendsListPage}
+              setUserOffline={setUserOffline}
               refs={refs}
               dimension={dimension}
             />

@@ -12,14 +12,14 @@ import { useFirebaseApp } from "reactfire";
 
 const TitleBar = (props) => {
   //get the signed in user and closeFriendsListPage function
-  const { user, closeFriendsListPage, refs, dimension } = props;
+  const { user, closeFriendsListPage, setUserOffline, refs, dimension } = props;
 
   // Import firebase
   const firebase = useFirebaseApp();
 
   // Log out function
   const handleClick = () => {
-    firebase.auth().signOut();
+    setUserOffline(() => firebase.auth().signOut()); 
   };
 
   const SM_WINDOW = 640;
