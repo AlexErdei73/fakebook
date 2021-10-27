@@ -7,7 +7,12 @@ const PostView = (props) => {
 
   return (
     <>
-      <CreatePost user={user} userID={userID} className="w-75 m-auto p-0" />
+      <CreatePost
+        user={user}
+        userID={userID}
+        isCurrentUser={true}
+        className="w-75 m-auto p-0"
+      />
       {posts.map((post, index) => {
         return (
           <DisplayPost

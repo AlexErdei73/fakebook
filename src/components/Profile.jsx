@@ -46,7 +46,7 @@ const Profile = (props) => {
 
   const isCurrentUser = userID === userId();
 
-  let { firstname, lastname, profilePictureURL, backgroundPictureURL, photos, isOnline } =
+  let { firstname, lastname, profilePictureURL, backgroundPictureURL, photos } =
     user();
 
   const profileRef = useFirestore().collection("users").doc(userId());

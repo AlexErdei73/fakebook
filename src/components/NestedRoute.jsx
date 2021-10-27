@@ -48,6 +48,8 @@ const NestedRoute = (props) => {
       <Posts
         userID={userID}
         users={users}
+        currentUser={users.find((user) => user.userID === userID)}
+        isCurrentUser={isCurrentUser}
         //the rendering of the component changes the activeLink
         photosLinkRef={photosLinkRef}
         friendsLinkRef={friendsLinkRef}
