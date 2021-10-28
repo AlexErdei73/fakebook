@@ -4,6 +4,7 @@ import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import PostView from "./PostView";
 import LeftNavbar from "./LeftNavbar";
 import VideoView from "./VideoView";
+import Contacts from "./Contacts";
 import "./HomePage.css";
 import { handleClickLink } from "./helper";
 
@@ -63,7 +64,9 @@ const HomePage = (props) => {
           {isWatch && <VideoView users={users} posts={posts} userID={userID} />}
         </Col>
         {dimension.width > MD_WINDOW && !isWatch && (
-          <Col className="bg-dark text-light mh-100 overflow-auto">col - 3</Col>
+          <Col className="mh-100 overflow-auto">
+            <Contacts users={users} />
+          </Col>
         )}
       </Row>
     );
