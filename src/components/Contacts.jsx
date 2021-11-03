@@ -1,19 +1,22 @@
 import React, { useState } from "react";
-import { CloseButton, Nav, OverlayTrigger } from "react-bootstrap";
+import { Card, CloseButton, Nav, OverlayTrigger } from "react-bootstrap";
 import ProfileLink from "./ProfileLink";
 import { FiEdit } from "react-icons/fi";
 
 const Contacts = (props) => {
   const [showOverlay, setShowOverlay] = useState(false);
+  const [messageTo, setMessageTo] = useState(null);
 
   const { users } = props;
 
-  function handleClick() {
+  function handleClick(user) {
     setShowOverlay(true);
+    setMessageTo(user);
   }
 
   function handleClose() {
     setShowOverlay(false);
+    setMessageTo(null);
   }
 
   return (
@@ -32,7 +35,7 @@ const Contacts = (props) => {
         <div
           key={index}
           className="navitem text-dark flex-row justify-content-center p-2"
-          onClick={handleClick}
+          onClick={() => handleClick(user)}
         >
           <ProfileLink size="26" fullname="true" bold="false" user={user} />
         </div>
@@ -41,17 +44,30 @@ const Contacts = (props) => {
         placement="left-start"
         show={showOverlay}
         overlay={
-          <div
+          <Card
             style={{
-              width: "100px",
-              height: "200px",
+              width: "350px",
+              height: "450px",
               background: "white",
-              color: "dodgerblue",
+              fontSize: "1.2rem",
             }}
           >
-            <CloseButton onClick={handleClose} className="text-primary" />
-            This is the overlay ...
-          </div>
+            <Card.Body>
+              <Card.Title>
+                {messageTo && (
+                  <ProfileLink
+                    size="26"
+                    fullname="true"
+                    bold="true"
+                    user={messageTo}
+                  />
+                )}
+                <div id="close-btn-container">
+                  <CloseButton onClick={handleClose} className="text-primary" />
+                </div>
+              </Card.Title>
+            </Card.Body>
+          </Card>
         }
       >
         <div
@@ -64,7 +80,7 @@ const Contacts = (props) => {
             right: "26px",
             boxShadow: "0px 5px 5px 0px lightgray",
           }}
-          onClick={handleClick}
+          onClick={() => handleClick(null)}
         >
           <FiEdit size="22px" />
         </div>
