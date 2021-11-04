@@ -53,6 +53,7 @@ const Comments = (props) => {
   }
 
   function handleKeyPress(e) {
+    if (e.shiftKey) return;
     const code = e.code;
     if (code !== "Enter") return;
     e.preventDefault();

@@ -1,22 +1,93 @@
 import React, { useState } from "react";
-import { Card, CloseButton, Nav, OverlayTrigger } from "react-bootstrap";
+import {
+  Card,
+  CloseButton,
+  Nav,
+  OverlayTrigger,
+  Button,
+  Col,
+  Row,
+} from "react-bootstrap";
+import { useStorage } from "reactfire";
 import ProfileLink from "./ProfileLink";
 import { FiEdit } from "react-icons/fi";
+import { HiOutlinePhotograph } from "react-icons/hi";
+import { MdSend } from "react-icons/md";
+import StyledTextarea from "./StyledTextarea";
+import { addPhoto, handleTextareaChange, delPhoto } from "./helper";
 
 const Contacts = (props) => {
   const [showOverlay, setShowOverlay] = useState(false);
-  const [messageTo, setMessageTo] = useState(null);
+  const [recipient, setRecipient] = useState(null);
 
-  const { users } = props;
+  const { user, users } = props;
+
+  const WELCOME_TEXT = "Aa";
+  const INIT_MESSAGE = {
+    sender: `${user.userID}`,
+    recipient: "",
+    text: "",
+    isPhoto: false,
+    photoURL: "",
+  };
+  const [message, setMessage] = useState(INIT_MESSAGE);
 
   function handleClick(user) {
     setShowOverlay(true);
-    setMessageTo(user);
+    setRecipient(user);
   }
 
   function handleClose() {
     setShowOverlay(false);
-    setMessageTo(null);
+    setRecipient(null);
+  }
+
+  function handleChange(e) {
+    handleTextareaChange({
+      e: e,
+      state: message,
+      setState: setMessage,
+    });
+  }
+
+  function addPhotoToMessage(file) {
+    addPhoto({
+      state: message,
+      setState: setMessage,
+      file: file,
+      userID: user.userID,
+    });
+  }
+
+  const storage = useStorage();
+
+  function deletePhoto() {
+    delPhoto({
+      state: message,
+      setState: setMessage,
+      user: user,
+      userID: user.userID,
+      storage: storage,
+    });
+  }
+
+  function handleKeyPress(e) {
+    if (e.shiftKey) return;
+    const code = e.code;
+    if (code !== "Enter") return;
+    e.preventDefault();
+    saveMessage();
+  }
+
+  function saveMessage() {
+    const newMessage = { ...message };
+    //... here we do whatever need to be done before saving to firebase
+    updateMessage(newMessage);
+    setMessage(INIT_MESSAGE);
+  }
+
+  function updateMessage(msg) {
+    console.log("message: ", msg);
   }
 
   return (
@@ -54,12 +125,12 @@ const Contacts = (props) => {
           >
             <Card.Body>
               <Card.Title>
-                {messageTo && (
+                {recipient && (
                   <ProfileLink
                     size="26"
                     fullname="true"
                     bold="true"
-                    user={messageTo}
+                    user={recipient}
                   />
                 )}
                 <div id="close-btn-container">
@@ -67,6 +138,41 @@ const Contacts = (props) => {
                 </div>
               </Card.Title>
             </Card.Body>
+            <Card.Footer>
+              <Row>
+                {message.text === "" && (
+                  <Col xs={2}>
+                    <Button variant="light" size="sm" id="add-photo-btn">
+                      <HiOutlinePhotograph
+                        size="21px"
+                        className="text-primary"
+                      />
+                    </Button>
+                  </Col>
+                )}
+                <Col
+                  xs={message.text === "" ? 8 : 10}
+                  className="align-self-center"
+                  style={{
+                    background: "#e9ecef",
+                    borderRadius: "18px",
+                  }}
+                >
+                  <StyledTextarea
+                    onChange={handleChange}
+                    onKeyPress={handleKeyPress}
+                    welcomeText={WELCOME_TEXT}
+                    value={message.text}
+                    className="w-100 mt-2"
+                  />
+                </Col>
+                <Col xs={2}>
+                  <Button variant="light" size="sm" id="add-photo-btn">
+                    <MdSend size="23px" className="text-primary" />
+                  </Button>
+                </Col>
+              </Row>
+            </Card.Footer>
           </Card>
         }
       >

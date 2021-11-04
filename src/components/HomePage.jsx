@@ -65,7 +65,7 @@ const HomePage = (props) => {
         </Col>
         {dimension.width > MD_WINDOW && !isWatch && (
           <Col className="mh-100 overflow-auto">
-            <Contacts users={users} />
+            <Contacts users={users} user={user} />
           </Col>
         )}
       </Row>
