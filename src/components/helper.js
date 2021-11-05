@@ -33,18 +33,11 @@ export function addPhoto(input) {
 
 export function delPhoto(input) {
   const photoURL = input.state.photoURL;
-  //we only remove the photo from the storage if it's not in the photos of the user
-  const photoURLs = input.user.photos.map(
-    (photo) => `${input.userID}/${photo.fileName}`
-  );
-  if (photoURLs.indexOf(photoURL) !== -1) {
-    removePhotoFromPost(input.state, input.setState, input.sideEffect);
-    return;
-  }
-  const ref = input.storage.ref().child(photoURL);
-  ref.delete().then(() => {
-    removePhotoFromPost(input.state, input.setState, input.sideEffect);
-  });
+  //We do not remove the photo from the storage, because in the case of multiple occurances, the removal
+  //of the photo causes error. If we want to take into account the storage efficiency, we have to store
+  //the number of occurences of each photo and only delete those from the storage, which only occure once.
+  //This would cause unnecessary extra logic in a demonstration app like this.
+  removePhotoFromPost(input.state, input.setState, input.sideEffect);
 }
 
 function removePhotoFromPost(state, setState, sideEffect) {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   CloseButton,
@@ -8,27 +8,30 @@ import {
   Col,
   Row,
 } from "react-bootstrap";
-import { useStorage } from "reactfire";
+import { StorageImage, useStorage } from "reactfire";
 import ProfileLink from "./ProfileLink";
 import { FiEdit } from "react-icons/fi";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { MdSend } from "react-icons/md";
 import StyledTextarea from "./StyledTextarea";
+import UploadPhoto from "./UploadPhoto";
 import { addPhoto, handleTextareaChange, delPhoto } from "./helper";
 
 const Contacts = (props) => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [recipient, setRecipient] = useState(null);
+  const [showPhotoDlg, setShowPhotoDlg] = useState(null);
 
-  const { user, users } = props;
+  const { user, userID, users } = props;
 
   const WELCOME_TEXT = "Aa";
   const INIT_MESSAGE = {
-    sender: `${user.userID}`,
+    sender: `${userID}`,
     recipient: "",
     text: "",
     isPhoto: false,
     photoURL: "",
+    isRead: false,
   };
   const [message, setMessage] = useState(INIT_MESSAGE);
 
@@ -55,7 +58,7 @@ const Contacts = (props) => {
       state: message,
       setState: setMessage,
       file: file,
-      userID: user.userID,
+      userID: userID,
     });
   }
 
@@ -66,7 +69,7 @@ const Contacts = (props) => {
       state: message,
       setState: setMessage,
       user: user,
-      userID: user.userID,
+      userID: userID,
       storage: storage,
     });
   }
@@ -89,6 +92,10 @@ const Contacts = (props) => {
   function updateMessage(msg) {
     console.log("message: ", msg);
   }
+
+  useEffect(() => {
+    console.log(message);
+  }, [message.isPhoto]);
 
   return (
     <Nav
@@ -142,7 +149,12 @@ const Contacts = (props) => {
               <Row>
                 {message.text === "" && (
                   <Col xs={2}>
-                    <Button variant="light" size="sm" id="add-photo-btn">
+                    <Button
+                      variant="light"
+                      size="sm"
+                      id="add-photo-btn"
+                      onClick={() => setShowPhotoDlg(true)}
+                    >
                       <HiOutlinePhotograph
                         size="21px"
                         className="text-primary"
@@ -158,6 +170,18 @@ const Contacts = (props) => {
                     borderRadius: "18px",
                   }}
                 >
+                  {message.isPhoto && (
+                    <div id="comment-img-container">
+                      <StorageImage
+                        alt=""
+                        storagePath={`/${message.photoURL}`}
+                        id="img-to-comment"
+                      />
+                      <div id="close-btn-container">
+                        <CloseButton onClick={deletePhoto} />
+                      </div>
+                    </div>
+                  )}
                   <StyledTextarea
                     onChange={handleChange}
                     onKeyPress={handleKeyPress}
@@ -173,6 +197,13 @@ const Contacts = (props) => {
                 </Col>
               </Row>
             </Card.Footer>
+
+            <UploadPhoto
+              show={showPhotoDlg}
+              setShow={setShowPhotoDlg}
+              updateDatabase={addPhotoToMessage}
+              userID={user.userID}
+            />
           </Card>
         }
       >
