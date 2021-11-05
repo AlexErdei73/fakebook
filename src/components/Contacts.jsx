@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Card,
   CloseButton,
@@ -8,7 +8,7 @@ import {
   Col,
   Row,
 } from "react-bootstrap";
-import { StorageImage, useStorage } from "reactfire";
+import { StorageImage, useStorage, useFirestore } from "reactfire";
 import ProfileLink from "./ProfileLink";
 import { FiEdit } from "react-icons/fi";
 import { HiOutlinePhotograph } from "react-icons/hi";
@@ -16,6 +16,7 @@ import { MdSend } from "react-icons/md";
 import StyledTextarea from "./StyledTextarea";
 import UploadPhoto from "./UploadPhoto";
 import { addPhoto, handleTextareaChange, delPhoto } from "./helper";
+import * as fb from "firebase"; //this is only needed, because we want to use server timestamps
 
 const Contacts = (props) => {
   const [showOverlay, setShowOverlay] = useState(false);
@@ -37,6 +38,12 @@ const Contacts = (props) => {
 
   function handleClick(user) {
     setShowOverlay(true);
+    let id;
+    if (user) id = user.userID;
+    else id = "";
+    const newMessage = { ...message };
+    newMessage.recipient = id;
+    setMessage(newMessage);
     setRecipient(user);
   }
 
@@ -83,19 +90,19 @@ const Contacts = (props) => {
   }
 
   function saveMessage() {
-    const newMessage = { ...message };
-    //... here we do whatever need to be done before saving to firebase
-    updateMessage(newMessage);
+    uploadMessage(message);
     setMessage(INIT_MESSAGE);
   }
 
-  function updateMessage(msg) {
-    console.log("message: ", msg);
-  }
+  const firestore = useFirestore();
 
-  useEffect(() => {
-    console.log(message);
-  }, [message.isPhoto]);
+  function uploadMessage(msg) {
+    const refMessages = firestore.collection("messages");
+    refMessages.add({
+      ...msg,
+      timestamp: fb.default.firestore.FieldValue.serverTimestamp(),
+    });
+  }
 
   return (
     <Nav
