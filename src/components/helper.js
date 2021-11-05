@@ -47,3 +47,11 @@ function removePhotoFromPost(state, setState, sideEffect) {
   setState(newState);
   if (sideEffect) sideEffect();
 }
+
+export function handleKeyPress(e, save) {
+  if (e.shiftKey) return;
+  const code = e.code;
+  if (code !== "Enter") return;
+  e.preventDefault();
+  save();
+}

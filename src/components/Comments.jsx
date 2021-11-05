@@ -6,7 +6,12 @@ import UploadPhoto from "./UploadPhoto";
 import DisplayComment from "./DisplayComment";
 import StyledTextarea from "./StyledTextarea";
 import { MdPhotoCamera } from "react-icons/md";
-import { addPhoto, handleTextareaChange, delPhoto } from "./helper";
+import {
+  addPhoto,
+  handleTextareaChange,
+  delPhoto,
+  handleKeyPress,
+} from "./helper";
 import "./Comments.css";
 
 const Comments = (props) => {
@@ -52,14 +57,6 @@ const Comments = (props) => {
     });
   }
 
-  function handleKeyPress(e) {
-    if (e.shiftKey) return;
-    const code = e.code;
-    if (code !== "Enter") return;
-    e.preventDefault();
-    saveComment();
-  }
-
   function saveComment() {
     const newPost = { ...post };
     if (!post.comments) newPost.comments = [];
@@ -95,7 +92,7 @@ const Comments = (props) => {
             <Col xs={10} className="align-self-center">
               <StyledTextarea
                 onChange={handleChange}
-                onKeyPress={handleKeyPress}
+                onKeyPress={(e) => handleKeyPress(e, saveComment)}
                 welcomeText={WELCOME_TEXT}
                 value={comment.text}
                 className="w-100 mt-2"

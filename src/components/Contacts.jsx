@@ -15,7 +15,12 @@ import { HiOutlinePhotograph } from "react-icons/hi";
 import { MdSend } from "react-icons/md";
 import StyledTextarea from "./StyledTextarea";
 import UploadPhoto from "./UploadPhoto";
-import { addPhoto, handleTextareaChange, delPhoto } from "./helper";
+import {
+  addPhoto,
+  handleTextareaChange,
+  delPhoto,
+  handleKeyPress,
+} from "./helper";
 import * as fb from "firebase"; //this is only needed, because we want to use server timestamps
 
 const Contacts = (props) => {
@@ -79,14 +84,6 @@ const Contacts = (props) => {
       userID: userID,
       storage: storage,
     });
-  }
-
-  function handleKeyPress(e) {
-    if (e.shiftKey) return;
-    const code = e.code;
-    if (code !== "Enter") return;
-    e.preventDefault();
-    saveMessage();
   }
 
   function saveMessage() {
@@ -191,7 +188,7 @@ const Contacts = (props) => {
                   )}
                   <StyledTextarea
                     onChange={handleChange}
-                    onKeyPress={handleKeyPress}
+                    onKeyPress={(e) => handleKeyPress(e, saveMessage)}
                     welcomeText={WELCOME_TEXT}
                     value={message.text}
                     className="w-100 mt-2"
