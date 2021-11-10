@@ -15,6 +15,7 @@ import { HiOutlinePhotograph } from "react-icons/hi";
 import { MdSend } from "react-icons/md";
 import StyledTextarea from "./StyledTextarea";
 import UploadPhoto from "./UploadPhoto";
+import Conversation from "./Conversation";
 import {
   addPhoto,
   handleTextareaChange,
@@ -148,59 +149,64 @@ const Contacts = (props) => {
                   <CloseButton onClick={handleClose} className="text-primary" />
                 </div>
               </Card.Title>
+              {recipient && (
+                <Conversation sender={userID} recipient={recipient.userID} />
+              )}
             </Card.Body>
-            <Card.Footer>
-              <Row>
-                {message.text === "" && (
+            {recipient && (
+              <Card.Footer>
+                <Row>
+                  {message.text === "" && (
+                    <Col xs={2}>
+                      <Button
+                        variant="light"
+                        size="sm"
+                        id="add-photo-btn"
+                        onClick={() => setShowPhotoDlg(true)}
+                      >
+                        <HiOutlinePhotograph
+                          size="21px"
+                          className="text-primary"
+                        />
+                      </Button>
+                    </Col>
+                  )}
+                  <Col
+                    xs={message.text === "" ? 8 : 10}
+                    className="align-self-center"
+                    style={{
+                      background: "#e9ecef",
+                      borderRadius: "18px",
+                    }}
+                  >
+                    {message.isPhoto && (
+                      <div id="comment-img-container">
+                        <StorageImage
+                          alt=""
+                          storagePath={`/${message.photoURL}`}
+                          id="img-to-comment"
+                        />
+                        <div id="close-btn-container">
+                          <CloseButton onClick={deletePhoto} />
+                        </div>
+                      </div>
+                    )}
+                    <StyledTextarea
+                      onChange={handleChange}
+                      onKeyPress={(e) => handleKeyPress(e, saveMessage)}
+                      welcomeText={WELCOME_TEXT}
+                      value={message.text}
+                      className="w-100 mt-2"
+                    />
+                  </Col>
                   <Col xs={2}>
-                    <Button
-                      variant="light"
-                      size="sm"
-                      id="add-photo-btn"
-                      onClick={() => setShowPhotoDlg(true)}
-                    >
-                      <HiOutlinePhotograph
-                        size="21px"
-                        className="text-primary"
-                      />
+                    <Button variant="light" size="sm" id="add-photo-btn">
+                      <MdSend size="23px" className="text-primary" />
                     </Button>
                   </Col>
-                )}
-                <Col
-                  xs={message.text === "" ? 8 : 10}
-                  className="align-self-center"
-                  style={{
-                    background: "#e9ecef",
-                    borderRadius: "18px",
-                  }}
-                >
-                  {message.isPhoto && (
-                    <div id="comment-img-container">
-                      <StorageImage
-                        alt=""
-                        storagePath={`/${message.photoURL}`}
-                        id="img-to-comment"
-                      />
-                      <div id="close-btn-container">
-                        <CloseButton onClick={deletePhoto} />
-                      </div>
-                    </div>
-                  )}
-                  <StyledTextarea
-                    onChange={handleChange}
-                    onKeyPress={(e) => handleKeyPress(e, saveMessage)}
-                    welcomeText={WELCOME_TEXT}
-                    value={message.text}
-                    className="w-100 mt-2"
-                  />
-                </Col>
-                <Col xs={2}>
-                  <Button variant="light" size="sm" id="add-photo-btn">
-                    <MdSend size="23px" className="text-primary" />
-                  </Button>
-                </Col>
-              </Row>
-            </Card.Footer>
+                </Row>
+              </Card.Footer>
+            )}
 
             <UploadPhoto
               show={showPhotoDlg}
