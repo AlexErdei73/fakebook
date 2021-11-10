@@ -150,11 +150,13 @@ const Contacts = (props) => {
                 </div>
               </Card.Title>
               {recipient && (
-                <Conversation sender={userID} recipient={recipient.userID} />
+                <Row className="mh-100 overflow-auto">
+                  <Conversation sender={userID} recipient={recipient.userID} />
+                </Row>
               )}
             </Card.Body>
             {recipient && (
-              <Card.Footer>
+              <Card.Footer className="mt-3">
                 <Row>
                   {message.text === "" && (
                     <Col xs={2}>
