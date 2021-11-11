@@ -157,6 +157,7 @@ const Contacts = (props) => {
               height: "450px",
               background: "white",
               fontSize: "1.2rem",
+              maxHeight: `${window.innerHeight - 70}px`,
             }}
           >
             <Card.Body>
