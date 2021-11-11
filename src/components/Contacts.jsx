@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Card,
   CloseButton,
@@ -87,20 +87,39 @@ const Contacts = (props) => {
     });
   }
 
+  const convRowRef = useRef(null);
+  const [scrollHeight, setScrollHeight] = useState("");
+
   function saveMessage() {
     uploadMessage(message);
-    setMessage(INIT_MESSAGE);
   }
+
+  useEffect(() => {
+    if (convRowRef.current) convRowRef.current.scrollTop = scrollHeight;
+  }, [scrollHeight]);
 
   const firestore = useFirestore();
 
   function uploadMessage(msg) {
     const refMessages = firestore.collection("messages");
-    refMessages.add({
-      ...msg,
-      timestamp: fb.default.firestore.FieldValue.serverTimestamp(),
-    });
+    refMessages
+      .add({
+        ...msg,
+        timestamp: fb.default.firestore.FieldValue.serverTimestamp(),
+      })
+      .then(() => {
+        setMessage(INIT_MESSAGE);
+        setScrollHeight(convRowRef.current.scrollHeight);
+      });
   }
+
+  //We open the overlay card programmatically again, otherwise the user is unable to send
+  //more than one message.
+  useEffect(() => {
+    if (!recipient) return; //When the user has not sent anything yet, we return.
+    //We only do this if we set back the INIT_MESSAGE after previous message had sent.
+    if (showOverlay && message.recipient === "") handleClick(recipient);
+  }, [message]);
 
   return (
     <Nav
@@ -114,15 +133,19 @@ const Contacts = (props) => {
       <h5 className="text-muted ml-3">
         <b>Contacts</b>
       </h5>
-      {users.map((user, index) => (
-        <div
-          key={index}
-          className="navitem text-dark flex-row justify-content-center p-2"
-          onClick={() => handleClick(user)}
-        >
-          <ProfileLink size="26" fullname="true" bold="false" user={user} />
-        </div>
-      ))}
+      {users.map((user, index) =>
+        user.userID === userID ? (
+          <></>
+        ) : (
+          <div
+            key={index}
+            className="navitem text-dark flex-row justify-content-center p-2"
+            onClick={() => handleClick(user)}
+          >
+            <ProfileLink size="26" fullname="true" bold="false" user={user} />
+          </div>
+        )
+      )}
       <OverlayTrigger
         placement="left-start"
         show={showOverlay}
@@ -150,7 +173,7 @@ const Contacts = (props) => {
                 </div>
               </Card.Title>
               {recipient && (
-                <Row className="mh-100 overflow-auto">
+                <Row className="mh-100 overflow-auto" ref={convRowRef}>
                   <Conversation sender={userID} recipient={recipient.userID} />
                 </Row>
               )}
