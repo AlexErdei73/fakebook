@@ -23,6 +23,7 @@ import {
   handleKeyPress,
 } from "./helper";
 import * as fb from "firebase"; //this is only needed, because we want to use server timestamps
+import "./Contacts.css";
 
 const Contacts = (props) => {
   const [showOverlay, setShowOverlay] = useState(false);
@@ -160,6 +161,12 @@ const Contacts = (props) => {
           >
             <Card.Body>
               <Card.Title>
+                {!recipient && (
+                  <>
+                    <h6>New Message</h6>
+                    <h6>To:</h6>
+                  </>
+                )}
                 {recipient && (
                   <ProfileLink
                     size="26"
@@ -172,14 +179,37 @@ const Contacts = (props) => {
                   <CloseButton onClick={handleClose} className="text-primary" />
                 </div>
               </Card.Title>
+              <hr />
               {recipient && (
                 <Row className="mh-100 overflow-auto" ref={convRowRef}>
                   <Conversation sender={userID} recipient={recipient.userID} />
                 </Row>
               )}
+              {!recipient && (
+                <Col className="mh-100 overflow-auto">
+                  {users.map((user, index) =>
+                    user.userID === userID ? (
+                      <></>
+                    ) : (
+                      <Row
+                        key={index}
+                        className="text-dark justify-content-start p-2 container-choose-to"
+                        onClick={() => handleClick(user)}
+                      >
+                        <ProfileLink
+                          size="36"
+                          fullname="true"
+                          bold="false"
+                          user={user}
+                        />
+                      </Row>
+                    )
+                  )}
+                </Col>
+              )}
             </Card.Body>
             {recipient && (
-              <Card.Footer className="mt-3">
+              <Card.Footer className="mt-5">
                 <Row>
                   {message.text === "" && (
                     <Col xs={2}>
