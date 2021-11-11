@@ -1,5 +1,6 @@
 import React from "react";
 import { Row } from "react-bootstrap";
+import { StorageImage } from "reactfire";
 
 const Message = (props) => {
   const { message, userID, ...rest } = props;
@@ -29,14 +30,27 @@ const Message = (props) => {
           : "justify-content-start"
       }
     >
-      <span
+      <div
         style={{
           fontSize: "12px",
           margin: "auto",
         }}
       >
         {message.timestamp && message.timestamp.toDate().toLocaleString()}
-      </span>
+      </div>
+      {message.isPhoto && (
+        <div className="w-100 p-3">
+          <StorageImage
+            alt=""
+            storagePath={message.photoURL}
+            style={{
+              display: "block",
+              width: "50%",
+              margin: "auto",
+            }}
+          />
+        </div>
+      )}
       <p style={message.sender === userID ? senderStyle : receiverStyle}>
         {message.text}
       </p>

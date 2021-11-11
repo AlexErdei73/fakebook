@@ -225,7 +225,15 @@ const Contacts = (props) => {
                     />
                   </Col>
                   <Col xs={2}>
-                    <Button variant="light" size="sm" id="add-photo-btn">
+                    <Button
+                      variant="light"
+                      size="sm"
+                      id="add-photo-btn"
+                      onClick={() => {
+                        if (message.text !== "" || message.isPhoto)
+                          saveMessage();
+                      }}
+                    >
                       <MdSend size="23px" className="text-primary" />
                     </Button>
                   </Col>
