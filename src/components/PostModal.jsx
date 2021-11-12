@@ -10,9 +10,17 @@ import "./PostModal.css";
 import { handleTextareaChange, addPhoto, delPhoto } from "./helper";
 
 const PostModal = (props) => {
-  const { show, onClose, user, userID, setText, isYoutubeBtnPressed, placeholder } = props;
+  const {
+    show,
+    onClose,
+    user,
+    userID,
+    setText,
+    isYoutubeBtnPressed,
+    placeholder,
+  } = props;
 
-  const WELCOME_TEXT = 'For adding YouTube video copy link here ...';
+  const WELCOME_TEXT = "For adding YouTube video copy link here ...";
   const INIT_POST = {
     userID: `${userID}`,
     text: "",
@@ -100,7 +108,7 @@ const PostModal = (props) => {
     let newPosts;
     if (user.posts) newPosts = [...user.posts];
     else newPosts = [];
-    newPosts.push(postID);
+    newPosts.unshift(postID);
     const refUser = firestore.collection("users").doc(userID);
     refUser.update({
       posts: newPosts,
@@ -132,7 +140,7 @@ const PostModal = (props) => {
 
   function getPlaceholder() {
     if (isYoutubeBtnPressed && !post.isYoutube) return WELCOME_TEXT;
-      else return placeholder; 
+    else return placeholder;
   }
 
   return (

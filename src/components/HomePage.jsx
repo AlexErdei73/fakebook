@@ -29,7 +29,7 @@ const HomePage = (props) => {
   const postsRef = firestore.collection("posts");
 
   const { status, data: posts } = useFirestoreCollectionData(
-    postsRef.orderBy("timestamp"),
+    postsRef.orderBy("timestamp", "desc"),
     { idField: "postID" }
   );
 
