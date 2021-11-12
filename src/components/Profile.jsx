@@ -33,7 +33,16 @@ import { handleClickLink } from "./helper";
 const Profile = (props) => {
   const { userName } = useParams();
 
-  const { users, userID, linkRef, activeMainLink, setActiveMainLink } = props;
+  const {
+    users,
+    userID,
+    linkRef,
+    activeMainLink,
+    setActiveMainLink,
+    dimension,
+  } = props;
+
+  const SM_WINDOW = 640;
 
   const user = () => {
     const userNames = users.map((user) => `${user.lastname}.${user.firstname}`);
@@ -142,7 +151,7 @@ const Profile = (props) => {
   }
 
   useEffect(() => {
-    //we set the active link to the friends link when it renders
+    //we set the active link to the profile link when it renders
     handleClickLink(
       { currentTarget: linkRef.current },
       activeMainLink,
@@ -167,7 +176,7 @@ const Profile = (props) => {
                 title={
                   <b>
                     <MdPhotoCamera className="mr-1" size="20px" />
-                    Edit Cover Photo
+                    {dimension.width > SM_WINDOW ? "Edit Cover Photo" : ""}
                   </b>
                 }
                 size="sm"

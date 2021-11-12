@@ -28,13 +28,19 @@ const StyledTextarea = (props) => {
   //we set the height to the scrollHeight property of textarea
   //This way when the height of the content decreses the textarea
   //can follow it down too. Without this trick the textarea can
-  //grow but unable to shrink back.
+  //grow but unable to shrink back
   useEffect(() => {
     if (style.height !== "auto") return;
     const newStyle = { ...style };
     newStyle.height = textarea.scrollHeight + "px";
     setStyle(newStyle);
   }, [style.height]);
+
+  //This restyles the text area, when we send the message, so the
+  //value goes back to "" without executing the onChange handler
+  useEffect(() => {
+    if (value === "" && textarea) restyleTextarea(textarea);
+  }, [value]);
 
   return (
     <textarea

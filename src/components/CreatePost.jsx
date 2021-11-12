@@ -20,19 +20,18 @@ const CreatePost = (props) => {
   const handleClose = () => {
     setShowPostModal(false);
     setYoutubeBtnPressed(false);
-  }
+  };
 
   const handleClick = () => setShowPostModal(true);
 
   const handleYoutubeBtnClick = () => {
     setYoutubeBtnPressed(true);
     setShowPostModal(true);
-  }
-
+  };
 
   function getPlaceholder() {
     if (isCurrentUser) return PLACEHOLDER_FOR_CURRENT_USER;
-      else return PLACEHOLDER_FOR_ANOTHER_USER;
+    else return PLACEHOLDER_FOR_ANOTHER_USER;
   }
 
   function getText() {
@@ -77,7 +76,7 @@ const CreatePost = (props) => {
             onClick={handleClick}
           >
             <HiOutlinePhotograph size="28px" className="text-success" />
-            Photo/Video
+            Photo
           </Button>
         </Card.Body>
       </Card>

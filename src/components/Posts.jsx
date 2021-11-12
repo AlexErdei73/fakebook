@@ -50,8 +50,14 @@ const Posts = (props) => {
           className="my-2"
         />
       </Col>
-      <Col sm={7} className="mh-100 overflow-auto hide-scrollbar">
-        <CreatePost user={currentUser} userID={currentUser.userID} firstname={user.firstname} isCurrentUser={isCurrentUser} className="mt-2" />
+      <Col sm={7} className="mh-100 overflow-auto hide-scrollbar bg-200">
+        <CreatePost
+          user={currentUser}
+          userID={currentUser.userID}
+          firstname={user.firstname}
+          isCurrentUser={isCurrentUser}
+          className="mt-2"
+        />
         {user.posts.map((postID, index) => (
           <DisplayUserPost
             key={index}

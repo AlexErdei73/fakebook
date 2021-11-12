@@ -75,7 +75,7 @@ const DisplayPost = (props) => {
             <iframe
               src={post.youtubeURL}
               title="YouTube video player"
-              frameborder="0"
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
               allowFullScreen
             ></iframe>
@@ -89,6 +89,7 @@ const DisplayPost = (props) => {
           onClick={() => {
             if (post.likes.length > 0) setShow(true);
           }}
+          style={{ boxShadow: "none" }}
         >
           <AiFillLike
             className="bg-primary text-light mr-2"
@@ -100,6 +101,7 @@ const DisplayPost = (props) => {
           variant="link"
           className="text-muted float-right"
           onClick={() => setShowComments(!showComments)}
+          style={{ boxShadow: "none" }}
         >
           comments({post.comments ? post.comments.length : 0})
         </Button>

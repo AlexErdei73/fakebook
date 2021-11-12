@@ -29,6 +29,7 @@ const PhotoViewer = () => {
 
   return (
     <Row
+      className="bg-200"
       style={{
         position: "relative",
         top: "50px",

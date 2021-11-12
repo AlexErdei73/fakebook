@@ -11,7 +11,8 @@ const PostView = (props) => {
         user={user}
         userID={userID}
         isCurrentUser={true}
-        className="w-75 m-auto p-0"
+        className="mw-100 m-auto p-0"
+        style={{ width: "450px" }}
       />
       {posts.map((post, index) => {
         return (
@@ -21,7 +22,8 @@ const PostView = (props) => {
             postID={post.postID}
             users={users}
             userID={userID}
-            className="w-75 mx-auto my-2"
+            className="mw-100 mx-auto my-2"
+            style={{ width: "450px" }}
           />
         );
       })}

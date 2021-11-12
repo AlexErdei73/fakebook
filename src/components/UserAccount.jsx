@@ -51,7 +51,7 @@ const UserAccount = (props) => {
 
   useEffect(() => {
     //Update the online status if the current user does not seem to be online
-    if (!currentUser.isOnline) userDocRef.update({ isOnline: true });  
+    if (!currentUser.isOnline) userDocRef.update({ isOnline: true });
   }, []);
 
   //This part is responsible for responsive behaviour only
@@ -164,6 +164,7 @@ const UserAccount = (props) => {
                         users={users}
                         user={currentUser}
                         userID={userID}
+                        dimension={dimension}
                         // the components need the above props to change the active link
                         linkRef={refs.friends}
                         activeLink={activeLink}
@@ -176,6 +177,7 @@ const UserAccount = (props) => {
                         user={currentUser}
                         userID={userID}
                         users={users}
+                        dimension={dimension}
                         // the components need the above props to change the active link
                         linkRef={refs.profile}
                         activeMainLink={activeLink}

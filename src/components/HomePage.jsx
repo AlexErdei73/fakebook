@@ -33,8 +33,9 @@ const HomePage = (props) => {
     { idField: "postID" }
   );
 
-  //we set the active link to the friends link when it renders
+  //we set the active link to the home link when it renders
   useEffect(() => {
+    //if (dimension.width < SM_WINDOW) return;
     handleClickLink(
       { currentTarget: linkRef.current },
       activeLink,
@@ -57,7 +58,6 @@ const HomePage = (props) => {
           lg={isWatch ? 9 : 6}
           className="mh-100 overflow-auto hide-scrollbar"
         >
-          window size: {dimension.width} x {dimension.height}
           {!isWatch && (
             <PostView user={user} userID={userID} posts={posts} users={users} />
           )}

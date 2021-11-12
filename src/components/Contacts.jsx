@@ -136,7 +136,7 @@ const Contacts = (props) => {
       </h5>
       {users.map((user, index) =>
         user.userID === userID ? (
-          <></>
+          <div key={index}></div>
         ) : (
           <div
             key={index}
@@ -190,7 +190,7 @@ const Contacts = (props) => {
                 <Col className="mh-100 overflow-auto">
                   {users.map((user, index) =>
                     user.userID === userID ? (
-                      <></>
+                      <div key={index}></div>
                     ) : (
                       <Row
                         key={index}

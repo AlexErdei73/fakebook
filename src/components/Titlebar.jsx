@@ -19,20 +19,19 @@ const TitleBar = (props) => {
 
   // Log out function
   const handleClick = () => {
-    setUserOffline(() => firebase.auth().signOut()); 
+    setUserOffline(() => firebase.auth().signOut());
   };
 
   const SM_WINDOW = 640;
 
   return (
-    <Navbar bg="light" fixed="top" expand="sm" className="p-0">
+    <Navbar bg="light" fixed="top" className="p-0">
       <Navbar.Brand as={Link} to="/">
         <FaFacebook color="dodgerblue" fontSize="2em" className="mx-3" />
       </Navbar.Brand>
       {dimension.width > SM_WINDOW && <div style={{ width: "450px" }} />}
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="w-75 justify-content-start mr-5">
+      <Nav className="w-75 justify-content-start mr-5">
+        {dimension.width > SM_WINDOW && (
           <Nav.Item>
             <Link to="/" className="nav-link" ref={refs.home}>
               <VscHome
@@ -42,27 +41,29 @@ const TitleBar = (props) => {
               />
             </Link>
           </Nav.Item>
-          <Nav.Item>
-            <Link to="/friends/list" className="nav-link" ref={refs.friends}>
-              <FaUserFriends
-                fontSize="2rem"
-                className="mx-4"
-                style={{ pointerEvents: "none" }}
-              />
-            </Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Link to="/watch" className="nav-link" ref={refs.watch}>
-              <MdOndemandVideo
-                fontSize="2rem"
-                className="mx-4"
-                style={{ pointerEvents: "none" }}
-              />
-            </Link>
-          </Nav.Item>
-        </Nav>
+        )}
+        <Nav.Item>
+          <Link to="/friends/list" className="nav-link" ref={refs.friends}>
+            <FaUserFriends
+              fontSize="2rem"
+              className="mx-4"
+              style={{ pointerEvents: "none" }}
+            />
+          </Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Link to="/watch" className="nav-link" ref={refs.watch}>
+            <MdOndemandVideo
+              fontSize="2rem"
+              className="mx-4"
+              style={{ pointerEvents: "none" }}
+            />
+          </Link>
+        </Nav.Item>
+      </Nav>
 
-        <Nav className="w-25 justify-content-end align-self-center">
+      <Nav className="w-25 justify-content-end align-self-center">
+        {dimension.width > SM_WINDOW && (
           <Nav.Item className="align-self-center">
             <Link
               to={props.profilelink}
@@ -76,40 +77,35 @@ const TitleBar = (props) => {
               <ProfileLink user={user} size="30" fullname="false" bold="true" />
             </Link>
           </Nav.Item>
-          <Nav.Item className="align-self-center">
-            <DropdownButton
-              id="custom-drop-down-btn"
-              title=""
-              className="mr-4"
-              menuAlign="right"
+        )}
+        <Nav.Item className="align-self-center">
+          <DropdownButton
+            id="custom-drop-down-btn"
+            title=""
+            className="mr-4"
+            menuAlign="right"
+          >
+            <Dropdown.Item
+              as={Link}
+              to={props.profilelink}
+              onClick={() => closeFriendsListPage()}
             >
-              <Dropdown.Item
-                as={Link}
-                to={props.profilelink}
-                onClick={() => closeFriendsListPage()}
-              >
-                <ProfileLink
-                  user={user}
-                  size="60"
-                  fullname="true"
-                  bold="true"
-                />
-              </Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item
-                as={Link}
-                to="/"
-                onClick={handleClick}
-                className="p-0"
-              >
-                <ImExit fontSize="1.5em" className="mx-4" />
-                <span>Log Out</span>
-                <div style={{ width: "20em" }}></div>
-              </Dropdown.Item>
-            </DropdownButton>
-          </Nav.Item>
-        </Nav>
-      </Navbar.Collapse>
+              <ProfileLink user={user} size="60" fullname="true" bold="true" />
+            </Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item
+              as={Link}
+              to="/"
+              onClick={handleClick}
+              className="p-0"
+            >
+              <ImExit fontSize="1.5em" className="mx-4" />
+              <span>Log Out</span>
+              <div style={{ width: "20em" }}></div>
+            </Dropdown.Item>
+          </DropdownButton>
+        </Nav.Item>
+      </Nav>
     </Navbar>
   );
 };
