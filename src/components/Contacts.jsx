@@ -8,7 +8,12 @@ import {
   Col,
   Row,
 } from "react-bootstrap";
-import { StorageImage, useStorage, useFirestore } from "reactfire";
+import {
+  StorageImage,
+  useStorage,
+  useFirestore,
+  useFirestoreCollectionData,
+} from "reactfire";
 import ProfileLink from "./ProfileLink";
 import { FiEdit } from "react-icons/fi";
 import { HiOutlinePhotograph } from "react-icons/hi";
@@ -44,6 +49,8 @@ const Contacts = (props) => {
   const [message, setMessage] = useState(INIT_MESSAGE);
 
   function handleClick(user) {
+    if (!user && recipient) return;
+    if (recipient && user.userID !== recipient.userID) return;
     setShowOverlay(true);
     let id;
     if (user) id = user.userID;
@@ -55,6 +62,8 @@ const Contacts = (props) => {
   }
 
   function handleClose() {
+    updateReadStatusOfMessages(recipient);
+    removeSender();
     setShowOverlay(false);
     setRecipient(null);
   }
@@ -121,6 +130,50 @@ const Contacts = (props) => {
     //We only do this if we set back the INIT_MESSAGE after previous message had sent.
     if (showOverlay && message.recipient === "") handleClick(recipient);
   }, [message]);
+
+  const [senders, setSenders] = useState([]);
+
+  const messagesRef = firestore.collection("messages");
+
+  const { status: status, data: unread } = useFirestoreCollectionData(
+    messagesRef.where("recipient", "==", userID).where("isRead", "==", false),
+    { idField: "messageID" }
+  );
+
+  useEffect(() => {
+    if (status === "success") {
+      const sendersWithUnreadMsg = [];
+      unread.forEach((msg) => {
+        const sender = msg.sender;
+        if (sendersWithUnreadMsg.indexOf(sender) === -1)
+          sendersWithUnreadMsg.push(sender);
+      });
+      setSenders(sendersWithUnreadMsg);
+    }
+  }, [status]);
+
+  useEffect(() => {
+    if (senders.length === 0) return;
+    const last = senders.length - 1;
+    const sender = senders[last];
+    handleClick(users.find((usr) => usr.userID === sender));
+  }, [senders]);
+
+  function updateReadStatusOfMessages(sender) {
+    const messagesToUpdate = unread.filter(
+      (msg) => msg.sender === sender.userID
+    );
+    messagesToUpdate.forEach((msg) => {
+      const messageID = msg.messageID;
+      messagesRef.doc(messageID).update({ isRead: true });
+    });
+  }
+
+  function removeSender() {
+    const newSenders = [...senders];
+    newSenders.pop();
+    setSenders(newSenders);
+  }
 
   return (
     <Nav

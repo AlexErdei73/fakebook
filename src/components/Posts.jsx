@@ -58,15 +58,18 @@ const Posts = (props) => {
           isCurrentUser={isCurrentUser}
           className="mt-2"
         />
-        {user.posts.map((postID, index) => (
-          <DisplayUserPost
-            key={index}
-            postID={postID}
-            userID={userID}
-            users={users}
-            className="mx-auto my-2"
-          />
-        ))}
+        {user.posts.map((postID, index) => {
+          console.log("postID: ", postID);
+          return (
+            <DisplayUserPost
+              key={index}
+              postID={postID}
+              userID={userID}
+              users={users}
+              className="mx-auto my-2"
+            />
+          );
+        })}
       </Col>
     </Row>
   );
