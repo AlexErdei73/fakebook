@@ -45,7 +45,11 @@ const Profile = (props) => {
   const SM_WINDOW = 640;
 
   const user = () => {
-    const userNames = users.map((user) => `${user.lastname}.${user.firstname}`);
+    const userNames = users.map((user) => {
+      if (!user.index || user.index === 0)
+        return `${user.lastname}.${user.firstname}`;
+      else return `${user.lastname}.${user.firstname}.${user.index}`;
+    });
     const index = userNames.indexOf(userName);
     const user = users[index];
     return user;

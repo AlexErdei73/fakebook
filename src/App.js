@@ -84,13 +84,15 @@ function App() {
       window.location.reload(false);
     }
 
-    return (
-      <UserAccount
-        userID={user.uid}
-        profileLink={profileLink}
-        userState={userState}
-      />
-    );
+    if (user.emailVerified)
+      return (
+        <UserAccount
+          userID={user.uid}
+          profileLink={profileLink}
+          userState={userState}
+        />
+      );
+    else return <></>;
   } else {
     return (
       <div className="bg-200 vw-100">

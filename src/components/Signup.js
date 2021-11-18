@@ -47,23 +47,34 @@ const Signup = (props) => {
           result.user.updateProfile({
             displayName: `${name.firstname} ${name.lastname}`,
           });
-          // Create firestore document
+          // get the index of the new user with the same username
           firebase
             .firestore()
             .collection("users")
-            .doc(result.user.uid)
-            .set({
-              firstname: name.firstname,
-              lastname: name.lastname,
-              profilePictureURL: "fakebook-avatar.jpeg",
-              backgroundPictureURL: "background-server.jpg",
-              photos: [],
-              posts: [],
-              isOnline: false,
-            })
-            .then(() => {
-              // Sign out the user
-              firebase.auth().signOut();
+            .where("firstname", "==", name.firstname)
+            .where("lastname", "==", name.lastname)
+            .get()
+            .then((querrySnapshot) => {
+              const i = querrySnapshot.size;
+              // Create firestore document
+              firebase
+                .firestore()
+                .collection("users")
+                .doc(result.user.uid)
+                .set({
+                  firstname: name.firstname,
+                  lastname: name.lastname,
+                  profilePictureURL: "fakebook-avatar.jpeg",
+                  backgroundPictureURL: "background-server.jpg",
+                  photos: [],
+                  posts: [],
+                  isOnline: false,
+                  index: i,
+                })
+                .then(() => {
+                  // Sign out the user
+                  firebase.auth().signOut();
+                });
             });
 
           // URL of my website.
@@ -79,6 +90,8 @@ const Signup = (props) => {
         });
     setValidated(true);
   };
+
+  function indexWithSameUsername() {}
 
   useEffect(() => {
     if (isFirst) {

@@ -35,6 +35,13 @@ const UserAccount = (props) => {
 
   const currentUser = result.data;
 
+  //We add the index of user to the profileLink if there are more users with the exact same userName
+  function modifyProfileLink() {
+    if (currentUser && currentUser.index && currentUser.index > 0) {
+      return `${profileLink}.${currentUser.index}`;
+    } else return profileLink;
+  }
+
   const { status, data: users } = useFirestoreCollectionData(usersCollection, {
     idField: "userID",
   });
@@ -98,7 +105,7 @@ const UserAccount = (props) => {
   //add the active status of the link DOM elements
   const [activeLink, setActiveLink] = useState(null);
 
-  if (status === "loading") {
+  if (status === "loading" || !currentUser) {
     return <div>...Loading</div>;
   }
 
@@ -107,7 +114,7 @@ const UserAccount = (props) => {
       <Container className="w-100 p-0" fluid>
         <BrowserRouter>
           <TitleBar
-            profilelink={profileLink}
+            profilelink={modifyProfileLink()}
             user={currentUser}
             closeFriendsListPage={closeFriendsListPage}
             setUserOffline={setUserOffline}
@@ -140,7 +147,7 @@ const UserAccount = (props) => {
                 return (
                   <HomePage
                     className="pt-5"
-                    profileLink={profileLink}
+                    profileLink={modifyProfileLink()}
                     user={currentUser}
                     userID={userID}
                     users={users}
@@ -192,7 +199,7 @@ const UserAccount = (props) => {
                 return (
                   <HomePage
                     className="pt-5"
-                    profileLink={profileLink}
+                    profileLink={modifyProfileLink()}
                     user={currentUser}
                     userID={userID}
                     users={users}

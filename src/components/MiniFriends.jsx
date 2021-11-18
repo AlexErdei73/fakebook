@@ -17,7 +17,10 @@ const MiniFriends = (props) => {
 
   const NUMBER_OF_FRIENDS = 9;
 
-  const friendsLink = `/${user.lastname}.${user.firstname}/Friends`;
+  const friendsLink =
+    user.index && user.index > 0
+      ? `/${user.lastname}.${user.firstname}.${user.index}/Friends`
+      : `/${user.lastname}.${user.firstname}/Friends`;
 
   function handleClick() {
     handleClickLink(
@@ -40,7 +43,10 @@ const MiniFriends = (props) => {
         </Card.Subtitle>
         <Row>
           {users.map((user, index) => {
-            const userProfileURL = `/${user.lastname}.${user.firstname}`;
+            const userProfileURL =
+              user.index && user.index > 0
+                ? `/${user.lastname}.${user.firstname}.${user.index}`
+                : `/${user.lastname}.${user.firstname}`;
             const userName = `${user.firstname} ${user.lastname}`;
             return (
               //we render maximum 9 friends

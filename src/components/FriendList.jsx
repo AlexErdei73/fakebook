@@ -12,10 +12,13 @@ const FriendList = (props) => {
     <Col xs="auto" className="overflow-auto mh-100">
       <div id="col-1" className="m-2">
         {users.map((user, index) => {
+          let profileLink = `/${user.lastname}.${user.firstname}`;
+          if (user.index && user.index > 0)
+            profileLink = profileLink + `.${user.index}`;
           return (
             <Link
               key={index}
-              to={`/${user.lastname}.${user.firstname}`}
+              to={profileLink}
               className={isModal ? "p-1 text-dark" : "nav-link text-dark"}
             >
               <ProfileLink
