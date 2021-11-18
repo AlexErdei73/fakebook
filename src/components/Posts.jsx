@@ -30,7 +30,7 @@ const Posts = (props) => {
   }, []);
 
   return (
-    <Row className="w-100" style={{ height: "120vh" }}>
+    <Row className="w-100" style={{ height: "900px" }}>
       <Col sm={5} className="mh-100 overflow-hidden">
         <MiniPhotos
           user={user}

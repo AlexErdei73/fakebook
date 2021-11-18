@@ -14,6 +14,7 @@ import { useUser } from "reactfire";
 import "firebase/auth";
 import "firebase/firestore";
 import UserAccount from "./components/UserAccount";
+import PasswordReminder from "./components/PasswordReminder";
 
 function App() {
   const { data: user } = useUser();
@@ -63,6 +64,14 @@ function App() {
 
   const profileLink = `/${lastName}.${firstName}`;
 
+  //handling the password reminder button
+  const [isModalSignup, setModalSignup] = useState(true);
+
+  function handleClickPasswordReminderBtn() {
+    setModalSignup(false);
+    handleShow();
+  }
+
   const { status, data: signInCheckResult } = useSigninCheck();
 
   if (status === "loading") {
@@ -110,6 +119,7 @@ function App() {
                   onError={addError}
                   onChange={updateUser}
                   user={userState}
+                  onClickForgottenPswd={handleClickPasswordReminderBtn}
                   disabled
                 ></Login>
                 <hr />
@@ -123,21 +133,34 @@ function App() {
                 </Button>
               </div>
             </Col>
-            <Modal show={show} onHide={handleClose}>
-              <Modal.Header closeButton>
+            <Modal
+              show={show}
+              onHide={handleClose}
+              onExited={() => setModalSignup(true)}
+            >
+              <Modal.Header closeButton={isModalSignup}>
                 <Modal.Title>
-                  <strong className="fs-2">Sign Up</strong>
-                  <div id="title-footer">It's quick and easy.</div>
+                  <strong className="fs-2">
+                    {isModalSignup ? "Sign Up" : "Password Reset Email"}
+                  </strong>
+                  {isModalSignup && (
+                    <div id="title-footer">It's quick and easy.</div>
+                  )}
                 </Modal.Title>
               </Modal.Header>
-              <Modal.Body>
-                <Signup
-                  onError={addError}
-                  onChange={updateUser}
-                  onSubmit={handleClose}
-                  user={userState}
-                ></Signup>
-              </Modal.Body>
+
+              {isModalSignup ? (
+                <Modal.Body>
+                  <Signup
+                    onError={addError}
+                    onChange={updateUser}
+                    onSubmit={handleClose}
+                    user={userState}
+                  ></Signup>
+                </Modal.Body>
+              ) : (
+                <PasswordReminder onHide={handleClose} />
+              )}
             </Modal>
           </Row>
         </Container>

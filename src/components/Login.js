@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useFirebaseApp } from "reactfire";
-import "firebase/auth";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
@@ -76,7 +75,13 @@ const Login = (props) => {
           <b>Log In</b>
         </Button>
       </Form>
-      <Button variant="link" type="link" className="w-100" id="link-button">
+      <Button
+        variant="link"
+        type="link"
+        className="w-100"
+        id="link-button"
+        onClick={props.onClickForgottenPswd}
+      >
         Forgotten password?
       </Button>
     </>

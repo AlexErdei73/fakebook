@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useFirebaseApp } from "reactfire";
-import "firebase/auth";
-import "firebase/firestore";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -90,8 +88,6 @@ const Signup = (props) => {
         });
     setValidated(true);
   };
-
-  function indexWithSameUsername() {}
 
   useEffect(() => {
     if (isFirst) {
