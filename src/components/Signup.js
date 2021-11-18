@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFirebaseApp } from "reactfire";
 import "firebase/auth";
 import "firebase/firestore";
@@ -30,52 +30,71 @@ const Signup = (props) => {
     });
   };
 
+  const [error, setError] = useState(null);
+  const [isFirst, setIsFirst] = useState(true);
+  const [validated, setValidated] = useState(false);
+
   // Submit function (Create account)
   const handleSubmit = (e) => {
     e.preventDefault();
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(props.user.email, props.user.password)
-      .then((result) => {
-        // Update the nickname
-        result.user.updateProfile({
-          displayName: `${name.firstname} ${name.lastname}`,
-        });
-        // Create firestore document
-        firebase
-          .firestore()
-          .collection("users")
-          .doc(result.user.uid)
-          .set({
-            firstname: name.firstname,
-            lastname: name.lastname,
-            profilePictureURL: "fakebook-avatar.jpeg",
-            backgroundPictureURL: "background-server.jpg",
-            photos: [],
-            posts: [],
-            isOnline: false,
-          })
-          .then(() => {
-            // Sign out the user
-            firebase.auth().signOut();
+    const form = e.currentTarget;
+    if (form.checkValidity() === true)
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(props.user.email, props.user.password)
+        .then((result) => {
+          // Update the nickname
+          result.user.updateProfile({
+            displayName: `${name.firstname} ${name.lastname}`,
           });
+          // Create firestore document
+          firebase
+            .firestore()
+            .collection("users")
+            .doc(result.user.uid)
+            .set({
+              firstname: name.firstname,
+              lastname: name.lastname,
+              profilePictureURL: "fakebook-avatar.jpeg",
+              backgroundPictureURL: "background-server.jpg",
+              photos: [],
+              posts: [],
+              isOnline: false,
+            })
+            .then(() => {
+              // Sign out the user
+              firebase.auth().signOut();
+            });
 
-        // URL of my website.
-        const myURL = { url: "http://localhost:3000/" };
+          // URL of my website.
+          const myURL = { url: "http://localhost:3000/" };
 
-        // Send Email Verification and redirect to my website.
-        return result.user.sendEmailVerification(myURL);
-      })
-      .catch((error) => {
-        // Update the error
-        console.log(error);
-        props.onError(error.message);
-      });
-    props.onSubmit();
+          // Send Email Verification and redirect to my website.
+          return result.user.sendEmailVerification(myURL);
+        })
+        .catch((error) => {
+          // Update the error
+          console.log(error);
+          setError(error);
+        });
+    setValidated(true);
   };
 
+  useEffect(() => {
+    if (isFirst) {
+      setIsFirst(false);
+      return;
+    }
+    if (error) {
+      props.onError(error.message);
+      console.log(error);
+    } else {
+      props.onSubmit();
+    }
+  }, [error]);
+
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form noValidate validated={validated} onSubmit={handleSubmit}>
       <Form.Row>
         <Form.Group as={Col}>
           <Form.Control
@@ -83,7 +102,11 @@ const Signup = (props) => {
             placeholder="First name"
             name="firstname"
             onChange={handleNameChange}
+            required
           />
+          <Form.Control.Feedback type="invalid">
+            First name required.
+          </Form.Control.Feedback>
         </Form.Group>
         <Form.Group as={Col}>
           <Form.Control
@@ -91,7 +114,11 @@ const Signup = (props) => {
             placeholder="Surename"
             name="lastname"
             onChange={handleNameChange}
+            required
           />
+          <Form.Control.Feedback type="invalid">
+            Last name required.
+          </Form.Control.Feedback>
         </Form.Group>
       </Form.Row>
       <Form.Row>
@@ -101,7 +128,11 @@ const Signup = (props) => {
             placeholder="Email address"
             name="email"
             onChange={handleChange}
+            required
           />
+          <Form.Control.Feedback type="invalid">
+            Email required in the right format.
+          </Form.Control.Feedback>
         </Form.Group>
       </Form.Row>
       <Form.Row>
@@ -111,7 +142,11 @@ const Signup = (props) => {
             placeholder="New password"
             name="password"
             onChange={handleChange}
+            required
           />
+          <Form.Control.Feedback type="invalid">
+            Password required.
+          </Form.Control.Feedback>
         </Form.Group>
       </Form.Row>
       <Form.Row>

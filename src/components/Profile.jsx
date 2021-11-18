@@ -51,7 +51,7 @@ const Profile = (props) => {
     return user;
   };
 
-  const userId = () => user(users).userID;
+  const userId = () => user().userID;
 
   const isCurrentUser = userID === userId();
 

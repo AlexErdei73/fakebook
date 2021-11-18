@@ -98,121 +98,120 @@ const UserAccount = (props) => {
   //add the active status of the link DOM elements
   const [activeLink, setActiveLink] = useState(null);
 
-  if (status !== "success") return <div>...Loading</div>;
-  else
-    return (
-      <div className="bg-200 vw-100">
-        <Container className="w-100 p-0" fluid>
-          <BrowserRouter>
-            <TitleBar
-              profilelink={profileLink}
-              user={currentUser}
-              closeFriendsListPage={closeFriendsListPage}
-              setUserOffline={setUserOffline}
-              refs={refs}
-              dimension={dimension}
+  if (status === "loading") {
+    return <div>...Loading</div>;
+  }
+
+  return (
+    <div className="bg-200 vw-100">
+      <Container className="w-100 p-0" fluid>
+        <BrowserRouter>
+          <TitleBar
+            profilelink={profileLink}
+            user={currentUser}
+            closeFriendsListPage={closeFriendsListPage}
+            setUserOffline={setUserOffline}
+            refs={refs}
+            dimension={dimension}
+          />
+          <Switch>
+            <Route
+              path="/friends/list"
+              render={() => {
+                setIsFriendsListPage(true);
+                return (
+                  <FriendsListPage
+                    users={users}
+                    user={currentUser}
+                    userID={userID}
+                    // the components need the above props to change the active link
+                    linkRef={refs.friends}
+                    activeLink={activeLink}
+                    setActiveLink={setActiveLink}
+                  />
+                );
+              }}
             />
-            <Switch>
-              <Route
-                path="/friends/list"
-                render={() => {
-                  setIsFriendsListPage(true);
+            <Route path={`/photo/:userID/:n`} render={() => <PhotoViewer />} />
+            <Route
+              path="/watch"
+              render={() => {
+                setIsFriendsListPage(false);
+                return (
+                  <HomePage
+                    className="pt-5"
+                    profileLink={profileLink}
+                    user={currentUser}
+                    userID={userID}
+                    users={users}
+                    dimension={dimension}
+                    isWatch={true}
+                    // the components need the above props to change the active link
+                    linkRef={refs.watch}
+                    activeLink={activeLink}
+                    setActiveLink={setActiveLink}
+                  />
+                );
+              }}
+            />
+            <Route
+              path={`/:userName`}
+              render={() => {
+                if (isFriendsListPage)
                   return (
                     <FriendsListPage
                       users={users}
                       user={currentUser}
                       userID={userID}
+                      dimension={dimension}
                       // the components need the above props to change the active link
                       linkRef={refs.friends}
                       activeLink={activeLink}
                       setActiveLink={setActiveLink}
                     />
                   );
-                }}
-              />
-              <Route
-                path={`/photo/:userID/:n`}
-                render={() => <PhotoViewer />}
-              />
-              <Route
-                path="/watch"
-                render={() => {
-                  setIsFriendsListPage(false);
+                else
                   return (
-                    <HomePage
-                      className="pt-5"
-                      profileLink={profileLink}
+                    <Profile
                       user={currentUser}
                       userID={userID}
                       users={users}
                       dimension={dimension}
-                      isWatch={true}
                       // the components need the above props to change the active link
-                      linkRef={refs.watch}
-                      activeLink={activeLink}
-                      setActiveLink={setActiveLink}
+                      linkRef={refs.profile}
+                      activeMainLink={activeLink}
+                      setActiveMainLink={setActiveLink}
                     />
                   );
-                }}
-              />
-              <Route
-                path={`/:userName`}
-                render={() => {
-                  if (isFriendsListPage)
-                    return (
-                      <FriendsListPage
-                        users={users}
-                        user={currentUser}
-                        userID={userID}
-                        dimension={dimension}
-                        // the components need the above props to change the active link
-                        linkRef={refs.friends}
-                        activeLink={activeLink}
-                        setActiveLink={setActiveLink}
-                      />
-                    );
-                  else
-                    return (
-                      <Profile
-                        user={currentUser}
-                        userID={userID}
-                        users={users}
-                        dimension={dimension}
-                        // the components need the above props to change the active link
-                        linkRef={refs.profile}
-                        activeMainLink={activeLink}
-                        setActiveMainLink={setActiveLink}
-                      />
-                    );
-                }}
-              />
-              <Route
-                path="/"
-                render={() => {
-                  setIsFriendsListPage(false);
-                  return (
-                    <HomePage
-                      className="pt-5"
-                      profileLink={profileLink}
-                      user={currentUser}
-                      userID={userID}
-                      users={users}
-                      dimension={dimension}
-                      isWatch={false}
-                      // the components need the above props to change the active link
-                      linkRef={refs.home}
-                      activeLink={activeLink}
-                      setActiveLink={setActiveLink}
-                    />
-                  );
-                }}
-              />
-            </Switch>
-          </BrowserRouter>
-          <div>{userState.error && <h4>{userState.error}</h4>}</div>
-        </Container>
-      </div>
-    );
+              }}
+            />
+            <Route
+              path="/"
+              render={() => {
+                setIsFriendsListPage(false);
+                return (
+                  <HomePage
+                    className="pt-5"
+                    profileLink={profileLink}
+                    user={currentUser}
+                    userID={userID}
+                    users={users}
+                    dimension={dimension}
+                    isWatch={false}
+                    // the components need the above props to change the active link
+                    linkRef={refs.home}
+                    activeLink={activeLink}
+                    setActiveLink={setActiveLink}
+                  />
+                );
+              }}
+            />
+          </Switch>
+        </BrowserRouter>
+        <div>{userState.error && <h4>{userState.error}</h4>}</div>
+      </Container>
+    </div>
+  );
 };
 
 export default UserAccount;

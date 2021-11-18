@@ -69,7 +69,10 @@ function App() {
     return <div>...Loading</div>;
   }
 
-  if (signInCheckResult.signedIn === true) {
+  if (
+    signInCheckResult.signedIn === true &&
+    userState.error !== "Please verify your email before to continue"
+  ) {
     //Reactfire is still buggy in ver 3.0.0
     //Even if user is signed in, the useUser
     //hook can give back null for the current
@@ -135,7 +138,6 @@ function App() {
               </Modal.Body>
             </Modal>
           </Row>
-          <div>{userState.error && <h4>{userState.error}</h4>}</div>
         </Container>
       </div>
     );

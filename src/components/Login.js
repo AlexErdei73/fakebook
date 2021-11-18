@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useFirebaseApp } from "reactfire";
 import "firebase/auth";
 import Form from "react-bootstrap/Form";
@@ -11,11 +11,16 @@ const Login = (props) => {
   // onChange function
   const handleChange = (e) => {
     props.onChange(e.target.name, e.target.value);
+    setErrorMsg("");
   };
+
+  const [errorMsg, setErrorMsg] = useState("");
 
   // Submit function (Create account)
   const handleSubmit = (e) => {
+    const form = e.currentTarget;
     e.preventDefault();
+    e.stopPropagation();
     //signIn code here ...
     firebase
       .auth()
@@ -24,19 +29,27 @@ const Login = (props) => {
         // email has been verified?
         if (!result.user.emailVerified) {
           firebase.auth().signOut();
-          throw Error("Please verify your email before to continue");
+          setErrorMsg("Please verify your email before to continue");
+        } else {
+          setErrorMsg("");
         }
       })
       .catch((error) => {
         // Update the error
-        console.log(error);
-        props.onError(error.message);
+        if (props.user.email === "") setErrorMsg("Email is required.");
+        else if (props.user.password === "")
+          setErrorMsg("Password is required.");
+        else setErrorMsg(error.message);
       });
   };
 
+  useEffect(() => {
+    props.onError(errorMsg);
+  }, [errorMsg]);
+
   return (
     <>
-      <Form onSubmit={handleSubmit} className="w-100">
+      <Form noValidate onSubmit={handleSubmit} className="w-100">
         <Form.Control
           type="email"
           placeholder="Email"
@@ -44,6 +57,10 @@ const Login = (props) => {
           size="lg"
           className="mb-2 w-100"
           onChange={handleChange}
+          isInvalid={
+            errorMsg.indexOf("mail") !== -1 ||
+            errorMsg.indexOf("identifier") !== -1
+          }
         />
         <Form.Control
           type="text"
@@ -52,7 +69,9 @@ const Login = (props) => {
           size="lg"
           className="mb-2 w-100"
           onChange={handleChange}
+          isInvalid={errorMsg !== ""}
         />
+        <Form.Control.Feedback type="invalid">{errorMsg}</Form.Control.Feedback>
         <Button variant="primary" type="submit" size="lg" className="w-100">
           <b>Log In</b>
         </Button>
