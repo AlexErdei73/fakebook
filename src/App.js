@@ -62,7 +62,7 @@ function App() {
 
   const firstName = name.join(" ");
 
-  const profileLink = `/${lastName}.${firstName}`;
+  const profileLink = `/fakebook/${lastName}.${firstName}`;
 
   //handling the password reminder button
   const [isModalSignup, setModalSignup] = useState(true);
