@@ -19,8 +19,8 @@ const MiniFriends = (props) => {
 
   const friendsLink =
     user.index && user.index > 0
-      ? `/${user.lastname}.${user.firstname}.${user.index}/Friends`
-      : `/${user.lastname}.${user.firstname}/Friends`;
+      ? `/fakebook/${user.lastname}.${user.firstname}.${user.index}/Friends`
+      : `/fakebook/${user.lastname}.${user.firstname}/Friends`;
 
   function handleClick() {
     handleClickLink(
