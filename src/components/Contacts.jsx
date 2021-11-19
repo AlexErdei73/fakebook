@@ -329,7 +329,7 @@ const Contacts = (props) => {
               show={showPhotoDlg}
               setShow={setShowPhotoDlg}
               updateDatabase={addPhotoToMessage}
-              userID={user.userID}
+              userID={userID}
             />
           </Card>
         }
