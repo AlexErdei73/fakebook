@@ -18,6 +18,8 @@ const UploadPhoto = (props) => {
     event.preventDefault();
     const file = event.target.files[0];
     const ref = storage.ref(userID).child(file.name);
+    console.log("userID: ", userID);
+    console.log("file: ", file.name);
     console.log("ref: ", ref);
     ref
       .put(file)
