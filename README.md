@@ -37,7 +37,9 @@ During building this app I learnt more than I could have imagined. There were so
 
 - The responsive design is mostly done by Bootstrap. There were some points, where Bootstrap was not powerful enough. I made a unique React solution for this problem, but I can imagine that it can be done easier with advanced CSS. That's going to be one of the topic of my further studies for example. 
 
-- It was non trivial how I can apply Firebase timestamps without cloud functions. It was not obvious at all. Although the solution, which I found, works well, I am not sure it's the best. 
+- It was non trivial how I can apply Firebase timestamps without cloud functions. It was not obvious at all. Although the solution, which I found, works well, I am not sure it's the best.
+
+- Deploying React apps to gh-pages can be a lot of work, if they contain a lot of routes like this app. The developer version uses relative urls, but the deployed app needs absolute urls. To realise this and fix it everywhere was a huge effort itself. 
 
 # What are the possible directions for improvement? 
 
