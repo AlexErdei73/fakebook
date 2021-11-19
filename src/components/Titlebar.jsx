@@ -70,7 +70,7 @@ const TitleBar = (props) => {
         {dimension.width > SM_WINDOW && (
           <Nav.Item className="align-self-center">
             <Link
-              to={props.profilelink}
+              to={`fakebook/${props.profilelink}`}
               className="nav-link"
               onClick={(e) => {
                 closeFriendsListPage();
@@ -91,7 +91,7 @@ const TitleBar = (props) => {
           >
             <Dropdown.Item
               as={Link}
-              to={props.profilelink}
+              to={`fakebook/${props.profilelink}`}
               onClick={() => closeFriendsListPage()}
             >
               <ProfileLink user={user} size="60" fullname="true" bold="true" />

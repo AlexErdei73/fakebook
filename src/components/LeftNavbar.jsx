@@ -12,7 +12,7 @@ const LeftNavbar = (props) => {
       <div className="navitem">
         <Nav.Link
           as={Link}
-          to={props.profileLink}
+          to={`fakebook/${props.profileLink}`}
           className="text-dark flex-column justify-content-center"
         >
           <ProfileLink user={props.user} size="26" fullname="true" />
