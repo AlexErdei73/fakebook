@@ -18,9 +18,14 @@ const UploadPhoto = (props) => {
     event.preventDefault();
     const file = event.target.files[0];
     const ref = storage.ref(userID).child(file.name);
-    ref.put(file).then(() => {
-      return updateDatabase(file);
-    });
+    ref
+      .put(file)
+      .then(() => {
+        return updateDatabase(file);
+      })
+      .caught((error) => {
+        console.log(error.message);
+      });
   }
 
   return (
