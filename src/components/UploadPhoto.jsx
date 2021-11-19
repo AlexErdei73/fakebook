@@ -23,7 +23,7 @@ const UploadPhoto = (props) => {
       .then(() => {
         return updateDatabase(file);
       })
-      .caught((error) => {
+      .catch((error) => {
         console.log(error.message);
       });
   }
