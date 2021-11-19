@@ -5,9 +5,6 @@ import DisplayConversation from "./DisplayConversation";
 const Conversation = (props) => {
   const { sender, recipient } = props;
 
-  console.log("sender: ", sender);
-  console.log("recipient: ", recipient);
-
   const [conversation, setConversation] = useState([]);
 
   const firestore = useFirestore();

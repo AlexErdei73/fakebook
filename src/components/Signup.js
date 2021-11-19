@@ -83,7 +83,6 @@ const Signup = (props) => {
         })
         .catch((error) => {
           // Update the error
-          console.log(error);
           setError(error);
         });
     setValidated(true);
@@ -96,7 +95,6 @@ const Signup = (props) => {
     }
     if (error) {
       props.onError(error.message);
-      console.log(error);
     } else {
       props.onSubmit();
     }
