@@ -54,7 +54,7 @@ const PhotoViewer = () => {
                 }}
               >
                 <StorageImage
-                  storagePath={`/fakebook/${userID}/${photo.fileName}`}
+                  storagePath={`/${userID}/${photo.fileName}`}
                   alt=""
                   style={{
                     position: "absolute",

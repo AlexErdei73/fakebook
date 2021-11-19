@@ -22,7 +22,7 @@ const SelectBgPhotoModal = (props) => {
               alt=""
               key={index}
               id={index}
-              storagePath={`fakebook/${userID}/${photo.fileName}`}
+              storagePath={`/${userID}/${photo.fileName}`}
               style={{
                 objectFit: "cover",
               }}
