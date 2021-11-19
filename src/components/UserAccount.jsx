@@ -140,7 +140,7 @@ const UserAccount = (props) => {
               }}
             />
             <Route
-              path={`fakebook/photo/:userID/:n`}
+              path={`/fakebook/photo/:userID/:n`}
               render={() => <PhotoViewer />}
             />
             <Route
