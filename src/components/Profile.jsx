@@ -44,6 +44,11 @@ const Profile = (props) => {
 
   const SM_WINDOW = 640;
 
+  //debugging console.logs
+  console.log("userName: ", userName);
+  console.log("users: ", users);
+  console.log("userID: ", userID);
+
   const user = () => {
     const userNames = users.map((user) => {
       if (!user.index || user.index === 0)
@@ -54,6 +59,9 @@ const Profile = (props) => {
     const user = users[index];
     return user;
   };
+
+  //checking the user() function
+  console.log("user(): ", user());
 
   const userId = () => user().userID;
 
