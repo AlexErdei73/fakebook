@@ -26,7 +26,7 @@ const Friends = (props) => {
     <Card>
       <Card.Body>
         <Card.Title>
-          <Link to={`/fakebook/${url}`} className="text-body">
+          <Link to={url} className="text-body">
             <b>Friends</b>
           </Link>
         </Card.Title>
