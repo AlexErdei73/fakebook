@@ -26,14 +26,14 @@ const TitleBar = (props) => {
 
   return (
     <Navbar bg="light" fixed="top" className="p-0">
-      <Navbar.Brand as={Link} to="/">
+      <Navbar.Brand as={Link} to="/fakebook">
         <FaFacebook color="dodgerblue" fontSize="2em" className="mx-3" />
       </Navbar.Brand>
       {dimension.width > SM_WINDOW && <div style={{ width: "450px" }} />}
       <Nav className="w-75 justify-content-start mr-5">
         {dimension.width > SM_WINDOW && (
           <Nav.Item>
-            <Link to="/" className="nav-link" ref={refs.home}>
+            <Link to="/fakebook" className="nav-link" ref={refs.home}>
               <VscHome
                 fontSize="2rem"
                 className="mx-4"
@@ -43,7 +43,11 @@ const TitleBar = (props) => {
           </Nav.Item>
         )}
         <Nav.Item>
-          <Link to="/friends/list" className="nav-link" ref={refs.friends}>
+          <Link
+            to="/fakebook/friends/list"
+            className="nav-link"
+            ref={refs.friends}
+          >
             <FaUserFriends
               fontSize="2rem"
               className="mx-4"
@@ -52,7 +56,7 @@ const TitleBar = (props) => {
           </Link>
         </Nav.Item>
         <Nav.Item>
-          <Link to="/watch" className="nav-link" ref={refs.watch}>
+          <Link to="/fakebook/watch" className="nav-link" ref={refs.watch}>
             <MdOndemandVideo
               fontSize="2rem"
               className="mx-4"
@@ -95,7 +99,7 @@ const TitleBar = (props) => {
             <Dropdown.Divider />
             <Dropdown.Item
               as={Link}
-              to="/"
+              to="/fakebook/"
               onClick={handleClick}
               className="p-0"
             >

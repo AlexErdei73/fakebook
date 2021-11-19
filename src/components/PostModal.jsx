@@ -169,7 +169,7 @@ const PostModal = (props) => {
               <div className="mb-2" id="img-container">
                 <StorageImage
                   alt=""
-                  storagePath={`/${post.photoURL}`}
+                  storagePath={`/fakebook/${post.photoURL}`}
                   className="w-100"
                   id="img-to-post"
                 />

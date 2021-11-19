@@ -45,8 +45,8 @@ const MiniFriends = (props) => {
           {users.map((user, index) => {
             const userProfileURL =
               user.index && user.index > 0
-                ? `/${user.lastname}.${user.firstname}.${user.index}`
-                : `/${user.lastname}.${user.firstname}`;
+                ? `/fakebook/${user.lastname}.${user.firstname}.${user.index}`
+                : `/fakebook/${user.lastname}.${user.firstname}`;
             const userName = `${user.firstname} ${user.lastname}`;
             return (
               //we render maximum 9 friends

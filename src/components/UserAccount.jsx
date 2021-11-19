@@ -123,7 +123,7 @@ const UserAccount = (props) => {
           />
           <Switch>
             <Route
-              path="/friends/list"
+              path="/fakebook/friends/list"
               render={() => {
                 setIsFriendsListPage(true);
                 return (
@@ -139,9 +139,12 @@ const UserAccount = (props) => {
                 );
               }}
             />
-            <Route path={`/photo/:userID/:n`} render={() => <PhotoViewer />} />
             <Route
-              path="/watch"
+              path={`fakebook/photo/:userID/:n`}
+              render={() => <PhotoViewer />}
+            />
+            <Route
+              path="/fakebook/watch"
               render={() => {
                 setIsFriendsListPage(false);
                 return (
@@ -162,7 +165,7 @@ const UserAccount = (props) => {
               }}
             />
             <Route
-              path={`/:userName`}
+              path={`/fakebook/:userName`}
               render={() => {
                 if (isFriendsListPage)
                   return (
@@ -193,7 +196,7 @@ const UserAccount = (props) => {
               }}
             />
             <Route
-              path="/"
+              path="/fakebook"
               render={() => {
                 setIsFriendsListPage(false);
                 return (

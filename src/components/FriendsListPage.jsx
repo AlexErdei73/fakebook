@@ -11,7 +11,7 @@ const FriendsListPage = (props) => {
   const { users, user, userID, linkRef, activeLink, setActiveLink, dimension } =
     props;
 
-  const FRIENDS_LIST_PAGE_PATH = "/friends/list";
+  const FRIENDS_LIST_PAGE_PATH = "/fakebook/friends/list";
 
   const location = useLocation();
 

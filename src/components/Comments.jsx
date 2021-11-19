@@ -116,7 +116,7 @@ const Comments = (props) => {
             <div id="comment-img-container">
               <StorageImage
                 alt=""
-                storagePath={`/${comment.photoURL}`}
+                storagePath={`/fakebook/${comment.photoURL}`}
                 id="img-to-comment"
               />
               <div id="close-btn-container">

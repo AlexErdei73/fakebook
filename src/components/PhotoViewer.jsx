@@ -24,7 +24,7 @@ const PhotoViewer = () => {
   }, [location]);
 
   const handleSelect = (selectedIndex, e) => {
-    history.push(`/photo/${userID}/${selectedIndex}`);
+    history.push(`/fakebook/photo/${userID}/${selectedIndex}`);
   };
 
   return (
@@ -54,7 +54,7 @@ const PhotoViewer = () => {
                 }}
               >
                 <StorageImage
-                  storagePath={`${userID}/${photo.fileName}`}
+                  storagePath={`/fakebook/${userID}/${photo.fileName}`}
                   alt=""
                   style={{
                     position: "absolute",

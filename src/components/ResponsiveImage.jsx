@@ -15,7 +15,7 @@ const ResponsiveImage = (props) => {
 
   let storagePath;
   if (useStoragePath === "true") storagePath = photo;
-  else storagePath = `${userID}/${photo.fileName}`;
+  else storagePath = `fakebook/${userID}/${photo.fileName}`;
 
   return (
     <div

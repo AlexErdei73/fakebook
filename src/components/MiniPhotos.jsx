@@ -12,7 +12,7 @@ const MiniPhotos = (props) => {
 
   const NUMBER_OF_PHOTOS = 9;
 
-  const photosLink = `/${user.lastname}.${user.firstname}/Photos`;
+  const photosLink = `/fakebook/${user.lastname}.${user.firstname}/Photos`;
 
   function handleClick() {
     handleClickLink(
@@ -47,7 +47,7 @@ const MiniPhotos = (props) => {
                   }}
                 >
                   <Link
-                    to={`photo/${userID}/${index}`}
+                    to={`/fakebook/photo/${userID}/${index}`}
                     className="text-body"
                     onClick={handleClick}
                   >

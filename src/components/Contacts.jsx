@@ -292,7 +292,7 @@ const Contacts = (props) => {
                       <div id="comment-img-container">
                         <StorageImage
                           alt=""
-                          storagePath={`/${message.photoURL}`}
+                          storagePath={`fakebook/${message.photoURL}`}
                           id="img-to-comment"
                         />
                         <div id="close-btn-container">

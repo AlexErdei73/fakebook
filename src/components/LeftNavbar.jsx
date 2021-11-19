@@ -19,13 +19,13 @@ const LeftNavbar = (props) => {
         </Nav.Link>
       </div>
       <div className="navitem">
-        <Nav.Link as={Link} to="/friends/list" className="text-dark">
+        <Nav.Link as={Link} to="/fakebook/friends/list" className="text-dark">
           <FaUserFriends size="26px" className="text-info mr-2" />
           <div className="d-inline">Friends</div>
         </Nav.Link>
       </div>
       <div className="navitem">
-        <Nav.Link as={Link} to="/watch" className="text-dark">
+        <Nav.Link as={Link} to="/fakebook/watch" className="text-dark">
           <MdOndemandVideo size="26px" className="text-info mr-2" />
           <div className="d-inline">Watch</div>
         </Nav.Link>
