@@ -176,30 +176,26 @@ const Contacts = (props) => {
   }
 
   return (
-    <Nav
-      className="flex-column"
-      style={{
-        height: "100%",
-        position: "relative",
-        margitTop: "50px",
-      }}
-    >
-      <h5 className="text-muted ml-3">
-        <b>Contacts</b>
-      </h5>
-      {users.map((user, index) =>
-        user.userID === userID ? (
-          <div key={index}></div>
-        ) : (
-          <div
-            key={index}
-            className="navitem text-dark flex-row justify-content-center p-2"
-            onClick={() => handleClick(user)}
-          >
-            <ProfileLink size="26" fullname="true" bold="false" user={user} />
-          </div>
-        )
-      )}
+    <>
+      <Nav className="flex-column">
+        <h5 className="text-muted ml-3">
+          <b>Contacts</b>
+        </h5>
+        {users.map((user, index) =>
+          user.userID === userID ? (
+            <div key={index}></div>
+          ) : (
+            <div
+              key={index}
+              className="navitem text-dark flex-row justify-content-center p-2"
+              onClick={() => handleClick(user)}
+            >
+              <ProfileLink size="26" fullname="true" bold="false" user={user} />
+            </div>
+          )
+        )}
+      </Nav>
+
       <OverlayTrigger
         placement="left-start"
         show={showOverlay}
@@ -336,7 +332,7 @@ const Contacts = (props) => {
       >
         <div
           style={{
-            position: "absolute",
+            position: "fixed",
             background: "white",
             padding: "12px",
             borderRadius: "50%",
@@ -349,7 +345,7 @@ const Contacts = (props) => {
           <FiEdit size="22px" />
         </div>
       </OverlayTrigger>
-    </Nav>
+    </>
   );
 };
 

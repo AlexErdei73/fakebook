@@ -64,7 +64,10 @@ const HomePage = (props) => {
           {isWatch && <VideoView users={users} posts={posts} userID={userID} />}
         </Col>
         {dimension.width > MD_WINDOW && !isWatch && (
-          <Col className="mh-100 overflow-auto">
+          <Col
+            className="mh-100 overflow-auto"
+            style={{ position: "relative" }}
+          >
             <Contacts users={users} user={user} userID={userID} />
           </Col>
         )}

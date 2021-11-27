@@ -76,7 +76,7 @@ const Signup = (props) => {
             });
 
           // URL of my website.
-          const myURL = { url: "http://localhost:3000/" };
+          const myURL = { url: "http://alexerdei73.github.io/fakebook" };
 
           // Send Email Verification and redirect to my website.
           return result.user.sendEmailVerification(myURL);
