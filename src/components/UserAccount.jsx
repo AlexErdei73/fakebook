@@ -59,6 +59,12 @@ const UserAccount = (props) => {
   useEffect(() => {
     //Update the online status if the current user does not seem to be online
     if (!currentUser.isOnline) userDocRef.update({ isOnline: true });
+    //We add event listener for the event when the user closes the browser window
+    window.addEventListener("beforeunload", (e) => {
+      e.preventDefault();
+      //We make the user offline
+      userDocRef.update({ isOnline: false });
+    });
   }, []);
 
   //This part is responsible for responsive behaviour only
