@@ -61,7 +61,6 @@ const UserAccount = (props) => {
     if (!currentUser.isOnline) userDocRef.update({ isOnline: true });
     //We add event listener for the event when the user closes the browser window
     window.addEventListener("beforeunload", (e) => {
-      e.preventDefault();
       //We make the user offline
       userDocRef.update({ isOnline: false });
     });
