@@ -39,7 +39,7 @@ During building this app I learnt more than I could have imagined. There were so
 
 - It was non trivial how I can apply Firebase timestamps without cloud functions. It was not obvious at all. Although the solution, which I found, works well, I am not sure it's the best.
 
-- Deploying React apps to gh-pages can be a lot of work, if they contain a lot of routes like this app. The developer version uses relative urls, but the deployed app needs absolute urls. To realise this and fix it everywhere was a huge effort itself. 
+- Deploying React apps to gh-pages can be a lot of work, if they contain a lot of routes like this app. The relative links work fine in the developer version without the fakebook in the path. On the other hand the deployed webpage has to contain fakebook/ at the beginning of all the paths, because the relative links are relative to the root directory of the gh-pages.
 
 # What are the possible directions for improvement? 
 
