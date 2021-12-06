@@ -7,8 +7,8 @@
     "functions.js": "/fakebook/static/js/functions.08cde967.chunk.js",
     "functions.js.map": "/fakebook/static/js/functions.08cde967.chunk.js.map",
     "main.css": "/fakebook/static/css/main.c18f12cc.chunk.css",
-    "main.js": "/fakebook/static/js/main.75466447.chunk.js",
-    "main.js.map": "/fakebook/static/js/main.75466447.chunk.js.map",
+    "main.js": "/fakebook/static/js/main.188da0b3.chunk.js",
+    "main.js.map": "/fakebook/static/js/main.188da0b3.chunk.js.map",
     "messaging.js": "/fakebook/static/js/messaging.0b99078f.chunk.js",
     "messaging.js.map": "/fakebook/static/js/messaging.0b99078f.chunk.js.map",
     "performance.js": "/fakebook/static/js/performance.f740f518.chunk.js",
@@ -21,7 +21,7 @@
     "static/js/8.1e7f6164.chunk.js": "/fakebook/static/js/8.1e7f6164.chunk.js",
     "static/js/8.1e7f6164.chunk.js.map": "/fakebook/static/js/8.1e7f6164.chunk.js.map",
     "index.html": "/fakebook/index.html",
-    "precache-manifest.3a54485d0571ec77dff99da9a675cd8e.js": "/fakebook/precache-manifest.3a54485d0571ec77dff99da9a675cd8e.js",
+    "precache-manifest.2a48b947098ab357d6c4b60bf1bb7291.js": "/fakebook/precache-manifest.2a48b947098ab357d6c4b60bf1bb7291.js",
     "service-worker.js": "/fakebook/service-worker.js",
     "static/css/8.63f31f8d.chunk.css.map": "/fakebook/static/css/8.63f31f8d.chunk.css.map",
     "static/css/main.c18f12cc.chunk.css.map": "/fakebook/static/css/main.c18f12cc.chunk.css.map",
@@ -33,6 +33,6 @@
     "static/css/8.63f31f8d.chunk.css",
     "static/js/8.1e7f6164.chunk.js",
     "static/css/main.c18f12cc.chunk.css",
-    "static/js/main.75466447.chunk.js"
+    "static/js/main.188da0b3.chunk.js"
   ]
 }
