@@ -7,8 +7,8 @@
     "functions.js": "/fakebook/static/js/functions.08cde967.chunk.js",
     "functions.js.map": "/fakebook/static/js/functions.08cde967.chunk.js.map",
     "main.css": "/fakebook/static/css/main.c18f12cc.chunk.css",
-    "main.js": "/fakebook/static/js/main.188da0b3.chunk.js",
-    "main.js.map": "/fakebook/static/js/main.188da0b3.chunk.js.map",
+    "main.js": "/fakebook/static/js/main.673cc36f.chunk.js",
+    "main.js.map": "/fakebook/static/js/main.673cc36f.chunk.js.map",
     "messaging.js": "/fakebook/static/js/messaging.0b99078f.chunk.js",
     "messaging.js.map": "/fakebook/static/js/messaging.0b99078f.chunk.js.map",
     "performance.js": "/fakebook/static/js/performance.f740f518.chunk.js",
@@ -18,21 +18,21 @@
     "runtime-main.js": "/fakebook/static/js/runtime-main.066d1632.js",
     "runtime-main.js.map": "/fakebook/static/js/runtime-main.066d1632.js.map",
     "static/css/8.63f31f8d.chunk.css": "/fakebook/static/css/8.63f31f8d.chunk.css",
-    "static/js/8.1e7f6164.chunk.js": "/fakebook/static/js/8.1e7f6164.chunk.js",
-    "static/js/8.1e7f6164.chunk.js.map": "/fakebook/static/js/8.1e7f6164.chunk.js.map",
+    "static/js/8.9d457346.chunk.js": "/fakebook/static/js/8.9d457346.chunk.js",
+    "static/js/8.9d457346.chunk.js.map": "/fakebook/static/js/8.9d457346.chunk.js.map",
     "index.html": "/fakebook/index.html",
-    "precache-manifest.2a48b947098ab357d6c4b60bf1bb7291.js": "/fakebook/precache-manifest.2a48b947098ab357d6c4b60bf1bb7291.js",
+    "precache-manifest.94484fbb01299db836fbab063d2270e6.js": "/fakebook/precache-manifest.94484fbb01299db836fbab063d2270e6.js",
     "service-worker.js": "/fakebook/service-worker.js",
     "static/css/8.63f31f8d.chunk.css.map": "/fakebook/static/css/8.63f31f8d.chunk.css.map",
     "static/css/main.c18f12cc.chunk.css.map": "/fakebook/static/css/main.c18f12cc.chunk.css.map",
-    "static/js/8.1e7f6164.chunk.js.LICENSE.txt": "/fakebook/static/js/8.1e7f6164.chunk.js.LICENSE.txt",
+    "static/js/8.9d457346.chunk.js.LICENSE.txt": "/fakebook/static/js/8.9d457346.chunk.js.LICENSE.txt",
     "static/media/friends.jpg": "/fakebook/static/media/friends.2536911b.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.066d1632.js",
     "static/css/8.63f31f8d.chunk.css",
-    "static/js/8.1e7f6164.chunk.js",
+    "static/js/8.9d457346.chunk.js",
     "static/css/main.c18f12cc.chunk.css",
-    "static/js/main.188da0b3.chunk.js"
+    "static/js/main.673cc36f.chunk.js"
   ]
 }
