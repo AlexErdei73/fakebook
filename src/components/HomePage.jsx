@@ -54,7 +54,7 @@ const HomePage = (props) => {
           </Col>
         )}
         <Col
-          sm={12}
+          sm={9}
           md={isWatch ? 12 : 9}
           lg={isWatch ? 9 : 6}
           className="mh-100 overflow-auto hide-scrollbar"

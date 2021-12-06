@@ -209,7 +209,7 @@ const Contacts = (props) => {
               maxHeight: `${window.innerHeight - 70}px`,
             }}
           >
-            <Card.Body>
+            <Card.Body className="overflow-none">
               <Card.Title>
                 {!recipient && (
                   <>
@@ -236,7 +236,7 @@ const Contacts = (props) => {
                 </Row>
               )}
               {!recipient && (
-                <Col className="mh-100 overflow-auto">
+                <Col className="h-75 overflow-auto">
                   {users.map((user, index) =>
                     user.userID === userID ? (
                       <div key={index}></div>
