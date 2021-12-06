@@ -11,6 +11,7 @@ import { handleClickLink } from "./helper";
 const HomePage = (props) => {
   const LG_WINDOW = 992;
   const MD_WINDOW = 768;
+  const SM_WINDOW = 640;
 
   const {
     dimension,
@@ -63,7 +64,7 @@ const HomePage = (props) => {
           )}
           {isWatch && <VideoView users={users} posts={posts} userID={userID} />}
         </Col>
-        {dimension.width > MD_WINDOW && !isWatch && (
+        {dimension.width > SM_WINDOW && !isWatch && (
           <Col
             className="mh-100 overflow-auto"
             style={{ position: "relative" }}
