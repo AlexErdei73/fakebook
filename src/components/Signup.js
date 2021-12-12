@@ -79,11 +79,14 @@ const Signup = (props) => {
           const myURL = { url: "https://alexerdei73.github.io/fakebook/" };
 
           // Send Email Verification and redirect to my website.
-          return result.user.sendEmailVerification(myURL);
+          return result.user.sendEmailVerification(myURL).then(() => {
+            console.log("Verification email has been sent.");
+          });
         })
         .catch((error) => {
           // Update the error
           setError(error);
+          console.log(error.message);
         });
     setValidated(true);
   };
