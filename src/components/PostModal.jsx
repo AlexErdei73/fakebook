@@ -118,8 +118,12 @@ const PostModal = (props) => {
   function addYoutubeVideo() {
     const url = post.text;
     const URL_PATTERN = "https://www.youtube.com/watch?v=";
-    const patternLength = URL_PATTERN.length;
-    if (!url.startsWith(URL_PATTERN)) return;
+    const MOBILE_URL_PATTERN = "https://m.youtube.com/watch?v=";
+    if (!url.startsWith(URL_PATTERN) || !url.startsWith(MOBILE_URL_PATTERN))
+      return;
+    let patternLength;
+    if (url.startsWith(URL_PATTERN)) patternLength = URL_PATTERN.length;
+    else patternLength = MOBILE_URL_PATTERN.length;
     const videoID = url.slice(patternLength);
     const youtubeURL = `https://www.youtube.com/embed/${videoID}`;
     const newPost = { ...post };
