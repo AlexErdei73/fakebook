@@ -13,6 +13,7 @@ import {
 } from "reactfire";
 import "firebase/auth";
 import "firebase/firestore";
+import { MdVisibility } from "react-icons/md";
 
 const UserAccount = (props) => {
   const { profileLink, userID, userState } = props;
@@ -61,8 +62,14 @@ const UserAccount = (props) => {
     if (!currentUser.isOnline) userDocRef.update({ isOnline: true });
     //We add event listener for the event when the user closes the browser window
     window.addEventListener("beforeunload", (e) => {
-      //We make the user offline
+      //We put the user offline
       userDocRef.update({ isOnline: false });
+    });
+    //we add event listener for the event when the browser window change visibility
+    document.addEventListener("visibilitychange", (e) => {
+      if (document.visibilityState === "visible")
+        userDocRef.update({ isOnline: true });
+      else userDocRef.update({ isOnline: false });
     });
   }, []);
 
