@@ -112,7 +112,7 @@ function App() {
           >
             <RecentLogins></RecentLogins>
           </Col>
-          <Col lg={5} className="d-flex justify-content-center">
+          <Col lg={5} className="bg-200 d-flex justify-content-center">
             <div className="login p-3 bg-light">
               <Login
                 onError={addError}
