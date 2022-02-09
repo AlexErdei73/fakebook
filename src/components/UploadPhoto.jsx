@@ -26,6 +26,7 @@ const UploadPhoto = (props) => {
   return (
     <input
       type="file"
+      accept="image/*"
       ref={fileInputRef}
       style={{ display: "none" }}
       onChange={onChange}
