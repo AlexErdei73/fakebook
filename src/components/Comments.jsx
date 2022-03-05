@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Col, Row, CloseButton, Button } from "react-bootstrap";
 import { StorageImage, useStorage } from "reactfire";
 import CircularImage from "./CircularImage";
@@ -6,6 +6,7 @@ import UploadPhoto from "./UploadPhoto";
 import DisplayComment from "./DisplayComment";
 import StyledTextarea from "./StyledTextarea";
 import { MdPhotoCamera } from "react-icons/md";
+import { MdSend } from "react-icons/md";
 import {
   addPhoto,
   handleTextareaChange,
@@ -58,6 +59,7 @@ const Comments = (props) => {
   }
 
   function saveComment() {
+    if (comment.text === "" && !comment.isPhoto) return;
     const newPost = { ...post };
     if (!post.comments) newPost.comments = [];
     newPost.comments.push(comment);
@@ -89,7 +91,7 @@ const Comments = (props) => {
               marginLeft: "5px",
             }}
           >
-            <Col xs={10} className="align-self-center">
+            <Col xs={9} className="align-self-center">
               <StyledTextarea
                 onChange={handleChange}
                 onKeyPress={(e) => handleKeyPress(e, saveComment)}
@@ -98,16 +100,25 @@ const Comments = (props) => {
                 className="w-100 mt-2"
               />
             </Col>
-            <Col xs={2}>
+            <Col xs={3}>
               <Row className="justify-content-end align-items-baseline">
                 <Button
                   variant="light"
                   size="sm"
-                  id="add-photo-btn"
+                  className="comment-btn"
                   onClick={() => setShow(true)}
                   disabled={comment.isPhoto}
                 >
-                  <MdPhotoCamera size="23px" className="text-muted" />
+                  <MdPhotoCamera size="20px" className="text-muted" />
+                </Button>
+                <Button
+                  variant="light"
+                  size="sm"
+                  id="send-btn"
+                  className="comment-btn"
+                  onClick={() => saveComment()}
+                >
+                  <MdSend size="20px" className="text-primary" />
                 </Button>
               </Row>
             </Col>

@@ -7,7 +7,7 @@ const StyledTextarea = (props) => {
     outline: "none",
     border: "none",
     resize: "none",
-    overflowY: "none",
+    overflow: "hidden",
     background: "#e9ecef",
     padding: "0",
     lineHeight: "0.8em",
@@ -39,7 +39,7 @@ const StyledTextarea = (props) => {
   //This restyles the text area, when we send the message, so the
   //value goes back to "" without executing the onChange handler
   useEffect(() => {
-    if (value === "" && textarea) restyleTextarea(textarea);
+    if (value === "" && textarea) setStyle(TEXTAREA_STYLE_INIT);
   }, [value]);
 
   return (

@@ -43,9 +43,13 @@
   font-size: 14px;
 }
 
-#add-photo-btn {
+#send-btn {
   border-radius: 50%;
   border: none;
+}
+
+.comment-btn {
+  background-color: #e9ecef;
 }
 
 #video-container {
