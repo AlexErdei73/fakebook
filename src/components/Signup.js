@@ -91,18 +91,9 @@ const Signup = (props) => {
     setValidated(true);
   };
 
-  useEffect(() => {
-    if (isFirst) {
-      setIsFirst(false);
-      return;
-    }
-    if (error) {
-      props.onError(error.message);
-    } else {
-      props.onSubmit();
-    }
-  }, [error]);
-
+  if (!isFirst)
+    if (!error) props.onSubmit();
+    else props.onError(error.message);
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>
       <Form.Row>
