@@ -118,7 +118,7 @@ const Comments = (props) => {
                   className="comment-btn"
                   onClick={() => saveComment()}
                 >
-                  <MdSend size="20px" className="text-primary" />
+                  <MdSend size="16px" className="text-primary" />
                 </Button>
               </Row>
             </Col>
