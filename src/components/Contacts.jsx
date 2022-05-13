@@ -123,14 +123,6 @@ const Contacts = (props) => {
       });
   }
 
-  //We open the overlay card programmatically again, otherwise the user is unable to send
-  //more than one message.
-  useEffect(() => {
-    if (!recipient) return; //When the user has not sent anything yet, we return.
-    //We only do this if we set back the INIT_MESSAGE after previous message had sent.
-    if (showOverlay && message.recipient === "") handleClick(recipient);
-  }, [message]);
-
   const [senders, setSenders] = useState([]);
 
   const messagesRef = firestore.collection("messages");
@@ -175,6 +167,12 @@ const Contacts = (props) => {
     setSenders(newSenders);
   }
 
+  //We open the overlay card programmatically again, otherwise the user is unable to send
+  //more than one message.
+  if (recipient)
+    if (showOverlay && message.recipient === "")
+      //We only do this if we set back the INIT_MESSAGE after previous message had sent.
+      handleClick(recipient);
   return (
     <>
       <Nav className="flex-column">
