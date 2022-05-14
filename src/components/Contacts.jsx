@@ -149,7 +149,7 @@ const Contacts = (props) => {
     const last = senders.length - 1;
     const sender = senders[last];
     handleClick(users.find((usr) => usr.userID === sender));
-  }, [senders]);
+  }, [senders, users]);
 
   function updateReadStatusOfMessages(sender) {
     const messagesToUpdate = unread.filter(
@@ -229,7 +229,10 @@ const Contacts = (props) => {
               </Card.Title>
               <hr />
               {recipient && (
-                <Row className="mh-100 overflow-auto" ref={convRowRef}>
+                <Row
+                  className="mh-100 overflow-auto flex-column-reverse"
+                  ref={convRowRef}
+                >
                   <Conversation sender={userID} recipient={recipient.userID} />
                 </Row>
               )}
