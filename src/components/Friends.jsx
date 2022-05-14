@@ -15,7 +15,7 @@ const Friends = (props) => {
       activeLink,
       setActiveLink
     );
-  }, []);
+  }, [activeLink, friendsLinkRef, setActiveLink]);
 
   //copyUsers never undefined to avoid error
   let copyUsers;
