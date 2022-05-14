@@ -35,13 +35,12 @@ const HomePage = (props) => {
 
   //we set the active link to the home link when it renders
   useEffect(() => {
-    //if (dimension.width < SM_WINDOW) return;
     handleClickLink(
       { currentTarget: linkRef.current },
       activeLink,
       setActiveLink
     );
-  }, [isWatch]);
+  }, [isWatch, linkRef, activeLink, setActiveLink]);
 
   if (status !== "success") return <div>...loading</div>;
   else
