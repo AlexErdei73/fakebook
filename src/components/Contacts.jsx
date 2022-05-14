@@ -127,7 +127,7 @@ const Contacts = (props) => {
 
   const messagesRef = firestore.collection("messages");
 
-  const { status: status, data: unread } = useFirestoreCollectionData(
+  const { status, data: unread } = useFirestoreCollectionData(
     messagesRef.where("recipient", "==", userID).where("isRead", "==", false),
     { idField: "messageID" }
   );
