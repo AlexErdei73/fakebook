@@ -142,7 +142,7 @@ const Contacts = (props) => {
       });
       setSenders(sendersWithUnreadMsg);
     }
-  }, [status]);
+  }, [status, unread]);
 
   useEffect(() => {
     if (senders.length === 0) return;
