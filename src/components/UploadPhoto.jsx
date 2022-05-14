@@ -12,7 +12,7 @@ const UploadPhoto = (props) => {
     if (!show) return;
     fileInputRef.current.click();
     setShow(false);
-  }, [show]);
+  }, [show, setShow]);
 
   function onChange(event) {
     event.preventDefault();
