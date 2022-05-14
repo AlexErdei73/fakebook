@@ -10,7 +10,6 @@ import { handleClickLink } from "./helper";
 
 const HomePage = (props) => {
   const LG_WINDOW = 992;
-  const MD_WINDOW = 768;
   const SM_WINDOW = 640;
 
   const {
