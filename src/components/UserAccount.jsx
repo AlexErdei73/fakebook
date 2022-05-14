@@ -13,7 +13,6 @@ import {
 } from "reactfire";
 import "firebase/auth";
 import "firebase/firestore";
-import { MdVisibility } from "react-icons/md";
 
 const UserAccount = (props) => {
   const { profileLink, userID, userState } = props;
