@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
   Card,
   CloseButton,
@@ -60,6 +60,8 @@ const Contacts = (props) => {
     setMessage(newMessage);
     setRecipient(user);
   }
+
+  const handleClickCallback = useCallback(handleClick, [user]);
 
   function handleClose() {
     updateReadStatusOfMessages(recipient);
@@ -148,8 +150,8 @@ const Contacts = (props) => {
     if (senders.length === 0) return;
     const last = senders.length - 1;
     const sender = senders[last];
-    handleClick(users.find((usr) => usr.userID === sender));
-  }, [senders, users]);
+    handleClickCallback(users.find((usr) => usr.userID === sender));
+  }, [senders, users, handleClickCallback]);
 
   function updateReadStatusOfMessages(sender) {
     const messagesToUpdate = unread.filter(
