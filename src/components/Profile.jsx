@@ -161,7 +161,7 @@ const Profile = (props) => {
       activeMainLink,
       setActiveMainLink
     );
-  }, []);
+  }, [linkRef, activeMainLink, setActiveMainLink]);
 
   return (
     <>
