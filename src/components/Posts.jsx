@@ -27,7 +27,7 @@ const Posts = (props) => {
       activeLink,
       setActiveLink
     );
-  }, []);
+  }, [activeLink, postsLinkRef, setActiveLink]);
 
   return (
     <Row className="w-100" style={{ height: "1000px" }}>
