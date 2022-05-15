@@ -33,7 +33,6 @@ export function addPhoto(input) {
 }
 
 export function delPhoto(input) {
-  const photoURL = input.state.photoURL;
   //We do not remove the photo from the storage, because in the case of multiple occurances, the removal
   //of the photo causes error. If we want to take into account the storage efficiency, we have to store
   //the number of occurences of each photo and only delete those from the storage, which only occure once.
