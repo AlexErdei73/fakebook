@@ -59,7 +59,6 @@ const Posts = (props) => {
           className="mt-2"
         />
         {user.posts.map((postID, index) => {
-          console.log("postID: ", postID);
           return (
             <DisplayUserPost
               key={index}
