@@ -22,7 +22,7 @@ const Photos = (props) => {
       activeLink,
       setActiveLink
     );
-  }, []);
+  }, [activeLink, photosLinkRef, setActiveLink]);
 
   return (
     <Card variant="light" className="w-100">
