@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useFirebaseApp } from "reactfire";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -7,12 +7,14 @@ import Button from "react-bootstrap/Button";
 import "./Signup.css";
 
 const Signup = (props) => {
+  const { user, onSubmit, onChange, onError } = props;
+
   // Import firebase
   var firebase = useFirebaseApp();
 
   // onChange function
   const handleChange = (e) => {
-    props.onChange(e.target.name, e.target.value);
+    onChange(e.target.name, e.target.value);
   };
 
   // Handle name change on form differently because of first and last name
@@ -29,8 +31,8 @@ const Signup = (props) => {
   };
 
   const [error, setError] = useState(null);
-  const [isFirst, setIsFirst] = useState(true);
   const [validated, setValidated] = useState(false);
+  const [formIsValid, setFormIsValid] = useState(false);
 
   // Submit function (Create account)
   const handleSubmit = (e) => {
@@ -39,7 +41,7 @@ const Signup = (props) => {
     if (form.checkValidity() === true)
       firebase
         .auth()
-        .createUserWithEmailAndPassword(props.user.email, props.user.password)
+        .createUserWithEmailAndPassword(user.email, user.password)
         .then((result) => {
           // Update the nickname
           result.user.updateProfile({
@@ -81,19 +83,25 @@ const Signup = (props) => {
           // Send Email Verification and redirect to my website.
           return result.user.sendEmailVerification(myURL).then(() => {
             console.log("Verification email has been sent.");
+            setFormIsValid(true);
           });
         })
         .catch((error) => {
           // Update the error
           setError(error);
           console.log(error.message);
+          setFormIsValid(true);
         });
     setValidated(true);
   };
 
-  if (!isFirst)
-    if (!error) props.onSubmit();
-    else props.onError(error.message);
+  useEffect(() => {
+    if (formIsValid) {
+      if (error) onError(error.message);
+      onSubmit();
+    }
+  }, [formIsValid, error, onError, onSubmit]);
+
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>
       <Form.Row>

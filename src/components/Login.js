@@ -13,7 +13,7 @@ const Login = (props) => {
     setErrorMsg("");
   };
 
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState(props.user.error);
 
   // Submit function (Create account)
   const handleSubmit = (e) => {
@@ -45,6 +45,10 @@ const Login = (props) => {
   useEffect(() => {
     props.onError(errorMsg);
   }, [errorMsg]);
+
+  useEffect(() => {
+    setErrorMsg(props.user.error);
+  }, [props.user]);
 
   return (
     <>

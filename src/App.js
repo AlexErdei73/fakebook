@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import "./App.css";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
@@ -47,12 +47,16 @@ function App() {
   const [show, setShow] = useState(false);
 
   function handleClose() {
+    console.log("modal closed");
     setShow(false);
   }
 
   function handleShow() {
     setShow(true);
   }
+
+  const addErrorCallback = useCallback(addError, []);
+  const handleCloseCallback = useCallback(handleClose, []);
 
   //get the first and lastName for the route of the profile
   const name =
@@ -78,10 +82,7 @@ function App() {
     return <div>...Loading</div>;
   }
 
-  if (
-    signInCheckResult.signedIn === true &&
-    userState.error !== "Please verify your email before to continue"
-  ) {
+  if (signInCheckResult.signedIn === true && !userState.error) {
     //Reactfire is still buggy in ver 3.0.0
     //Even if user is signed in, the useUser
     //hook can give back null for the current
@@ -151,9 +152,9 @@ function App() {
             {isModalSignup ? (
               <Modal.Body>
                 <Signup
-                  onError={addError}
+                  onError={addErrorCallback}
                   onChange={updateUser}
-                  onSubmit={handleClose}
+                  onSubmit={handleCloseCallback}
                   user={userState}
                 ></Signup>
               </Modal.Body>
