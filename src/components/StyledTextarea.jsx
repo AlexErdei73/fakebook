@@ -31,10 +31,11 @@ const StyledTextarea = (props) => {
   //grow but unable to shrink back
   useEffect(() => {
     if (style.height !== "auto") return;
+    if (!textarea) return;
     const newStyle = { ...style };
     newStyle.height = textarea.scrollHeight + "px";
     setStyle(newStyle);
-  }, [style.height]);
+  }, [style, textarea]);
 
   //This restyles the text area, when we send the message, so the
   //value goes back to "" without executing the onChange handler
