@@ -17,7 +17,6 @@ const Login = (props) => {
 
   // Submit function (Create account)
   const handleSubmit = (e) => {
-    const form = e.currentTarget;
     e.preventDefault();
     e.stopPropagation();
     //signIn code here ...
