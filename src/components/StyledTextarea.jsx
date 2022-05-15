@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const StyledTextarea = (props) => {
   const { onChange, onKeyPress, value, welcomeText, ...rest } = props;
@@ -12,6 +12,7 @@ const StyledTextarea = (props) => {
     padding: "0",
     lineHeight: "0.8em",
   };
+  const styleInitRef = useRef(TEXTAREA_STYLE_INIT);
   const [style, setStyle] = useState(TEXTAREA_STYLE_INIT);
   const [textarea, setTextarea] = useState(null); //We save the textarea in the state, so the effect hook can use it
 
@@ -40,8 +41,8 @@ const StyledTextarea = (props) => {
   //This restyles the text area, when we send the message, so the
   //value goes back to "" without executing the onChange handler
   useEffect(() => {
-    if (value === "" && textarea) setStyle(TEXTAREA_STYLE_INIT);
-  }, [value]);
+    if (value === "" && textarea) setStyle(styleInitRef.current);
+  }, [value, textarea, styleInitRef]);
 
   return (
     <textarea
