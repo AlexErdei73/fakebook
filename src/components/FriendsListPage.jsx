@@ -24,7 +24,7 @@ const FriendsListPage = (props) => {
       activeLink,
       setActiveLink
     );
-  }, []);
+  }, [activeLink, linkRef, setActiveLink]);
 
   return (
     <Row id="friends-list" className="overflow-hidden">
