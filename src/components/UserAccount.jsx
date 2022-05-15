@@ -46,10 +46,10 @@ const UserAccount = (props) => {
     idField: "userID",
   });
 
-  const [isFriendsListPage, setIsFriendsListPage] = useState(false);
+  const isFriendsListPage = useRef(false);
 
   function closeFriendsListPage() {
-    setIsFriendsListPage(false);
+    isFriendsListPage.current = false;
   }
 
   function setUserOffline(signoutFn) {
@@ -139,7 +139,7 @@ const UserAccount = (props) => {
             <Route
               path="/fakebook/friends/list"
               render={() => {
-                setIsFriendsListPage(true);
+                isFriendsListPage.current = true;
                 return (
                   <FriendsListPage
                     users={users}
@@ -160,7 +160,7 @@ const UserAccount = (props) => {
             <Route
               path="/fakebook/watch"
               render={() => {
-                setIsFriendsListPage(false);
+                isFriendsListPage.current = false;
                 return (
                   <HomePage
                     className="pt-5"
@@ -181,7 +181,7 @@ const UserAccount = (props) => {
             <Route
               path={`/fakebook/:userName`}
               render={() => {
-                if (isFriendsListPage)
+                if (isFriendsListPage.current)
                   return (
                     <FriendsListPage
                       users={users}
@@ -212,7 +212,7 @@ const UserAccount = (props) => {
             <Route
               path="/fakebook"
               render={() => {
-                setIsFriendsListPage(false);
+                isFriendsListPage.current = false;
                 return (
                   <HomePage
                     className="pt-5"
