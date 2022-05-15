@@ -116,7 +116,7 @@ function App() {
           <Col lg={5} className="bg-200 d-flex justify-content-center">
             <div className="login p-3 bg-light">
               <Login
-                onError={addError}
+                onError={addErrorCallback}
                 onChange={updateUser}
                 user={userState}
                 onClickForgottenPswd={handleClickPasswordReminderBtn}

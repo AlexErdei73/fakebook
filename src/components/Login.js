@@ -4,16 +4,18 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 const Login = (props) => {
+  const { onError, onChange, user, onClickForgottenPswd } = props;
+
   // Import firebase
   var firebase = useFirebaseApp();
 
   // onChange function
   const handleChange = (e) => {
-    props.onChange(e.target.name, e.target.value);
+    onChange(e.target.name, e.target.value);
     setErrorMsg("");
   };
 
-  const [errorMsg, setErrorMsg] = useState(props.user.error);
+  const [errorMsg, setErrorMsg] = useState(user.error);
 
   // Submit function (Create account)
   const handleSubmit = (e) => {
@@ -22,7 +24,7 @@ const Login = (props) => {
     //signIn code here ...
     firebase
       .auth()
-      .signInWithEmailAndPassword(props.user.email, props.user.password)
+      .signInWithEmailAndPassword(user.email, user.password)
       .then((result) => {
         // email has been verified?
         if (!result.user.emailVerified) {
@@ -34,20 +36,19 @@ const Login = (props) => {
       })
       .catch((error) => {
         // Update the error
-        if (props.user.email === "") setErrorMsg("Email is required.");
-        else if (props.user.password === "")
-          setErrorMsg("Password is required.");
+        if (user.email === "") setErrorMsg("Email is required.");
+        else if (user.password === "") setErrorMsg("Password is required.");
         else setErrorMsg(error.message);
       });
   };
 
   useEffect(() => {
-    props.onError(errorMsg);
-  }, [errorMsg]);
+    onError(errorMsg);
+  }, [errorMsg, onError]);
 
   useEffect(() => {
-    setErrorMsg(props.user.error);
-  }, [props.user]);
+    setErrorMsg(user.error);
+  }, [user]);
 
   return (
     <>
@@ -83,7 +84,7 @@ const Login = (props) => {
         type="link"
         className="w-100"
         id="link-button"
-        onClick={props.onClickForgottenPswd}
+        onClick={onClickForgottenPswd}
       >
         Forgotten password?
       </Button>
