@@ -20,7 +20,11 @@ const PostModal = (props) => {
     placeholder,
   } = props;
 
-  const WELCOME_TEXT = "For adding YouTube video copy link here ...";
+  const WELCOME_TEXT = `For adding YouTube video do the following:
+     1. copy link of the video from the addresse bar of your browser
+     2. press YouTube button again to upload the YouTube video to your post
+     3. add your text for the post
+     4. push the post button`;
   const INIT_POST = {
     userID: `${userID}`,
     text: "",
@@ -131,6 +135,7 @@ const PostModal = (props) => {
     newPost.youtubeURL = youtubeURL;
     newPost.text = "";
     setPost(newPost);
+    setText("");
     setBtnEnabled(true);
   }
 
@@ -145,6 +150,11 @@ const PostModal = (props) => {
   function getPlaceholder() {
     if (isYoutubeBtnPressed && !post.isYoutube) return WELCOME_TEXT;
     else return placeholder;
+  }
+
+  function getRows() {
+    if (getPlaceholder() === WELCOME_TEXT && post.text === "") return 7;
+    else return 3;
   }
 
   return (
@@ -165,7 +175,7 @@ const PostModal = (props) => {
               onChange={handleChange}
               className="w-100 mt-2"
               placeholder={getPlaceholder()}
-              rows="3"
+              rows={getRows()}
               id="textarea"
               value={post.text}
             ></textarea>
