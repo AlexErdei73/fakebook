@@ -71,11 +71,11 @@ const TitleBar = (props) => {
           <Nav.Item className="align-self-center">
             <Link
               to={props.profilelink}
-              className="nav-link"
+              className="nav-link profile"
+              id="profile"
               onClick={(e) => {
                 closeFriendsListPage();
               }}
-              id="profile"
               ref={refs.profile}
             >
               <ProfileLink user={user} size="30" fullname="false" bold="true" />
@@ -84,9 +84,8 @@ const TitleBar = (props) => {
         )}
         <Nav.Item className="align-self-center">
           <DropdownButton
-            id="custom-drop-down-btn"
             title=""
-            className="mr-4"
+            className="mr-4 custom-drop-down-btn"
             menuAlign="right"
           >
             <Dropdown.Item
