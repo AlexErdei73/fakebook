@@ -225,7 +225,7 @@ const Contacts = (props) => {
                     user={recipient}
                   />
                 )}
-                <div id="close-btn-container">
+                <div className="close-btn-container">
                   <CloseButton onClick={handleClose} className="text-primary" />
                 </div>
               </Card.Title>
@@ -269,7 +269,7 @@ const Contacts = (props) => {
                       <Button
                         variant="light"
                         size="sm"
-                        id="add-photo-btn"
+                        className="add-photo-btn"
                         onClick={() => setShowPhotoDlg(true)}
                       >
                         <HiOutlinePhotograph
@@ -288,13 +288,13 @@ const Contacts = (props) => {
                     }}
                   >
                     {message.isPhoto && (
-                      <div id="comment-img-container">
+                      <div className="comment-img-container">
                         <StorageImage
                           alt=""
                           storagePath={`/${message.photoURL}`}
-                          id="img-to-comment"
+                          className="img-to-comment"
                         />
-                        <div id="close-btn-container">
+                        <div className="close-btn-container">
                           <CloseButton onClick={deletePhoto} />
                         </div>
                       </div>
@@ -311,7 +311,7 @@ const Contacts = (props) => {
                     <Button
                       variant="light"
                       size="sm"
-                      id="add-photo-btn"
+                      className="add-photo-btn"
                       onClick={() => {
                         if (message.text !== "" || message.isPhoto)
                           saveMessage();
