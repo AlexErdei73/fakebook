@@ -169,31 +169,29 @@ const PostModal = (props) => {
         </Modal.Header>
         <Modal.Body>
           <ProfileLink user={user} size="45" fullname="true" bold="true" />
-          <div className="mt-2" id="scrolling-container">
+          <div className="mt-2 scrolling-container">
             <textarea
               type="text"
               onChange={handleChange}
-              className="w-100 mt-2"
+              className="w-100 mt-2 textarea"
               placeholder={getPlaceholder()}
               rows={getRows()}
-              id="textarea"
               value={post.text}
             ></textarea>
             {post.isPhoto && (
-              <div className="mb-2" id="img-container">
+              <div className="mb-2 img-container">
                 <StorageImage
                   alt=""
                   storagePath={`/${post.photoURL}`}
-                  className="w-100"
-                  id="img-to-post"
+                  className="w-100 img-to-post"
                 />
-                <div id="close-btn-container">
+                <div className="close-btn-container">
                   <CloseButton onClick={deletePhoto} />
                 </div>
               </div>
             )}
             {post.isYoutube && (
-              <div className="mb-2" id="video-container">
+              <div className="mb-2 video-container">
                 <iframe
                   src={post.youtubeURL}
                   title="YouTube video player"
@@ -201,29 +199,27 @@ const PostModal = (props) => {
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
                   allowfullscreen
                 ></iframe>
-                <div id="close-btn-container">
+                <div className="close-btn-container">
                   <CloseButton onClick={deleteYoutubeVideo} />
                 </div>
               </div>
             )}
           </div>
-          <div className="w-100 my-2" id="add-to-post">
+          <div className="w-100 my-2 add-to-post">
             <b>Add to your post</b>
             <Button
-              className="ml-2"
+              className="ml-2 add-photo-btn"
               variant="light"
               size="sm"
-              id="add-photo-btn"
               onClick={addYoutubeVideo}
               disabled={post.isPhoto || post.isYoutube}
             >
               <AiFillYoutube size="26px" className="text-danger" />
             </Button>
             <Button
-              className="ml-2"
+              className="ml-2 add-photo-btn"
               variant="light"
               size="sm"
-              id="add-photo-btn"
               onClick={() => setShowUploadPhotoDlg(true)}
               disabled={post.isPhoto || post.isYoutube}
             >

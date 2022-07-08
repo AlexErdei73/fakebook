@@ -71,7 +71,7 @@ const DisplayPost = (props) => {
           <StorageImage alt="" storagePath={post.photoURL} className="w-100" />
         )}
         {post.isYoutube && (
-          <div id="video-container">
+          <div className="video-container">
             <iframe
               src={post.youtubeURL}
               title="YouTube video player"

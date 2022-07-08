@@ -1,17 +1,17 @@
-#scrolling-container {
+.scrolling-container {
   width: 102.5%;
   max-height: 250px;
   overflow-y: scroll;
 }
 
-#textarea {
+.textarea {
   outline: none;
   border: none;
   resize: none;
   overflow-y: hidden;
 }
 
-#img-container {
+.img-container {
   width: 100%;
   border: 2px solid lightgray;
   border-radius: 10px;
@@ -19,11 +19,11 @@
   position: relative;
 }
 
-#img-to-post {
+.img-to-post {
   border-radius: 10px;
 }
 
-#close-btn-container {
+.close-btn-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,23 +36,23 @@
   right: 20px;
 }
 
-#add-to-post {
+.add-to-post {
   border: 2px solid lightgray;
   border-radius: 10px;
   padding: 16px;
   font-size: 14px;
 }
 
-#send-btn {
+/*#send-btn {
   border-radius: 50%;
   border: none;
-}
+}*/
 
 .comment-btn {
   background-color: #e9ecef;
 }
 
-#video-container {
+.video-container {
   width: 100%;
   border: 2px solid lightgray;
   border-radius: 10px;
