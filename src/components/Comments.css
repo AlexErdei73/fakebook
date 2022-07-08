@@ -8,11 +8,6 @@
   width: 30%;
 }
 
-#send-btn {
-  padding: 0 5px 0 0;
-}
-
-#send-btn:focus {
-  outline: none important!;
-  box-shadow: none;
+.comment-btn {
+  border-radius: 18px;
 }
