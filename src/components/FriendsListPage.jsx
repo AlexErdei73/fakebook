@@ -27,9 +27,9 @@ const FriendsListPage = (props) => {
   }, [activeLink, linkRef, setActiveLink]);
 
   return (
-    <Row id="friends-list" className="overflow-hidden">
+    <Row className="overflow-hidden friends-list">
       <FriendList users={users} />
-      <Col id="col-2" className="overflow-auto mh-100 hide-scrollbar">
+      <Col className="overflow-auto mh-100 hide-scrollbar col-two">
         {isNoUser ? (
           <div className="h-100 w-100 d-flex flex-column align-items-center justify-content-center">
             <img
@@ -43,7 +43,7 @@ const FriendsListPage = (props) => {
             </h5>
           </div>
         ) : (
-          <div id="profile-container">
+          <div className="profile-container">
             <Profile
               user={user}
               userID={userID}

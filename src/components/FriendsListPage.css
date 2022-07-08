@@ -1,17 +1,13 @@
-#friends-list {
+.friends-list {
   margin-top: 50px;
   height: 92.5vh;
 }
 
-#col-1 {
-  width: 300px;
-}
-
-#col-2 {
+.col-two {
   overflow-x: hidden;
 }
 
-#profile-container {
+.profile-container {
   width: 98%;
   min-width: 600px;
   margin-top: -3.5%;
