@@ -1,9 +1,9 @@
-#card {
+.create-post-card {
   position: relative;
   height: 145px;
 }
 
-#text-div {
+.text-div {
   background: #e9ecef;
   border-radius: 20px;
   position: absolute;
@@ -12,17 +12,11 @@
   color: gray;
 }
 
-#text-div:hover {
+.text-div:hover {
   background: lightgray;
 }
 
-#photo-btn {
-  display: block;
-  width: 33%;
-  float: left;
-}
-
-#youtube-btn {
+.add-btn {
   display: block;
   width: 33%;
   min-width: 150px;

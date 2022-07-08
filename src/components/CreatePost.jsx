@@ -47,22 +47,18 @@ const CreatePost = (props) => {
 
   return (
     <>
-      <Card id="card" {...rest}>
+      <Card className="create-post-card" {...rest}>
         <Card.Body>
           <Card.Title>
             <CircularImage size="40" url={user.profilePictureURL} />
-            <div
-              id="text-div"
-              className="p-2 w-75 text-dark"
-              onClick={handleClick}
-            >
+            <div className="p-2 w-75 text-dark text-div" onClick={handleClick}>
               {getText()}
             </div>
           </Card.Title>
           <hr></hr>
           <Button
             variant="light"
-            id="youtube-btn"
+            className="add-btn"
             size="sm"
             onClick={handleYoutubeBtnClick}
           >
@@ -71,7 +67,7 @@ const CreatePost = (props) => {
           </Button>
           <Button
             variant="light"
-            id="photo-btn"
+            className="add-btn"
             size="sm"
             onClick={handleClick}
           >
