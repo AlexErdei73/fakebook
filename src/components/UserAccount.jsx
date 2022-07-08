@@ -75,38 +75,6 @@ const UserAccount = (props) => {
     });
   }, [userDocRef]);
 
-  //This part is responsible for responsive behaviour only
-  const [dimension, setDimension] = useState({
-    height: window.innerHeight,
-    width: window.innerWidth,
-  });
-
-  function debounce(fn, ms) {
-    let timer;
-    return () => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        fn();
-        clearTimeout(timer);
-      }, ms);
-    };
-  }
-
-  useEffect(() => {
-    const debouncedHandleResize = debounce(function handleResize() {
-      setDimension({
-        height: window.innerHeight,
-        width: window.innerWidth,
-      });
-    }, 100);
-
-    window.addEventListener("resize", debouncedHandleResize);
-
-    return () => {
-      window.removeEventListener("resize", debouncedHandleResize);
-    };
-  });
-
   //code responsible for changing activelink with url changes
 
   const refs = {
@@ -167,7 +135,6 @@ const UserAccount = (props) => {
                     user={currentUser}
                     userID={userID}
                     users={users}
-                    dimension={dimension}
                     isWatch={true}
                     // the components need the above props to change the active link
                     linkRef={refs.watch}
@@ -217,7 +184,6 @@ const UserAccount = (props) => {
                     user={currentUser}
                     userID={userID}
                     users={users}
-                    dimension={dimension}
                     isWatch={false}
                     // the components need the above props to change the active link
                     linkRef={refs.home}
