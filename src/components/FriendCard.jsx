@@ -29,7 +29,7 @@ const FriendCard = (props) => {
         show={showOverlay}
         overlay={
           <div
-            id="popup-card"
+            className="popup-card"
             onMouseEnter={() => setShowOverlay(true)}
             onMouseLeave={() => setShowOverlay(false)}
             onClick={handleClick}
@@ -37,7 +37,7 @@ const FriendCard = (props) => {
             <div className="m-3">
               <CircularImage size="120" url={user.profilePictureURL} />
             </div>
-            <h4 id="name-tag">
+            <h4 className="name-tag">
               <b>{userName}</b>
             </h4>
           </div>
@@ -48,7 +48,7 @@ const FriendCard = (props) => {
           width="90px"
           height="90px"
           alt=""
-          id="profile-picture"
+          className="profile-picture"
           onMouseEnter={() => setShowOverlay(true)}
           onMouseLeave={() => setShowOverlay(false)}
           onClick={handleClick}

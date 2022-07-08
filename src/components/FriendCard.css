@@ -1,4 +1,4 @@
-#popup-card {
+.popup-card {
   position: relative;
   width: 400px;
   height: 200px;
@@ -7,12 +7,12 @@
   border-radius: 10px;
 }
 
-#name-tag {
+.name-tag {
   position: absolute;
   top: 20px;
   left: 160px;
 }
 
-#profile-picture {
+.profile-picture {
   object-fit: cover;
 }
