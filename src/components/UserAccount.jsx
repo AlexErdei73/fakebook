@@ -186,7 +186,6 @@ const UserAccount = (props) => {
                       users={users}
                       user={currentUser}
                       userID={userID}
-                      dimension={dimension}
                       // the components need the above props to change the active link
                       linkRef={refs.friends}
                       activeLink={activeLink}

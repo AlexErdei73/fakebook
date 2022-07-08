@@ -8,8 +8,7 @@ import imgFriends from "../images/friends.jpg";
 import { handleClickLink } from "./helper";
 
 const FriendsListPage = (props) => {
-  const { users, user, userID, linkRef, activeLink, setActiveLink, dimension } =
-    props;
+  const { users, user, userID, linkRef, activeLink, setActiveLink } = props;
 
   const FRIENDS_LIST_PAGE_PATH = "/fakebook/friends/list";
 
@@ -51,7 +50,6 @@ const FriendsListPage = (props) => {
               linkRef={linkRef}
               activeMainLink={activeLink}
               setActiveMainLink={setActiveLink}
-              dimension={dimension}
             />
           </div>
         )}
