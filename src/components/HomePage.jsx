@@ -9,11 +9,7 @@ import "./HomePage.css";
 import { handleClickLink } from "./helper";
 
 const HomePage = (props) => {
-  const LG_WINDOW = 992;
-  const SM_WINDOW = 640;
-
   const {
-    dimension,
     user,
     userID,
     users,
@@ -46,11 +42,9 @@ const HomePage = (props) => {
   else
     return (
       <Row className={`${className} overflow-hidden vh-100`}>
-        {dimension.width > LG_WINDOW && (
-          <Col className="mh-100 overflow-auto">
-            <LeftNavbar user={user} profileLink={profileLink} />
-          </Col>
-        )}
+        <Col className="mh-100 overflow-auto left-navbar-col">
+          <LeftNavbar user={user} profileLink={profileLink} />
+        </Col>
         <Col
           sm={9}
           md={isWatch ? 12 : 9}
@@ -62,9 +56,9 @@ const HomePage = (props) => {
           )}
           {isWatch && <VideoView users={users} posts={posts} userID={userID} />}
         </Col>
-        {dimension.width > SM_WINDOW && !isWatch && (
+        {!isWatch && (
           <Col
-            className="mh-100 overflow-auto"
+            className="mh-100 overflow-auto contacts-col"
             style={{ position: "relative" }}
           >
             <Contacts users={users} user={user} userID={userID} />

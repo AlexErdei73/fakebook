@@ -8,3 +8,15 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+@media (max-width: 640px) {
+  .contacts-col {
+    display: none;
+  }
+}
+
+@media (max-width: 992px) {
+  .left-navbar-col {
+    display: none;
+  }
+}
