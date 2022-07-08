@@ -33,16 +33,7 @@ import { handleClickLink } from "./helper";
 const Profile = (props) => {
   const { userName } = useParams();
 
-  const {
-    users,
-    userID,
-    linkRef,
-    activeMainLink,
-    setActiveMainLink,
-    dimension,
-  } = props;
-
-  const SM_WINDOW = 640;
+  const { users, userID, linkRef, activeMainLink, setActiveMainLink } = props;
 
   const user = () => {
     const userNames = users.map((user) => {
@@ -180,7 +171,7 @@ const Profile = (props) => {
                 title={
                   <b>
                     <MdPhotoCamera className="mr-1" size="20px" />
-                    {dimension.width > SM_WINDOW ? "Edit Cover Photo" : ""}
+                    <span>Edit Cover Photo</span>
                   </b>
                 }
                 size="sm"

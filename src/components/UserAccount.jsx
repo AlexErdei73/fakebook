@@ -199,7 +199,6 @@ const UserAccount = (props) => {
                       user={currentUser}
                       userID={userID}
                       users={users}
-                      dimension={dimension}
                       // the components need the above props to change the active link
                       linkRef={refs.profile}
                       activeMainLink={activeLink}
