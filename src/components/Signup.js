@@ -159,7 +159,7 @@ const Signup = (props) => {
         </Form.Group>
       </Form.Row>
       <Form.Row>
-        <p className="text-muted p-1" id="text-legal">
+        <p className="text-muted p-1 text-legal">
           Signing Up for fakebook you agree to share the uploaded details with
           any other user. Please do not upload any sensitive data to the app,
           which is built strictly for demonstration purposes.
