@@ -165,18 +165,18 @@ const Profile = (props) => {
 
   return (
     <>
-      <Row className="justify-content-center" id="grad">
-        <Col id="profile-col" className="m-0 p-0">
-          <div id="background-pic-container">
+      <Row className="justify-content-center grad">
+        <Col className="m-0 p-0 profile-col">
+          <div className="background-pic-container">
             <StorageImage
-              id="background-pic"
+              className="background-pic"
               storagePath={backgroundPictureURL}
               alt=""
             />
             {isCurrentUser && (
               <DropdownButton
                 variant="light"
-                id="background-pic-button"
+                className="background-pic-button"
                 title={
                   <b>
                     <MdPhotoCamera className="mr-1" size="20px" />
@@ -199,12 +199,12 @@ const Profile = (props) => {
                 </Dropdown.Item>
               </DropdownButton>
             )}
-            <div id="profile-pic-container">
+            <div className="profile-pic-container">
               <CircularImage size="180" url={profilePictureURL} />
               {isCurrentUser && (
                 <Button
                   variant="light"
-                  id="profile-pic-button"
+                  className="profile-pic-button"
                   onClick={() => setShowUpdateProfilePic(true)}
                 >
                   <MdPhotoCamera size="19px" />
@@ -255,7 +255,7 @@ const Profile = (props) => {
         </Col>
       </Row>
       <Row className="justify-content-center">
-        <Col id="profile-col">
+        <Col className="profile-col">
           <Switch>
             <Route path={`${path}/:itemId`}>
               <NestedRoute
