@@ -123,11 +123,11 @@ const Comments = (props) => {
             </Col>
           </Row>
           {comment.isPhoto && (
-            <div id="comment-img-container">
+            <div className="comment-img-container">
               <StorageImage
                 alt=""
                 storagePath={`/${comment.photoURL}`}
-                id="img-to-comment"
+                className="img-to-comment"
               />
               <div id="close-btn-container">
                 <CloseButton onClick={deletePhoto} />
