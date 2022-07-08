@@ -10,11 +10,7 @@
   background-color: #e9ecef;
 }
 
-#title-footer {
+.title-footer {
   font-size: small;
   font-weight: lighter;
-}
-
-#link-button {
-  box-shadow: none;
 }

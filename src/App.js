@@ -143,7 +143,7 @@ function App() {
                   {isModalSignup ? "Sign Up" : "Password Reset Email"}
                 </strong>
                 {isModalSignup && (
-                  <div id="title-footer">It's quick and easy.</div>
+                  <div className="title-footer">It's quick and easy.</div>
                 )}
               </Modal.Title>
             </Modal.Header>
