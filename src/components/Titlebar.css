@@ -25,6 +25,7 @@
   height: 46px;
   background: #e9ecef;
   border-radius: 23px;
+  caret-color: transparent;
 }
 
 .profile:hover {
