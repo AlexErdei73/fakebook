@@ -12,7 +12,7 @@ import { useFirebaseApp } from "reactfire";
 
 const TitleBar = (props) => {
   //get the signed in user and closeFriendsListPage function
-  const { user, closeFriendsListPage, setUserOffline, refs, dimension } = props;
+  const { user, closeFriendsListPage, setUserOffline, refs } = props;
 
   // Import firebase
   const firebase = useFirebaseApp();
@@ -22,26 +22,22 @@ const TitleBar = (props) => {
     setUserOffline(() => firebase.auth().signOut());
   };
 
-  const SM_WINDOW = 640;
-
   return (
     <Navbar bg="light" fixed="top" className="p-0">
       <Navbar.Brand as={Link} to="/fakebook">
         <FaFacebook color="dodgerblue" fontSize="2em" className="mx-3" />
       </Navbar.Brand>
-      {dimension.width > SM_WINDOW && <div style={{ width: "450px" }} />}
+      <div style={{ width: "450px" }} className="spaceing" />
       <Nav className="w-75 justify-content-start mr-5">
-        {dimension.width > SM_WINDOW && (
-          <Nav.Item>
-            <Link to="/fakebook" className="nav-link" ref={refs.home}>
-              <VscHome
-                fontSize="2rem"
-                className="mx-4"
-                style={{ pointerEvents: "none" }}
-              />
-            </Link>
-          </Nav.Item>
-        )}
+        <Nav.Item className="first">
+          <Link to="/fakebook" className="nav-link" ref={refs.home}>
+            <VscHome
+              fontSize="2rem"
+              className="mx-4"
+              style={{ pointerEvents: "none" }}
+            />
+          </Link>
+        </Nav.Item>
         <Nav.Item>
           <Link
             to="/fakebook/friends/list"
@@ -67,21 +63,19 @@ const TitleBar = (props) => {
       </Nav>
 
       <Nav className="w-25 justify-content-end align-self-center">
-        {dimension.width > SM_WINDOW && (
-          <Nav.Item className="align-self-center">
-            <Link
-              to={props.profilelink}
-              className="nav-link profile"
-              id="profile"
-              onClick={(e) => {
-                closeFriendsListPage();
-              }}
-              ref={refs.profile}
-            >
-              <ProfileLink user={user} size="30" fullname="false" bold="true" />
-            </Link>
-          </Nav.Item>
-        )}
+        <Nav.Item className="align-self-center first">
+          <Link
+            to={props.profilelink}
+            className="nav-link profile"
+            id="profile"
+            onClick={(e) => {
+              closeFriendsListPage();
+            }}
+            ref={refs.profile}
+          >
+            <ProfileLink user={user} size="30" fullname="false" bold="true" />
+          </Link>
+        </Nav.Item>
         <Nav.Item className="align-self-center">
           <DropdownButton
             title=""

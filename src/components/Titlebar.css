@@ -31,3 +31,10 @@
 .profile:hover {
   background: lightgray;
 }
+
+@media (max-width: 640px) {
+  .spaceing,
+  .first {
+    display: none;
+  }
+}

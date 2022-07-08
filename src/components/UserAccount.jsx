@@ -133,7 +133,6 @@ const UserAccount = (props) => {
             closeFriendsListPage={closeFriendsListPage}
             setUserOffline={setUserOffline}
             refs={refs}
-            dimension={dimension}
           />
           <Switch>
             <Route
