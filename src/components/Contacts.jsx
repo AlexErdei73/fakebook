@@ -17,7 +17,7 @@ import {
 import ProfileLink from "./ProfileLink";
 import { FiEdit } from "react-icons/fi";
 import { HiOutlinePhotograph } from "react-icons/hi";
-import { MdSend } from "react-icons/md";
+import { MdNoEncryption, MdSend } from "react-icons/md";
 import StyledTextarea from "./StyledTextarea";
 import UploadPhoto from "./UploadPhoto";
 import Conversation from "./Conversation";
@@ -185,13 +185,14 @@ const Contacts = (props) => {
           user.userID === userID ? (
             <div key={index}></div>
           ) : (
-            <div
+            <button
+              type="button"
               key={index}
-              className="navitem text-dark flex-row justify-content-center p-2"
+              className="navitem text-dark flex-row justify-content-center p-2 mb-1 nav-btn"
               onClick={() => handleClick(user)}
             >
               <ProfileLink size="26" fullname="true" bold="false" user={user} />
-            </div>
+            </button>
           )
         )}
       </Nav>
@@ -333,7 +334,8 @@ const Contacts = (props) => {
           </Card>
         }
       >
-        <div
+        <button
+          type="button"
           style={{
             position: "fixed",
             background: "white",
@@ -342,11 +344,12 @@ const Contacts = (props) => {
             bottom: "20px",
             right: "26px",
             boxShadow: "0px 5px 5px 0px lightgray",
+            border: "none",
           }}
           onClick={() => handleClick(null)}
         >
           <FiEdit size="22px" />
-        </div>
+        </button>
       </OverlayTrigger>
     </>
   );
