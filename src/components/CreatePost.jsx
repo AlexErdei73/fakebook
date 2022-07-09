@@ -51,9 +51,9 @@ const CreatePost = (props) => {
         <Card.Body>
           <Card.Title>
             <CircularImage size="40" url={user.profilePictureURL} />
-            <div className="p-2 w-75 text-dark text-div" onClick={handleClick}>
+            <button type="button" className="p-2 w-75 text-dark text-btn" onClick={handleClick}>
               {getText()}
-            </div>
+            </button>
           </Card.Title>
           <hr></hr>
           <Button

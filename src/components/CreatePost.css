@@ -3,13 +3,15 @@
   height: 145px;
 }
 
-.text-div {
+.text-btn {
   background: #e9ecef;
   border-radius: 20px;
   position: absolute;
   top: 20px;
   left: 80px;
   color: gray;
+  border: none;
+  text-align: left;
 }
 
 .text-div:hover {
