@@ -59,21 +59,21 @@ const MiniFriends = (props) => {
                     paddingLeft: "3px",
                     paddingRight: "3px",
                     paddingTop: "0",
-                    paddingBottom: "0",
+                    paddingBottom: "3px",
                   }}
                 >
+                  <ResponsiveImage
+                    photo={user.profilePictureURL}
+                    width="100%"
+                    height="100%"
+                    useStoragePath="true"
+                  />
                   <Link
                     to={userProfileURL}
                     className="text-body"
                     onClick={handleClick}
                   >
-                    <ResponsiveImage
-                      photo={user.profilePictureURL}
-                      width="100%"
-                      height="100%"
-                      useStoragePath="true"
-                    />
-                    <div className="w-100" style={{ height: "2.7em" }}>
+                    <div className="w-100" style={{ height: "2.5em" }}>
                       <p style={{ fontSize: "0.9em" }}>
                         <b>{userName}</b>
                       </p>
