@@ -50,6 +50,7 @@ const MiniPhotos = (props) => {
                     to={`/fakebook/photo/${userID}/${index}`}
                     className="text-body"
                     onClick={handleClick}
+                    tabindex="-1"
                   >
                     <ResponsiveImage
                       photo={photo}
