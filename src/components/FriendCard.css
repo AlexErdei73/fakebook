@@ -16,3 +16,8 @@
 .profile-picture {
   object-fit: cover;
 }
+
+.friend-btn {
+  border: none;
+  background: white;
+}

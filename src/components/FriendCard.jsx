@@ -43,20 +43,26 @@ const FriendCard = (props) => {
           </div>
         }
       >
-        <StorageImage
-          storagePath={user.profilePictureURL}
-          width="90px"
-          height="90px"
-          alt=""
-          className="profile-picture"
-          onMouseEnter={() => setShowOverlay(true)}
-          onMouseLeave={() => setShowOverlay(false)}
+        <button
+          type="button"
           onClick={handleClick}
-        />
+          className="friend-btn"
+          tabindex="-1"
+        >
+          <StorageImage
+            storagePath={user.profilePictureURL}
+            width="90px"
+            height="90px"
+            alt=""
+            className="profile-picture"
+            onMouseEnter={() => setShowOverlay(true)}
+            onMouseLeave={() => setShowOverlay(false)}
+          />
+        </button>
       </OverlayTrigger>
-      <b className="ml-3" onClick={handleClick}>
-        {userName}
-      </b>
+      <button type="button" className="ml-3 friend-btn" onClick={handleClick}>
+        <b>{userName}</b>
+      </button>
     </Col>
   );
 };
