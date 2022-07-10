@@ -94,6 +94,7 @@ const DisplayPost = (props) => {
           <AiFillLike
             className="bg-primary text-light mr-2"
             style={{ borderRadius: "50%" }}
+            aria-label="likes"
           />
           {post.likes.length}
         </Button>

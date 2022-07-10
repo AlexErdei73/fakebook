@@ -214,7 +214,11 @@ const PostModal = (props) => {
               onClick={addYoutubeVideo}
               disabled={post.isPhoto || post.isYoutube}
             >
-              <AiFillYoutube size="26px" className="text-danger" />
+              <AiFillYoutube
+                size="26px"
+                className="text-danger"
+                aria-label="YouTube"
+              />
             </Button>
             <Button
               className="ml-2 add-photo-btn"
@@ -223,7 +227,11 @@ const PostModal = (props) => {
               onClick={() => setShowUploadPhotoDlg(true)}
               disabled={post.isPhoto || post.isYoutube}
             >
-              <HiOutlinePhotograph size="26px" className="text-success" />
+              <HiOutlinePhotograph
+                size="26px"
+                className="text-success"
+                aria-label="photo"
+              />
             </Button>
           </div>
           <Button

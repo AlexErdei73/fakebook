@@ -198,7 +198,7 @@ const Profile = (props) => {
                   className="profile-pic-button"
                   onClick={() => setShowUpdateProfilePic(true)}
                 >
-                  <MdPhotoCamera size="19px" />
+                  <MdPhotoCamera size="19px" aria-label="photo" />
                 </Button>
               )}
             </div>

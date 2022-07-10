@@ -348,8 +348,9 @@ const Contacts = (props) => {
             border: "none",
           }}
           onClick={() => handleClick(null)}
+          aria-label="Message"
         >
-          <FiEdit size="22px" />
+          <FiEdit size="22px" aria-hidden="true" />
         </button>
       </OverlayTrigger>
     </>

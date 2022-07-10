@@ -109,7 +109,11 @@ const Comments = (props) => {
                   onClick={() => setShow(true)}
                   disabled={comment.isPhoto}
                 >
-                  <MdPhotoCamera size="18px" className="text-muted" />
+                  <MdPhotoCamera
+                    size="18px"
+                    className="text-muted"
+                    aria-label="photo"
+                  />
                 </Button>
                 <Button
                   variant="light"
@@ -117,7 +121,11 @@ const Comments = (props) => {
                   className="comment-btn"
                   onClick={() => saveComment()}
                 >
-                  <MdSend size="18px" className="text-primary" />
+                  <MdSend
+                    size="18px"
+                    className="text-primary"
+                    aria-label="send"
+                  />
                 </Button>
               </Row>
             </Col>
