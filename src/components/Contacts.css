@@ -10,3 +10,7 @@
 .nav-btn:focus {
   background-color: lightgray;
 }
+
+.white {
+  background-color: white;
+}

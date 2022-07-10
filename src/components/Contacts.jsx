@@ -245,9 +245,10 @@ const Contacts = (props) => {
                     user.userID === userID ? (
                       <div key={index}></div>
                     ) : (
-                      <Row
+                      <button
+                        type="button"
                         key={index}
-                        className="text-dark justify-content-start p-2 container-choose-to"
+                        className="flex-row text-dark justify-content-start p-2 container-choose-to nav-btn w-100 mb-1 white"
                         onClick={() => handleClick(user)}
                       >
                         <ProfileLink
@@ -256,7 +257,7 @@ const Contacts = (props) => {
                           bold="false"
                           user={user}
                         />
-                      </Row>
+                      </button>
                     )
                   )}
                 </Col>
