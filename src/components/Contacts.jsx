@@ -17,7 +17,7 @@ import {
 import ProfileLink from "./ProfileLink";
 import { FiEdit } from "react-icons/fi";
 import { HiOutlinePhotograph } from "react-icons/hi";
-import { MdNoEncryption, MdSend } from "react-icons/md";
+import { MdSend } from "react-icons/md";
 import StyledTextarea from "./StyledTextarea";
 import UploadPhoto from "./UploadPhoto";
 import Conversation from "./Conversation";
@@ -188,7 +188,7 @@ const Contacts = (props) => {
             <button
               type="button"
               key={index}
-              className="navitem text-dark flex-row justify-content-center p-2 mb-1 nav-btn"
+              className="navitem text-dark flex-row justify-content-center p-2 mb-1 nav-btn bg-200"
               onClick={() => handleClick(user)}
             >
               <ProfileLink size="26" fullname="true" bold="false" user={user} />
