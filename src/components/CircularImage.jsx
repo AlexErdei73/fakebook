@@ -1,17 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StorageImage } from "reactfire";
 import "firebase/storage";
+import { getImageURL } from "../backend/backend";
 
 const CircularImage = (props) => {
   const { size, url, isOnline, ...rest } = props;
+
+  const [src, setSrc] = useState("");
 
   const radius = Math.floor(size / 6);
 
   const shift = Math.floor(0.8536 * size - radius / 2);
 
+  useEffect(() => {
+    (async () => setSrc(await getImageURL(url)))();
+  }, []);
+
   return (
     <>
-      <StorageImage
+      <img
         style={{
           width: `${size}px`,
           height: `${size}px`,
@@ -20,7 +27,7 @@ const CircularImage = (props) => {
           pointerEvents: "none",
           position: "relative",
         }}
-        storagePath={url}
+        src={src}
         alt=""
         {...rest}
       />
