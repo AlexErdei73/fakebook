@@ -14,9 +14,11 @@ import "firebase/auth";
 import "firebase/firestore";
 import UserAccount from "./components/UserAccount";
 import PasswordReminder from "./components/PasswordReminder";
+import { useSelector } from "react-redux";
 
 function App() {
-  const { data: user } = useUser();
+  //const { data: user } = useUser();
+  const user = useSelector((state) => state.user);
 
   // User State
   const initUser = {
@@ -75,13 +77,13 @@ function App() {
     handleShow();
   }
 
-  const { status, data: signInCheckResult } = useSigninCheck();
+  //const { status, data: signInCheckResult } = useSigninCheck();
 
-  if (status === "loading") {
+  /*if (status === "loading") {
     return <div>...Loading</div>;
-  }
+  }*/
 
-  if (signInCheckResult.signedIn === true && !userState.error) {
+  if (user.isSignedIn === true && !userState.error) {
     //Reactfire is still buggy in ver 3.0.0
     //Even if user is signed in, the useUser
     //hook can give back null for the current
@@ -89,14 +91,14 @@ function App() {
     //premission to read firebase and the error
     //is not caught by reactfire. Strangely
     //refreshing the browser solves the issue.
-    if (!user) {
+    /*if (!user) {
       window.location.reload(false);
-    }
+    }*/
 
-    if (user.emailVerified)
+    if (user.isEmailVerified)
       return (
         <UserAccount
-          userID={user.uid}
+          userID={user.id}
           profileLink={profileLink}
           userState={userState}
         />
