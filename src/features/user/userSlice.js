@@ -14,6 +14,7 @@ export const userSlice = createSlice({
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
       state.id = action.payload.id;
+      state.displayName = action.payload.displayName;
       state.isEmailVerified = action.payload.isEmailVerified;
       state.isSignedIn = true;
     },

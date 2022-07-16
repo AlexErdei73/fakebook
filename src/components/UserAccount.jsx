@@ -16,6 +16,7 @@ import "firebase/firestore";
 
 const UserAccount = (props) => {
   const { profileLink, userID, userState } = props;
+  console.log(props);
 
   const firestore = useFirestore();
   const usersCollection = firestore.collection("users");

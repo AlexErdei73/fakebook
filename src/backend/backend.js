@@ -20,7 +20,8 @@ auth.onAuthStateChanged((user) => {
   if (user) {
     const id = user.uid;
     const isEmailVerified = user.emailVerified;
-    store.dispatch(signIn({ id, isEmailVerified }));
+    const displayName = user.displayName;
+    store.dispatch(signIn({ id, displayName, isEmailVerified }));
   } else {
     store.dispatch(signOut());
   }
