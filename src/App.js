@@ -48,7 +48,6 @@ function App() {
   const [show, setShow] = useState(false);
 
   function handleClose() {
-    console.log("modal closed");
     setShow(false);
   }
 
@@ -96,13 +95,7 @@ function App() {
     }*/
 
     if (user.isEmailVerified)
-      return (
-        <UserAccount
-          userID={user.id}
-          profileLink={profileLink}
-          userState={userState}
-        />
-      );
+      return <UserAccount profileLink={profileLink} userState={userState} />;
     else return <></>;
   } else {
     return (

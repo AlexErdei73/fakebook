@@ -22,7 +22,7 @@ import {
 } from "../backend/backend";
 
 const UserAccount = (props) => {
-  const { profileLink, userID, userState } = props;
+  const { profileLink, userState } = props;
 
   /*const firestore = useFirestore();
   const usersCollection = firestore.collection("users");
@@ -63,6 +63,7 @@ const UserAccount = (props) => {
     };
   }, []);
 
+  const userID = useSelector((state) => state.user.id);
   const currentUser = useSelector((state) => state.currentUser);
   const users = useSelector((state) => state.users);
 
