@@ -33,10 +33,21 @@ const firestore = firebase.firestore();
 
 const usersCollection = firestore.collection("users");
 
+let userID;
+let userDocRef;
+
 export function subscribeCurrentUser() {
-  const userID = store.getState().user.id;
-  const userDocRef = usersCollection.doc(userID);
+  userID = store.getState().user.id;
+  userDocRef = usersCollection.doc(userID);
   userDocRef.onSnapshot((doc) => {
     store.dispatch(currentUserUpdated(doc.data()));
   });
+}
+
+export function currentUserOnline() {
+  userDocRef.update({ isOnline: true });
+}
+
+export function currentUserOffline() {
+  return userDocRef.update({ isOnline: false });
 }

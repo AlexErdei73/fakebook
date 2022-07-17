@@ -14,7 +14,11 @@ import {
 import "firebase/auth";
 import "firebase/firestore";
 import { useSelector } from "react-redux";
-import { subscribeCurrentUser } from "../backend/backend";
+import {
+  currentUserOffline,
+  currentUserOnline,
+  subscribeCurrentUser,
+} from "../backend/backend";
 
 const UserAccount = (props) => {
   const { profileLink, userID, userState } = props;
@@ -39,6 +43,20 @@ const UserAccount = (props) => {
 
   useEffect(() => {
     subscribeCurrentUser();
+    //Update the online status if the current user does not seem to be online
+    if (!currentUser.isOnline) {
+      currentUserOnline();
+    }
+    //We add event listener for the event when the user closes the browser window
+    window.addEventListener("beforeunload", (e) => {
+      //We put the user offline
+      currentUserOffline();
+    });
+    //we add event listener for the event when the browser window change visibility
+    document.addEventListener("visibilitychange", (e) => {
+      if (document.visibilityState === "visible") currentUserOnline();
+      else currentUserOffline();
+    });
   }, []);
 
   const currentUser = useSelector((state) => state.currentUser);
@@ -60,30 +78,10 @@ const UserAccount = (props) => {
     isFriendsListPage.current = false;
   }
 
-  function setUserOffline(signoutFn) {
-    userDocRef.update({ isOnline: false }).then(() => signoutFn());
+  async function setUserOffline(signoutFn) {
+    await currentUserOffline();
+    signoutFn();
   }
-
-  useEffect(() => {
-    //Update the online status if the current user does not seem to be online
-    if (!currentUser.isOnline) {
-      userDocRef.update({ isOnline: true });
-    }
-  }, []);
-
-  useEffect(() => {
-    //We add event listener for the event when the user closes the browser window
-    window.addEventListener("beforeunload", (e) => {
-      //We put the user offline
-      userDocRef.update({ isOnline: false });
-    });
-    //we add event listener for the event when the browser window change visibility
-    document.addEventListener("visibilitychange", (e) => {
-      if (document.visibilityState === "visible")
-        userDocRef.update({ isOnline: true });
-      else userDocRef.update({ isOnline: false });
-    });
-  }, [userDocRef]);
 
   //code responsible for changing activelink with url changes
 
