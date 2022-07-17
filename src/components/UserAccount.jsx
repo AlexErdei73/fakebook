@@ -6,30 +6,29 @@ import HomePage from "./HomePage";
 import FriendsListPage from "./FriendsListPage";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Container from "react-bootstrap/Container";
-import {
+/*import {
   useFirestore,
   useFirestoreDocData,
   useFirestoreCollectionData,
 } from "reactfire";
 import "firebase/auth";
-import "firebase/firestore";
+import "firebase/firestore";*/
 import { useSelector } from "react-redux";
 import {
   currentUserOffline,
   currentUserOnline,
   subscribeCurrentUser,
+  subscribeUsers,
 } from "../backend/backend";
 
 const UserAccount = (props) => {
   const { profileLink, userID, userState } = props;
 
-  console.log(props);
-
-  const firestore = useFirestore();
+  /*const firestore = useFirestore();
   const usersCollection = firestore.collection("users");
 
   const userDocRef = usersCollection.doc(userID);
-  /*const result = useFirestoreDocData(userDocRef, {
+  const result = useFirestoreDocData(userDocRef, {
     initialData: {
       firstname: "",
       lastname: "",
@@ -42,7 +41,8 @@ const UserAccount = (props) => {
   });*/
 
   useEffect(() => {
-    subscribeCurrentUser();
+    const unsubscribeCurrentUser = subscribeCurrentUser();
+    const unsubscribeUsers = subscribeUsers();
     //Update the online status if the current user does not seem to be online
     if (!currentUser.isOnline) {
       currentUserOnline();
@@ -57,9 +57,14 @@ const UserAccount = (props) => {
       if (document.visibilityState === "visible") currentUserOnline();
       else currentUserOffline();
     });
+    return () => {
+      unsubscribeCurrentUser();
+      unsubscribeUsers();
+    };
   }, []);
 
   const currentUser = useSelector((state) => state.currentUser);
+  const users = useSelector((state) => state.users);
 
   //We add the index of user to the profileLink if there are more users with the exact same userName
   function modifyProfileLink() {
@@ -68,9 +73,9 @@ const UserAccount = (props) => {
     } else return profileLink;
   }
 
-  const { status, data: users } = useFirestoreCollectionData(usersCollection, {
+  /*const { status, data: users } = useFirestoreCollectionData(usersCollection, {
     idField: "userID",
-  });
+  });*/
 
   const isFriendsListPage = useRef(false);
 
@@ -95,7 +100,7 @@ const UserAccount = (props) => {
   //add the active status of the link DOM elements
   const [activeLink, setActiveLink] = useState(null);
 
-  if (status === "loading" || !currentUser) {
+  if (users.length === 0 || !currentUser.isOnline) {
     return <div>...Loading</div>;
   }
 

@@ -33,8 +33,6 @@ import { handleClickLink } from "./helper";
 const Profile = (props) => {
   const { userName } = useParams();
 
-  console.log(userName);
-
   const { users, userID, linkRef, activeMainLink, setActiveMainLink } = props;
 
   const user = () => {
@@ -47,9 +45,6 @@ const Profile = (props) => {
     const user = users[index];
     return user;
   };
-
-  console.log("UserID: ", userID);
-  console.log(user());
 
   const userId = () => user().userID;
 

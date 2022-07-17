@@ -6,6 +6,7 @@ import firebaseConfig from "../firebaseConfig";
 import store from "../app/store";
 import { signIn, signOut } from "../features/user/userSlice";
 import { currentUserUpdated } from "../features/currentUser/currentUserSlice";
+import { usersUpdated } from "../features/users/usersSlice";
 
 firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
@@ -39,7 +40,7 @@ let userDocRef;
 export function subscribeCurrentUser() {
   userID = store.getState().user.id;
   userDocRef = usersCollection.doc(userID);
-  userDocRef.onSnapshot((doc) => {
+  return userDocRef.onSnapshot((doc) => {
     store.dispatch(currentUserUpdated(doc.data()));
   });
 }
@@ -50,4 +51,16 @@ export function currentUserOnline() {
 
 export function currentUserOffline() {
   return userDocRef.update({ isOnline: false });
+}
+
+export function subscribeUsers() {
+  return usersCollection.onSnapshot((snapshot) => {
+    const users = [];
+    snapshot.forEach((user) => {
+      const userData = user.data();
+      userData.userID = user.id;
+      users.push(userData);
+    });
+    store.dispatch(usersUpdated(users));
+  });
 }
