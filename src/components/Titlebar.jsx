@@ -8,18 +8,18 @@ import { MdOndemandVideo } from "react-icons/md";
 import { ImExit } from "react-icons/im";
 import "./Titlebar.css";
 import ProfileLink from "./ProfileLink";
-import { useFirebaseApp } from "reactfire";
+import { signUserOut } from "../backend/backend";
+import { useSelector } from "react-redux";
 
 const TitleBar = (props) => {
   //get the signed in user and closeFriendsListPage function
-  const { user, closeFriendsListPage, setUserOffline, refs } = props;
+  const { closeFriendsListPage, refs } = props;
 
-  // Import firebase
-  const firebase = useFirebaseApp();
+  const user = useSelector((state) => state.currentUser);
 
   // Log out function
   const handleClick = () => {
-    setUserOffline(() => firebase.auth().signOut());
+    signUserOut();
   };
 
   return (

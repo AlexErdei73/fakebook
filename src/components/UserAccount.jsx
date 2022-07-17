@@ -110,9 +110,7 @@ const UserAccount = (props) => {
         <BrowserRouter>
           <TitleBar
             profilelink={modifyProfileLink()}
-            user={currentUser}
             closeFriendsListPage={closeFriendsListPage}
-            setUserOffline={setUserOffline}
             refs={refs}
           />
           <Switch>

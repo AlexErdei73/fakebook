@@ -64,3 +64,8 @@ export function subscribeUsers() {
     store.dispatch(usersUpdated(users));
   });
 }
+
+export async function signUserOut() {
+  await currentUserOffline();
+  auth.signOut();
+}
