@@ -13,6 +13,8 @@ import {
 } from "reactfire";
 import "firebase/auth";
 import "firebase/firestore";
+import { useSelector } from "react-redux";
+import { subscribeCurrentUser } from "../backend/backend";
 
 const UserAccount = (props) => {
   const { profileLink, userID, userState } = props;
@@ -23,7 +25,7 @@ const UserAccount = (props) => {
   const usersCollection = firestore.collection("users");
 
   const userDocRef = usersCollection.doc(userID);
-  const result = useFirestoreDocData(userDocRef, {
+  /*const result = useFirestoreDocData(userDocRef, {
     initialData: {
       firstname: "",
       lastname: "",
@@ -33,13 +35,13 @@ const UserAccount = (props) => {
       posts: [],
       isOnline: false,
     },
-  });
+  });*/
 
   useEffect(() => {
-    console.log(result);
-  }, [result]);
+    subscribeCurrentUser();
+  }, []);
 
-  const currentUser = result.data;
+  const currentUser = useSelector((state) => state.currentUser);
 
   //We add the index of user to the profileLink if there are more users with the exact same userName
   function modifyProfileLink() {
@@ -67,7 +69,7 @@ const UserAccount = (props) => {
     if (!currentUser.isOnline) {
       userDocRef.update({ isOnline: true });
     }
-  }, [currentUser.isOnline, userDocRef]);
+  }, []);
 
   useEffect(() => {
     //We add event listener for the event when the user closes the browser window

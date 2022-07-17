@@ -1,9 +1,11 @@
 import firebase from "firebase/app";
 import "firebase/storage";
 import "firebase/auth";
+import "firebase/firestore";
 import firebaseConfig from "../firebaseConfig";
 import store from "../app/store";
 import { signIn, signOut } from "../features/user/userSlice";
+import { currentUserUpdated } from "../features/currentUser/currentUserSlice";
 
 firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
@@ -26,3 +28,15 @@ auth.onAuthStateChanged((user) => {
     store.dispatch(signOut());
   }
 });
+
+const firestore = firebase.firestore();
+
+const usersCollection = firestore.collection("users");
+
+export function subscribeCurrentUser() {
+  const userID = store.getState().user.id;
+  const userDocRef = usersCollection.doc(userID);
+  userDocRef.onSnapshot((doc) => {
+    store.dispatch(currentUserUpdated(doc.data()));
+  });
+}
