@@ -84,11 +84,6 @@ const UserAccount = (props) => {
     isFriendsListPage.current = false;
   }
 
-  async function setUserOffline(signoutFn) {
-    await currentUserOffline();
-    signoutFn();
-  }
-
   //code responsible for changing activelink with url changes
 
   const refs = {
