@@ -6,13 +6,6 @@ import HomePage from "./HomePage";
 import FriendsListPage from "./FriendsListPage";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Container from "react-bootstrap/Container";
-/*import {
-  useFirestore,
-  useFirestoreDocData,
-  useFirestoreCollectionData,
-} from "reactfire";
-import "firebase/auth";
-import "firebase/firestore";*/
 import { useSelector } from "react-redux";
 import {
   currentUserOffline,
@@ -23,22 +16,6 @@ import {
 
 const UserAccount = (props) => {
   const { profileLink, userState } = props;
-
-  /*const firestore = useFirestore();
-  const usersCollection = firestore.collection("users");
-
-  const userDocRef = usersCollection.doc(userID);
-  const result = useFirestoreDocData(userDocRef, {
-    initialData: {
-      firstname: "",
-      lastname: "",
-      profilePictureURL: "fakebook-avatar.jpeg",
-      backgroundPictureURL: "background-server.jpg",
-      photos: [],
-      posts: [],
-      isOnline: false,
-    },
-  });*/
 
   useEffect(() => {
     const unsubscribeCurrentUser = subscribeCurrentUser();
@@ -74,10 +51,6 @@ const UserAccount = (props) => {
     } else return profileLink;
   }
 
-  /*const { status, data: users } = useFirestoreCollectionData(usersCollection, {
-    idField: "userID",
-  });*/
-
   const isFriendsListPage = useRef(false);
 
   function closeFriendsListPage() {
@@ -94,6 +67,7 @@ const UserAccount = (props) => {
   };
 
   //add the active status of the link DOM elements
+
   const [activeLink, setActiveLink] = useState(null);
 
   if (users.length === 0 || !currentUser.isOnline) {
