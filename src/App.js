@@ -79,11 +79,11 @@ function App() {
 
   //const { status, data: signInCheckResult } = useSigninCheck();
 
-  /*if (status === "loading") {
+  /*if (user.id !== "loading") {
     return <div>...Loading</div>;
   }*/
 
-  if (user.isSignedIn === true && !userState.error) {
+  if (user.isSignedIn && !userState.error) {
     //Reactfire is still buggy in ver 3.0.0
     //Even if user is signed in, the useUser
     //hook can give back null for the current

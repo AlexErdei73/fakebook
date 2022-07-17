@@ -14,7 +14,7 @@ const CircularImage = (props) => {
 
   useEffect(() => {
     (async () => setSrc(await getImageURL(url)))();
-  }, []);
+  }, [url]);
 
   return (
     <>

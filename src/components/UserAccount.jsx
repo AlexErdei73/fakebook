@@ -16,6 +16,7 @@ import "firebase/firestore";
 
 const UserAccount = (props) => {
   const { profileLink, userID, userState } = props;
+
   console.log(props);
 
   const firestore = useFirestore();
@@ -33,6 +34,10 @@ const UserAccount = (props) => {
       isOnline: false,
     },
   });
+
+  useEffect(() => {
+    console.log(result);
+  }, [result]);
 
   const currentUser = result.data;
 
@@ -59,7 +64,9 @@ const UserAccount = (props) => {
 
   useEffect(() => {
     //Update the online status if the current user does not seem to be online
-    if (!currentUser.isOnline) userDocRef.update({ isOnline: true });
+    if (!currentUser.isOnline) {
+      userDocRef.update({ isOnline: true });
+    }
   }, [currentUser.isOnline, userDocRef]);
 
   useEffect(() => {
