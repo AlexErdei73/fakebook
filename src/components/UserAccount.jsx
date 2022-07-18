@@ -34,9 +34,11 @@ const UserAccount = (props) => {
       if (document.visibilityState === "visible") currentUserOnline();
       else currentUserOffline();
     });
+    const unsubscribePosts = subscribePosts();
     return () => {
       unsubscribeCurrentUser();
       unsubscribeUsers();
+      unsubscribePosts();
     };
   }, []);
 

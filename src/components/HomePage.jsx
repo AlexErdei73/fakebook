@@ -25,11 +25,6 @@ const HomePage = (props) => {
   const users = useSelector((state) => state.users);
   const posts = useSelector((state) => state.posts);
 
-  useEffect(() => {
-    const unsubscribe = subscribePosts();
-    return unsubscribe;
-  }, []);
-
   //we set the active link to the home link when it renders
   useEffect(() => {
     handleClickLink(
