@@ -29,11 +29,15 @@ import UploadPhoto from "./UploadPhoto";
 import Posts from "./Posts";
 import "./Profile.css";
 import { handleClickLink } from "./helper";
+import { useSelector } from "react-redux";
 
 const Profile = (props) => {
   const { userName } = useParams();
 
-  const { users, userID, linkRef, activeMainLink, setActiveMainLink } = props;
+  const { linkRef, activeMainLink, setActiveMainLink } = props;
+
+  const userID = useSelector((state) => state.user.id);
+  const users = useSelector((state) => state.users);
 
   const user = () => {
     const userNames = users.map((user) => {
