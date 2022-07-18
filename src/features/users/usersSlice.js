@@ -5,6 +5,7 @@ export const usersSlice = createSlice({
   initialState: [],
   reducers: {
     usersUpdated: (state, action) => {
+      state = [];
       action.payload.forEach((user) => state.push(user));
     },
   },

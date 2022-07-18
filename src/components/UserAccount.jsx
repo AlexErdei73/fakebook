@@ -12,6 +12,7 @@ import {
   currentUserOnline,
   subscribeCurrentUser,
   subscribeUsers,
+  subscribePosts,
 } from "../backend/backend";
 
 const UserAccount = (props) => {

@@ -29,6 +29,8 @@ export const currentUserSlice = createSlice({
       state.backgroundPictureURL = backgroundPictureURL;
       state.isOnline = isOnline;
       if (index) state.index = index;
+      state.photos = [];
+      state.posts = [];
       photos.forEach((photo) => state.photos.push(photo));
       posts.forEach((post) => state.posts.push(post));
     },
