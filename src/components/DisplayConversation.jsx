@@ -3,12 +3,12 @@ import { Col } from "react-bootstrap";
 import Message from "./Message";
 
 const DisplayConversation = (props) => {
-  const { conversation, userID } = props;
+  const { conversation } = props;
 
   return (
     <Col>
       {conversation.map((msg, index) => (
-        <Message key={index} message={msg} userID={userID} />
+        <Message key={index} message={msg} />
       ))}
     </Col>
   );

@@ -1,9 +1,12 @@
 import React from "react";
 import { Row } from "react-bootstrap";
 import { StorageImage } from "reactfire";
+import { useSelector } from "react-redux";
 
 const Message = (props) => {
-  const { message, userID, ...rest } = props;
+  const { message, ...rest } = props;
+
+  const userID = useSelector((state) => state.user.id);
 
   const senderStyle = {
     width: "75%",
@@ -36,7 +39,7 @@ const Message = (props) => {
           margin: "auto",
         }}
       >
-        {message.timestamp && message.timestamp.toDate().toLocaleString()}
+        {new Date(message.timestamp).toLocaleString()}
       </div>
       {message.isPhoto && (
         <div className="w-100 p-3">

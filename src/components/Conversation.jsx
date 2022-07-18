@@ -1,56 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import DisplayConversation from "./DisplayConversation";
+import { useSelector } from "react-redux";
 
 const Conversation = (props) => {
-  const { sender, recipient } = props;
+  const { recipient } = props;
 
   const [conversation, setConversation] = useState([]);
 
-  const firestore = useFirestore();
-  const messagesRef = firestore.collection("messages");
+  const incomingMessages = useSelector((state) => state.incomingMessages);
+  const outgoingMessages = useSelector((state) => state.outgoingMessages);
 
-  const { status: statusOut, data: outgoing } = useFirestoreCollectionData(
-    messagesRef
-      .where("sender", "==", sender)
-      .where("recipient", "==", recipient)
-      .orderBy("timestamp"),
-    { idField: "messageID" }
+  const incoming = incomingMessages.filter(
+    (message) => message.sender === recipient
   );
-
-  const { status: statusIn, data: incoming } = useFirestoreCollectionData(
-    messagesRef
-      .where("sender", "==", recipient)
-      .where("recipient", "==", sender)
-      .orderBy("timestamp"),
-    { idField: "messageID" }
+  const outgoing = outgoingMessages.filter(
+    (message) => message.recipient === recipient
   );
 
   function getConversation(incoming, outgoing) {
     const conversation = [...incoming, ...outgoing];
-    //When new message sent, it appears with timestamp null.
-    //It needs to be removed and added to the end after sorting the messages in the oreder of timestamps.
-    let indexOfNewMsg = -1;
-    conversation.forEach((msg, index) => {
-      if (!msg.timestamp) indexOfNewMsg = index;
-    });
-    let faultyMessages;
-    if (indexOfNewMsg !== -1)
-      faultyMessages = conversation.splice(indexOfNewMsg, 1);
     const sorted = conversation.sort(
-      (msgA, msgB) => msgA.timestamp.toDate() - msgB.timestamp.toDate()
+      (msgA, msgB) => new Date(msgA.timestamp) - new Date(msgB.timestamp)
     );
-    if (faultyMessages) sorted.push(faultyMessages[0]);
     return sorted;
   }
 
   useEffect(() => {
-    if (statusOut === "success" && statusIn === "success") {
-      setConversation(getConversation(incoming, outgoing));
-    }
-  }, [statusOut, statusIn, incoming, outgoing]);
+    const newConversation = getConversation(incoming, outgoing);
+    if (newConversation.length !== conversation.length)
+      setConversation(newConversation);
+  }, [incoming, outgoing]);
 
-  return <DisplayConversation conversation={conversation} userID={sender} />;
+  return <DisplayConversation conversation={conversation} />;
 };
 
 export default Conversation;

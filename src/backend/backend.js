@@ -105,10 +105,13 @@ export function subscribeMessages(typeOfMessages) {
     const messages = [];
     snapshot.forEach((message) => {
       const messageData = message.data();
-      const dateString = message.data().timestamp.toDate().toLocaleString();
+      const timestamp = message.data().timestamp;
+      let dateString;
+      if (timestamp) dateString = timestamp.toDate().toISOString();
+      else dateString = "";
       messageData.timestamp = dateString;
       messageData.id = message.id;
-      messages.push(messageData);
+      if (dateString !== "") messages.push(messageData);
     });
     store.dispatch(actionCreator(messages));
   });

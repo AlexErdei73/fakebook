@@ -60,7 +60,7 @@ const HomePage = (props) => {
           className="mh-100 overflow-auto contacts-col"
           style={{ position: "relative" }}
         >
-          <Contacts users={users} user={user} userID={userID} />
+          <Contacts />
         </Col>
       )}
     </Row>

@@ -8,12 +8,7 @@ import {
   Col,
   Row,
 } from "react-bootstrap";
-import {
-  StorageImage,
-  useStorage,
-  useFirestore,
-  useFirestoreCollectionData,
-} from "reactfire";
+import { StorageImage, useStorage, useFirestore } from "reactfire";
 import ProfileLink from "./ProfileLink";
 import { FiEdit } from "react-icons/fi";
 import { HiOutlinePhotograph } from "react-icons/hi";
@@ -32,7 +27,7 @@ import "./Contacts.css";
 import { useSelector } from "react-redux";
 import { subscribeMessages } from "../backend/backend";
 
-const Contacts = (props) => {
+const Contacts = () => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [recipient, setRecipient] = useState(null);
   const [showPhotoDlg, setShowPhotoDlg] = useState(null);
@@ -142,10 +137,6 @@ const Contacts = (props) => {
 
   const messagesRef = firestore.collection("messages");
 
-  /*const { status, data: unread } = useFirestoreCollectionData(
-    messagesRef.where("recipient", "==", userID).where("isRead", "==", false),
-    { idField: "messageID" }
-  );*/
   const incomingMessages = useSelector((state) => state.incomingMessages);
   const unread = incomingMessages.filter((message) => !message.isRead);
 
@@ -156,8 +147,9 @@ const Contacts = (props) => {
       if (sendersWithUnreadMsg.indexOf(sender) === -1)
         sendersWithUnreadMsg.push(sender);
     });
-    setSenders(sendersWithUnreadMsg);
-  }, []);
+    if (senders.length !== sendersWithUnreadMsg.length)
+      setSenders(sendersWithUnreadMsg);
+  }, [senders]);
 
   useEffect(() => {
     if (senders.length === 0) return;
