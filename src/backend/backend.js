@@ -8,6 +8,8 @@ import { signIn, signOut } from "../features/user/userSlice";
 import { currentUserUpdated } from "../features/currentUser/currentUserSlice";
 import { usersUpdated } from "../features/users/usersSlice";
 import { postsUpdated } from "../features/posts/postsSlice";
+import { incomingMessagesUpdated } from "../features/incomingMessages/incomingMessagesSlice";
+import { outgoingMessagesUpdated } from "../features/outgoingMessages/outgoingMessagesSlice";
 
 firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
@@ -83,5 +85,31 @@ export function subscribePosts() {
       posts.push(postData);
     });
     store.dispatch(postsUpdated(posts));
+  });
+}
+
+export function subscribeMessages(typeOfMessages) {
+  let typeOfUser;
+  let actionCreator;
+  if (typeOfMessages === "incoming") {
+    typeOfUser = "recipient";
+    actionCreator = incomingMessagesUpdated;
+  } else {
+    typeOfUser = "sender";
+    actionCreator = outgoingMessagesUpdated;
+  }
+  const messagesCollection = firestore
+    .collection("messages")
+    .where(typeOfUser, "==", userID);
+  return messagesCollection.onSnapshot((snapshot) => {
+    const messages = [];
+    snapshot.forEach((message) => {
+      const messageData = message.data();
+      const dateString = message.data().timestamp.toDate().toLocaleString();
+      messageData.timestamp = dateString;
+      messageData.id = message.id;
+      messages.push(messageData);
+    });
+    store.dispatch(actionCreator(messages));
   });
 }

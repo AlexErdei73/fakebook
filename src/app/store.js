@@ -1,14 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "../features/user/userSlice";
 import currentUserReducer from "../features/currentUser/currentUserSlice";
-import usersSlice from "../features/users/usersSlice";
-import postsSlice from "../features/posts/postsSlice";
+import usersReducer from "../features/users/usersSlice";
+import postsReducer from "../features/posts/postsSlice";
+import incomingMessagesReducer from "../features/incomingMessages/incomingMessagesSlice";
+import outgoingMessagesReducer from "../features/outgoingMessages/outgoingMessagesSlice";
 
 export default configureStore({
   reducer: {
     user: userReducer,
     currentUser: currentUserReducer,
-    users: usersSlice,
-    posts: postsSlice,
+    users: usersReducer,
+    posts: postsReducer,
+    incomingMessages: incomingMessagesReducer,
+    outgoingMessages: outgoingMessagesReducer,
   },
 });

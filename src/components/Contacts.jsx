@@ -29,13 +29,17 @@ import {
 } from "./helper";
 import * as fb from "firebase"; //this is only needed, because we want to use server timestamps
 import "./Contacts.css";
+import { useSelector } from "react-redux";
+import { subscribeMessages } from "../backend/backend";
 
 const Contacts = (props) => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [recipient, setRecipient] = useState(null);
   const [showPhotoDlg, setShowPhotoDlg] = useState(null);
 
-  const { user, userID, users } = props;
+  const user = useSelector((state) => state.currentUser);
+  const userID = useSelector((state) => state.user.id);
+  const users = useSelector((state) => state.users);
 
   const WELCOME_TEXT = "Aa";
   const INIT_MESSAGE = {
@@ -110,6 +114,15 @@ const Contacts = (props) => {
     if (convRowRef.current) convRowRef.current.scrollTop = scrollHeight;
   }, [scrollHeight]);
 
+  useEffect(() => {
+    const unsubscribeIncomingMsg = subscribeMessages("incoming");
+    const unsubscribeOutgoingMsg = subscribeMessages("outgoing");
+    return () => {
+      unsubscribeIncomingMsg();
+      unsubscribeOutgoingMsg();
+    };
+  }, []);
+
   const firestore = useFirestore();
 
   function uploadMessage(msg) {
@@ -129,22 +142,22 @@ const Contacts = (props) => {
 
   const messagesRef = firestore.collection("messages");
 
-  const { status, data: unread } = useFirestoreCollectionData(
+  /*const { status, data: unread } = useFirestoreCollectionData(
     messagesRef.where("recipient", "==", userID).where("isRead", "==", false),
     { idField: "messageID" }
-  );
+  );*/
+  const incomingMessages = useSelector((state) => state.incomingMessages);
+  const unread = incomingMessages.filter((message) => !message.isRead);
 
   useEffect(() => {
-    if (status === "success") {
-      const sendersWithUnreadMsg = [];
-      unread.forEach((msg) => {
-        const sender = msg.sender;
-        if (sendersWithUnreadMsg.indexOf(sender) === -1)
-          sendersWithUnreadMsg.push(sender);
-      });
-      setSenders(sendersWithUnreadMsg);
-    }
-  }, [status, unread]);
+    const sendersWithUnreadMsg = [];
+    unread.forEach((msg) => {
+      const sender = msg.sender;
+      if (sendersWithUnreadMsg.indexOf(sender) === -1)
+        sendersWithUnreadMsg.push(sender);
+    });
+    setSenders(sendersWithUnreadMsg);
+  }, []);
 
   useEffect(() => {
     if (senders.length === 0) return;
