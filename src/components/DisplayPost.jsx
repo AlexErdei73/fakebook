@@ -62,7 +62,7 @@ const DisplayPost = (props) => {
             fontSize: "12px",
           }}
         >
-          {post.timestamp && post.timestamp.toDate().toLocaleString()}
+          {post.timestamp}
         </span>
       </Card.Header>
       <Card.Body>

@@ -7,6 +7,7 @@ import store from "../app/store";
 import { signIn, signOut } from "../features/user/userSlice";
 import { currentUserUpdated } from "../features/currentUser/currentUserSlice";
 import { usersUpdated } from "../features/users/usersSlice";
+import { postsUpdated } from "../features/posts/postsSlice";
 
 firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
@@ -68,4 +69,19 @@ export function subscribeUsers() {
 export async function signUserOut() {
   await currentUserOffline();
   auth.signOut();
+}
+
+export function subscribePosts() {
+  const postsCollection = firestore.collection("posts");
+  return postsCollection.orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+    const posts = [];
+    snapshot.forEach((post) => {
+      const postData = post.data();
+      const dateString = post.data().timestamp.toDate().toLocaleString();
+      postData.timestamp = dateString;
+      postData.postID = post.id;
+      posts.push(postData);
+    });
+    store.dispatch(postsUpdated(posts));
+  });
 }
