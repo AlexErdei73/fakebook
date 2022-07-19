@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { Form, Button, Modal, Alert } from "react-bootstrap";
-import { useFirebaseApp } from "reactfire";
+import { useSelector, useDispatch } from "react-redux";
+import { sendPasswordReminder } from "../backend/backend";
+import { errorOccured } from "../features/user/userSlice";
 
 const PasswordReminder = (props) => {
   const { onHide } = props;
 
+  const errorMsg = useSelector((state) => state.user.error);
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
 
   function handleChange(e) {
     e.preventDefault();
@@ -14,20 +18,12 @@ const PasswordReminder = (props) => {
     setEmail(input.value);
   }
 
-  const firebase = useFirebaseApp();
-
   function handleClickSend() {
-    firebase
-      .auth()
-      .sendPasswordResetEmail(email)
+    sendPasswordReminder(email)
       .then(() => {
-        // Password reset email sent!
         onHide();
       })
-      .catch((error) => {
-        const errorMessage = error.message;
-        setErrorMsg(errorMessage);
-      });
+      .catch((error) => dispatch(errorOccured(error.message)));
   }
 
   return (
@@ -52,7 +48,13 @@ const PasswordReminder = (props) => {
 
       <Modal.Footer>
         <hr />
-        <Button variant="light" onClick={onHide}>
+        <Button
+          variant="light"
+          onClick={() => {
+            onHide();
+            dispatch(errorOccured(""));
+          }}
+        >
           <b>Cancel</b>
         </Button>
         <Button variant="primary" onClick={handleClickSend}>

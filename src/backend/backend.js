@@ -182,3 +182,7 @@ export async function signInUser(user) {
     store.dispatch(errorOccured(error.message));
   }
 }
+
+export function sendPasswordReminder(email) {
+  return auth.sendPasswordResetEmail(email);
+}
