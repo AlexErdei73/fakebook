@@ -5,7 +5,7 @@ export const outgoingMessagesSlice = createSlice({
   initialState: [],
   reducers: {
     outgoingMessagesUpdated: (state, action) => {
-      state = [];
+      state.forEach((message) => state.pop());
       action.payload.forEach((message) => state.push(message));
     },
   },

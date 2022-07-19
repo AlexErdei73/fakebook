@@ -21,6 +21,7 @@ const UserAccount = (props) => {
   useEffect(() => {
     const unsubscribeCurrentUser = subscribeCurrentUser();
     const unsubscribeUsers = subscribeUsers();
+    const unsubscribePosts = subscribePosts();
     //Update the online status if the current user does not seem to be online
     if (!currentUser.isOnline) {
       currentUserOnline();
@@ -35,7 +36,6 @@ const UserAccount = (props) => {
       if (document.visibilityState === "visible") currentUserOnline();
       else currentUserOffline();
     });
-    const unsubscribePosts = subscribePosts();
     return () => {
       unsubscribeCurrentUser();
       unsubscribeUsers();

@@ -5,7 +5,7 @@ export const usersSlice = createSlice({
   initialState: [],
   reducers: {
     usersUpdated: (state, action) => {
-      state = [];
+      state.forEach((user) => state.pop());
       action.payload.forEach((user) => state.push(user));
     },
   },

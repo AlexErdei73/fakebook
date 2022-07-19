@@ -5,7 +5,7 @@ export const postsSlice = createSlice({
   initialState: [],
   reducers: {
     postsUpdated: (state, action) => {
-      state = [];
+      state.forEach((item) => state.pop());
       action.payload.forEach((post) => state.push(post));
     },
   },
