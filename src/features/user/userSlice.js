@@ -6,6 +6,7 @@ export const userSlice = createSlice({
     id: "",
     isSignedIn: false,
     isEmailVerified: false,
+    error: "",
   },
   reducers: {
     signIn: (state, action) => {
@@ -21,9 +22,12 @@ export const userSlice = createSlice({
     signOut: (state) => {
       state.isSignedIn = false;
     },
+    errorOccured: (state, action) => {
+      state.error = action.payload;
+    },
   },
 });
 
-export const { signIn, signOut } = userSlice.actions;
+export const { signIn, signOut, errorOccured } = userSlice.actions;
 
 export default userSlice.reducer;

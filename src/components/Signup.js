@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useFirebaseApp } from "reactfire";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import "./Signup.css";
+import { useSelector } from "react-redux";
+import { createUserAccount } from "../backend/backend";
 
 const Signup = (props) => {
   const { user, onSubmit, onChange, onError } = props;
 
-  // Import firebase
-  var firebase = useFirebaseApp();
+  const error = useSelector((state) => state.user.error);
 
   // onChange function
   const handleChange = (e) => {
@@ -30,7 +30,6 @@ const Signup = (props) => {
     });
   };
 
-  const [error, setError] = useState(null);
   const [validated, setValidated] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
 
@@ -38,60 +37,15 @@ const Signup = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.currentTarget;
-    if (form.checkValidity() === true)
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(user.email, user.password)
-        .then((result) => {
-          // Update the nickname
-          result.user.updateProfile({
-            displayName: `${name.firstname} ${name.lastname}`,
-          });
-          // get the index of the new user with the same username
-          firebase
-            .firestore()
-            .collection("users")
-            .where("firstname", "==", name.firstname)
-            .where("lastname", "==", name.lastname)
-            .get()
-            .then((querrySnapshot) => {
-              const i = querrySnapshot.size;
-              // Create firestore document
-              firebase
-                .firestore()
-                .collection("users")
-                .doc(result.user.uid)
-                .set({
-                  firstname: name.firstname,
-                  lastname: name.lastname,
-                  profilePictureURL: "fakebook-avatar.jpeg",
-                  backgroundPictureURL: "background-server.jpg",
-                  photos: [],
-                  posts: [],
-                  isOnline: false,
-                  index: i,
-                })
-                .then(() => {
-                  // Sign out the user
-                  firebase.auth().signOut();
-                });
-            });
-
-          // URL of my website.
-          const myURL = { url: "https://alexerdei73.github.io/fakebook/" };
-
-          // Send Email Verification and redirect to my website.
-          return result.user.sendEmailVerification(myURL).then(() => {
-            console.log("Verification email has been sent.");
-            setFormIsValid(true);
-          });
-        })
-        .catch((error) => {
-          // Update the error
-          setError(error);
-          console.log(error.message);
-          setFormIsValid(true);
-        });
+    if (form.checkValidity() === true) {
+      createUserAccount({
+        firstname: name.firstname,
+        lastname: name.lastname,
+        email: user.email,
+        password: user.password,
+      });
+      setFormIsValid(true);
+    }
     setValidated(true);
   };
 

@@ -8,8 +8,6 @@ import Row from "react-bootstrap/Row";
 import RecentLogins from "./components/RecentLogins";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import "firebase/auth";
-import "firebase/firestore";
 import UserAccount from "./components/UserAccount";
 import PasswordReminder from "./components/PasswordReminder";
 import { useSelector } from "react-redux";
@@ -83,7 +81,7 @@ function App() {
     return <div>...Loading</div>;
   }*/
 
-  if (user.isSignedIn && !userState.error) {
+  if (user.isSignedIn && !user.error) {
     if (user.isEmailVerified)
       return <UserAccount profileLink={profileLink} userState={userState} />;
     else return <></>;

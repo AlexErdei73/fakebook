@@ -4,12 +4,15 @@ import "firebase/auth";
 import "firebase/firestore";
 import firebaseConfig from "../firebaseConfig";
 import store from "../app/store";
-import { signIn, signOut } from "../features/user/userSlice";
+import { signIn, signOut, errorOccured } from "../features/user/userSlice";
 import { currentUserUpdated } from "../features/currentUser/currentUserSlice";
 import { usersUpdated } from "../features/users/usersSlice";
 import { postsUpdated } from "../features/posts/postsSlice";
 import { incomingMessagesUpdated } from "../features/incomingMessages/incomingMessagesSlice";
 import { outgoingMessagesUpdated } from "../features/outgoingMessages/outgoingMessagesSlice";
+
+// URL of my website.
+const FAKEBOOK_URL = { url: "https://alexerdei73.github.io/fakebook/" };
 
 firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
@@ -117,4 +120,44 @@ export function subscribeMessages(typeOfMessages) {
     });
     store.dispatch(actionCreator(messages));
   });
+}
+
+export async function createUserAccount(user) {
+  try {
+    const result = await auth.createUserWithEmailAndPassword(
+      user.email,
+      user.password
+    );
+    // Update the nickname
+    await result.user.updateProfile({
+      displayName: `${user.firstname} ${user.lastname}`,
+    });
+    // get the index of the new user with the same username
+    const querySnapshot = await firestore
+      .collection("users")
+      .where("firstname", "==", user.firstname)
+      .where("lastname", "==", user.lastname)
+      .get();
+    const index = querySnapshot.size;
+    // Create firestore document
+    await firestore.collection("users").doc(result.user.uid).set({
+      firstname: user.firstname,
+      lastname: user.lastname,
+      profilePictureURL: "fakebook-avatar.jpeg",
+      backgroundPictureURL: "background-server.jpg",
+      photos: [],
+      posts: [],
+      isOnline: false,
+      index: index,
+    });
+    // Sign out the user
+    await firebase.auth().signOut();
+    // Send Email Verification and redirect to my website.
+    await result.user.sendEmailVerification(FAKEBOOK_URL);
+    console.log("Verification email has been sent.");
+  } catch (error) {
+    // Update the error
+    store.dispatch(errorOccured(error.message));
+    console.log(error.message);
+  }
 }
