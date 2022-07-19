@@ -22,16 +22,18 @@ export async function getImageURL(imagePath) {
 
 const auth = firebase.auth();
 
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    const id = user.uid;
-    const isEmailVerified = user.emailVerified;
-    const displayName = user.displayName;
-    store.dispatch(signIn({ id, displayName, isEmailVerified }));
-  } else {
-    store.dispatch(signOut());
-  }
-});
+export function subscribeAuth() {
+  return auth.onAuthStateChanged((user) => {
+    if (user) {
+      const id = user.uid;
+      const isEmailVerified = user.emailVerified;
+      const displayName = user.displayName;
+      store.dispatch(signIn({ id, displayName, isEmailVerified }));
+    } else {
+      store.dispatch(signOut());
+    }
+  });
+}
 
 const firestore = firebase.firestore();
 

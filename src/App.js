@@ -1,24 +1,27 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import "./App.css";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
-import { useSigninCheck } from "reactfire";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import RecentLogins from "./components/RecentLogins";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { useUser } from "reactfire";
 import "firebase/auth";
 import "firebase/firestore";
 import UserAccount from "./components/UserAccount";
 import PasswordReminder from "./components/PasswordReminder";
 import { useSelector } from "react-redux";
+import { subscribeAuth } from "./backend/backend";
 
 function App() {
-  //const { data: user } = useUser();
   const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    const unsubscribe = subscribeAuth();
+    return unsubscribe;
+  }, []);
 
   // User State
   const initUser = {
@@ -76,24 +79,11 @@ function App() {
     handleShow();
   }
 
-  //const { status, data: signInCheckResult } = useSigninCheck();
-
   /*if (user.id !== "loading") {
     return <div>...Loading</div>;
   }*/
 
   if (user.isSignedIn && !userState.error) {
-    //Reactfire is still buggy in ver 3.0.0
-    //Even if user is signed in, the useUser
-    //hook can give back null for the current
-    //user. In this case the user has no
-    //premission to read firebase and the error
-    //is not caught by reactfire. Strangely
-    //refreshing the browser solves the issue.
-    /*if (!user) {
-      window.location.reload(false);
-    }*/
-
     if (user.isEmailVerified)
       return <UserAccount profileLink={profileLink} userState={userState} />;
     else return <></>;
