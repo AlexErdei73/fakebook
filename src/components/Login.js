@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,33 +6,33 @@ import { errorOccured } from "../features/user/userSlice";
 import { signInUser } from "../backend/backend";
 
 const Login = (props) => {
-  const { onChange, user, onClickForgottenPswd } = props;
+  const { onClickForgottenPswd } = props;
+
+  const [state, setState] = useState({ email: "", password: "" });
 
   // onChange function
   const handleChange = (e) => {
-    onChange(e.target.name, e.target.value);
+    const newState = { ...state };
+    newState[e.target.name] = e.target.value;
+    setState(newState);
     dispatch(errorOccured(""));
   };
 
   const errorMsg = useSelector((state) => state.user.error);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log(errorMsg);
-  }, [errorMsg]);
-
   // Submit function (Create account)
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (user.email === "") {
+    if (state.email === "") {
       dispatch(errorOccured("Email is required."));
       return;
-    } else if (user.password === "") {
+    } else if (state.password === "") {
       dispatch(errorOccured("Password is required."));
       return;
     }
-    signInUser(user);
+    signInUser(state);
   };
 
   return (
