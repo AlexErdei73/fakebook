@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useFirebaseApp } from "reactfire";
+import React, { useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { errorOccured } from "../features/user/userSlice";
+import { signInUser } from "../backend/backend";
 
 const Login = (props) => {
-  const { onError, onChange, user, onClickForgottenPswd } = props;
-
-  // Import firebase
-  var firebase = useFirebaseApp();
+  const { onChange, user, onClickForgottenPswd } = props;
 
   // onChange function
   const handleChange = (e) => {
@@ -20,32 +17,22 @@ const Login = (props) => {
   const errorMsg = useSelector((state) => state.user.error);
   const dispatch = useDispatch();
 
-  console.log(errorMsg);
+  useEffect(() => {
+    console.log(errorMsg);
+  }, [errorMsg]);
 
   // Submit function (Create account)
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    //signIn code here ...
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(user.email, user.password)
-      .then((result) => {
-        // email has been verified?
-        if (!result.user.emailVerified) {
-          firebase.auth().signOut();
-          dispatch(errorOccured("Please verify your email before to continue"));
-        } else {
-          dispatch(errorOccured(""));
-        }
-      })
-      .catch((error) => {
-        // Update the error
-        if (user.email === "") dispatch(errorOccured("Email is required."));
-        else if (user.password === "")
-          dispatch(errorOccured("Password is required."));
-        else dispatch(errorOccured(error.message));
-      });
+    if (user.email === "") {
+      dispatch(errorOccured("Email is required."));
+      return;
+    } else if (user.password === "") {
+      dispatch(errorOccured("Password is required."));
+      return;
+    }
+    signInUser(user);
   };
 
   return (

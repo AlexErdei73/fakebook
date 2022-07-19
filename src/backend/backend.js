@@ -161,3 +161,24 @@ export async function createUserAccount(user) {
     console.log(error.message);
   }
 }
+
+export async function signInUser(user) {
+  try {
+    const result = await auth.signInWithEmailAndPassword(
+      user.email,
+      user.password
+    );
+    // email has been verified?
+    if (!result.user.emailVerified) {
+      auth.signOut();
+      store.dispatch(
+        errorOccured("Please verify your email before to continue")
+      );
+    } else {
+      store.dispatch(errorOccured(""));
+    }
+  } catch (error) {
+    // Update the error
+    store.dispatch(errorOccured(error.message));
+  }
+}
