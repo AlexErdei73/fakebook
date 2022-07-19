@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-import { StorageImage } from "reactfire";
+import StorageImage from "./StorageImage";
 import CircularImage from "./CircularImage";
 
 const DisplayComment = (props) => {

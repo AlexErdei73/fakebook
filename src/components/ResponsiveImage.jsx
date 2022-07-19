@@ -1,5 +1,5 @@
 import React from "react";
-import { StorageImage } from "reactfire";
+import StorageImage from "./StorageImage";
 
 const ResponsiveImage = (props) => {
   const {

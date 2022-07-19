@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button, CloseButton } from "react-bootstrap";
-import { StorageImage, useStorage, useFirestore } from "reactfire";
+import { useStorage, useFirestore } from "reactfire";
+import StorageImage from "./StorageImage";
 import ProfileLink from "./ProfileLink";
 import UploadPhoto from "./UploadPhoto";
 import { HiOutlinePhotograph } from "react-icons/hi";

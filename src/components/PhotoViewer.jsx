@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useFirestore, useFirestoreDocData, StorageImage } from "reactfire";
+import { useFirestore, useFirestoreDocData } from "reactfire";
+import StorageImage from "./StorageImage";
 import { Row, Col, Carousel } from "react-bootstrap";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 

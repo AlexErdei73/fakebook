@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useFirestore, StorageImage } from "reactfire";
+import { useFirestore } from "reactfire";
 import {
   Row,
   Col,
@@ -27,6 +27,7 @@ import SelectBgPhotoModal from "./SelectBgPhotoModal";
 import UpdateProfilePicModal from "./UpdateProfilePicModal";
 import UploadPhoto from "./UploadPhoto";
 import Posts from "./Posts";
+import StorageImage from "./StorageImage";
 import "./Profile.css";
 import { handleClickLink } from "./helper";
 import { useSelector } from "react-redux";

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
-import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import PostView from "./PostView";
 import LeftNavbar from "./LeftNavbar";
 import VideoView from "./VideoView";
@@ -8,7 +7,6 @@ import Contacts from "./Contacts";
 import "./HomePage.css";
 import { handleClickLink } from "./helper";
 import { useSelector } from "react-redux";
-import { subscribePosts } from "../backend/backend";
 
 const HomePage = (props) => {
   const {

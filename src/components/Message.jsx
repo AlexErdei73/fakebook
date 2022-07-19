@@ -1,6 +1,6 @@
 import React from "react";
 import { Row } from "react-bootstrap";
-import { StorageImage } from "reactfire";
+import StorageImage from "./StorageImage";
 import { useSelector } from "react-redux";
 
 const Message = (props) => {

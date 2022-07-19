@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Col, Row, CloseButton, Button } from "react-bootstrap";
-import { StorageImage, useStorage } from "reactfire";
+import { useStorage } from "reactfire";
+import StorageImage from "./StorageImage";
 import CircularImage from "./CircularImage";
 import UploadPhoto from "./UploadPhoto";
 import DisplayComment from "./DisplayComment";

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Col, OverlayTrigger } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import CircularImage from "./CircularImage";
-import { StorageImage } from "reactfire";
+import StorageImage from "./StorageImage";
 import "./FriendCard.css";
 
 const FriendCard = (props) => {

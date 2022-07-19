@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
-import { StorageImage } from "reactfire";
+import StorageImage from "./StorageImage";
 
 const SelectBgPhotoModal = (props) => {
   const { show, onHide, onPhotoClick, userID, photos } = props;
