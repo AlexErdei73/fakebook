@@ -5,6 +5,7 @@ import usersReducer from "../features/users/usersSlice";
 import postsReducer from "../features/posts/postsSlice";
 import incomingMessagesReducer from "../features/incomingMessages/incomingMessagesSlice";
 import outgoingMessagesReducer from "../features/outgoingMessages/outgoingMessagesSlice";
+import imagesReducer from "../features/images/imagesSlice";
 
 export default configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export default configureStore({
     posts: postsReducer,
     incomingMessages: incomingMessagesReducer,
     outgoingMessages: outgoingMessagesReducer,
+    images: imagesReducer,
   },
 });

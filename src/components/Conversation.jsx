@@ -29,7 +29,7 @@ const Conversation = (props) => {
     const newConversation = getConversation(incoming, outgoing);
     if (newConversation.length !== conversation.length)
       setConversation(newConversation);
-  }, [incoming, outgoing]);
+  }, [incoming, outgoing, conversation]);
 
   return <DisplayConversation conversation={conversation} />;
 };

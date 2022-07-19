@@ -149,7 +149,7 @@ const Contacts = () => {
     });
     if (senders.length !== sendersWithUnreadMsg.length)
       setSenders(sendersWithUnreadMsg);
-  }, [senders]);
+  }, [senders, unread]);
 
   useEffect(() => {
     if (senders.length === 0) return;
