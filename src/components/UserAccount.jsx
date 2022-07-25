@@ -18,7 +18,7 @@ import {
 const UserAccount = (props) => {
   const { profileLink } = props;
 
-  const error = useSelector(state => state.user.error);
+  const error = useSelector((state) => state.user.error);
 
   useEffect(() => {
     const unsubscribeCurrentUser = subscribeCurrentUser();
@@ -95,9 +95,6 @@ const UserAccount = (props) => {
                 isFriendsListPage.current = true;
                 return (
                   <FriendsListPage
-                    users={users}
-                    user={currentUser}
-                    userID={userID}
                     // the components need the above props to change the active link
                     linkRef={refs.friends}
                     activeLink={activeLink}
@@ -136,9 +133,6 @@ const UserAccount = (props) => {
                 if (isFriendsListPage.current)
                   return (
                     <FriendsListPage
-                      users={users}
-                      user={currentUser}
-                      userID={userID}
                       // the components need the above props to change the active link
                       linkRef={refs.friends}
                       activeLink={activeLink}
@@ -148,9 +142,6 @@ const UserAccount = (props) => {
                 else
                   return (
                     <Profile
-                      user={currentUser}
-                      userID={userID}
-                      users={users}
                       // the components need the above props to change the active link
                       linkRef={refs.profile}
                       activeMainLink={activeLink}

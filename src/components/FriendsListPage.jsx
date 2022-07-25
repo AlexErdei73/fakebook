@@ -8,7 +8,7 @@ import imgFriends from "../images/friends.jpg";
 import { handleClickLink } from "./helper";
 
 const FriendsListPage = (props) => {
-  const { users, user, userID, linkRef, activeLink, setActiveLink } = props;
+  const { linkRef, activeLink, setActiveLink } = props;
 
   const FRIENDS_LIST_PAGE_PATH = "/fakebook/friends/list";
 
@@ -27,7 +27,7 @@ const FriendsListPage = (props) => {
 
   return (
     <Row className="overflow-hidden friends-list">
-      <FriendList users={users} />
+      <FriendList />
       <Col className="overflow-auto mh-100 hide-scrollbar col-two">
         {isNoUser ? (
           <div className="h-100 w-100 d-flex flex-column align-items-center justify-content-center">
@@ -44,9 +44,6 @@ const FriendsListPage = (props) => {
         ) : (
           <div className="profile-container">
             <Profile
-              user={user}
-              userID={userID}
-              users={users}
               linkRef={linkRef}
               activeMainLink={activeLink}
               setActiveMainLink={setActiveLink}

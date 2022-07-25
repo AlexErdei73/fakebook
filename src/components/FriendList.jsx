@@ -2,9 +2,12 @@ import React from "react";
 import ProfileLink from "./ProfileLink";
 import { Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const FriendList = (props) => {
-  const { users, variant } = props;
+  const { variant } = props;
+
+  const users = useSelector((state) => state.users);
 
   const isModal = variant === "modal";
 
