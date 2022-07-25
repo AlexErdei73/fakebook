@@ -21,23 +21,6 @@ function App() {
     return unsubscribe;
   }, []);
 
-  // User State
-  const initUser = {
-    email: "",
-    password: "",
-    error: "",
-  };
-
-  const [userState, setUserState] = useState(initUser);
-
-  function updateUser(name, value) {
-    setUserState({
-      ...userState,
-      [name]: value,
-      error: "",
-    });
-  }
-
   //Handle the modal
   const [show, setShow] = useState(false);
 
