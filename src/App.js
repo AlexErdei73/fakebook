@@ -52,13 +52,12 @@ function App() {
     handleShow();
   }
 
-  /*if (user.id !== "loading") {
+  if (user.isLoading) {
     return <div>...Loading</div>;
-  }*/
+  }
 
   if (user.isSignedIn && !user.error) {
-    if (user.isEmailVerified)
-      return <UserAccount profileLink={profileLink} />;
+    if (user.isEmailVerified) return <UserAccount profileLink={profileLink} />;
     else return <></>;
   } else {
     return (
@@ -105,9 +104,7 @@ function App() {
 
             {isModalSignup ? (
               <Modal.Body>
-                <Signup
-                  onSubmit={handleCloseCallback}
-                ></Signup>
+                <Signup onSubmit={handleCloseCallback}></Signup>
               </Modal.Body>
             ) : (
               <PasswordReminder onHide={handleClose} />

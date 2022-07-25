@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useSelector, useDispatch } from "react-redux";
-import { errorOccured } from "../features/user/userSlice";
+import { errorOccured, loadingStarted } from "../features/user/userSlice";
 import { signInUser } from "../backend/backend";
 
 const Login = (props) => {
@@ -32,6 +32,7 @@ const Login = (props) => {
       dispatch(errorOccured("Password is required."));
       return;
     }
+    dispatch(loadingStarted());
     signInUser(state);
   };
 

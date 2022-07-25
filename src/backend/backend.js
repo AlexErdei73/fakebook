@@ -4,7 +4,12 @@ import "firebase/auth";
 import "firebase/firestore";
 import firebaseConfig from "../firebaseConfig";
 import store from "../app/store";
-import { signIn, signOut, errorOccured } from "../features/user/userSlice";
+import {
+  signIn,
+  signOut,
+  errorOccured,
+  loadingFinished,
+} from "../features/user/userSlice";
 import { currentUserUpdated } from "../features/currentUser/currentUserSlice";
 import { usersUpdated } from "../features/users/usersSlice";
 import { postsUpdated } from "../features/posts/postsSlice";
@@ -176,6 +181,7 @@ export async function signInUser(user) {
       );
     } else {
       store.dispatch(errorOccured(""));
+      store.dispatch(loadingFinished());
     }
   } catch (error) {
     // Update the error

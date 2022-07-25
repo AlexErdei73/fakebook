@@ -7,6 +7,7 @@ export const userSlice = createSlice({
     isSignedIn: false,
     isEmailVerified: false,
     error: "",
+    isLoading: false,
   },
   reducers: {
     signIn: (state, action) => {
@@ -25,9 +26,21 @@ export const userSlice = createSlice({
     errorOccured: (state, action) => {
       state.error = action.payload;
     },
+    loadingStarted: (state) => {
+      state.isLoading = true;
+    },
+    loadingFinished: (state) => {
+      state.isLoading = false;
+    },
   },
 });
 
-export const { signIn, signOut, errorOccured } = userSlice.actions;
+export const {
+  signIn,
+  signOut,
+  errorOccured,
+  loadingStarted,
+  loadingFinished,
+} = userSlice.actions;
 
 export default userSlice.reducer;
