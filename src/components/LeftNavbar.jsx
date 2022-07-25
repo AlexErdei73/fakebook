@@ -5,8 +5,11 @@ import ProfileLink from "./ProfileLink";
 import { FaUserFriends } from "react-icons/fa";
 import { MdOndemandVideo } from "react-icons/md";
 import "./LeftNavbar.css";
+import { useSelector } from "react-redux";
 
 const LeftNavbar = (props) => {
+  const user = useSelector((state) => state.currentUser);
+
   return (
     <Nav className="flex-column mt-3" id="left-navbar">
       <div className="navitem">
@@ -15,7 +18,7 @@ const LeftNavbar = (props) => {
           to={props.profileLink}
           className="text-dark flex-column justify-content-center"
         >
-          <ProfileLink user={props.user} size="26" fullname="true" />
+          <ProfileLink user={user} size="26" fullname="true" />
         </Nav.Link>
       </div>
       <div className="navitem">

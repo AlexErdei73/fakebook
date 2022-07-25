@@ -115,9 +115,6 @@ const UserAccount = (props) => {
                   <HomePage
                     className="pt-5"
                     profileLink={modifyProfileLink()}
-                    user={currentUser}
-                    userID={userID}
-                    users={users}
                     isWatch={true}
                     // the components need the above props to change the active link
                     linkRef={refs.watch}
@@ -158,9 +155,6 @@ const UserAccount = (props) => {
                   <HomePage
                     className="pt-5"
                     profileLink={modifyProfileLink()}
-                    user={currentUser}
-                    userID={userID}
-                    users={users}
                     isWatch={false}
                     // the components need the above props to change the active link
                     linkRef={refs.home}

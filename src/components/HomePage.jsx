@@ -35,7 +35,7 @@ const HomePage = (props) => {
   return (
     <Row className={`${className} overflow-hidden vh-100`}>
       <Col className="mh-100 overflow-auto left-navbar-col">
-        <LeftNavbar user={user} profileLink={profileLink} />
+        <LeftNavbar profileLink={profileLink} />
       </Col>
       <Col
         sm={9}
