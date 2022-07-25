@@ -5,8 +5,9 @@ export const incomingMessagesSlice = createSlice({
   initialState: [],
   reducers: {
     incomingMessagesUpdated: (state, action) => {
-      state.forEach((message) => state.pop());
-      action.payload.forEach((message) => state.push(message));
+      const updatedState = [];
+      action.payload.forEach((message) => updatedState.push(message));
+      return updatedState;
     },
   },
 });
