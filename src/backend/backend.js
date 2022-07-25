@@ -15,6 +15,7 @@ import { usersUpdated } from "../features/users/usersSlice";
 import { postsUpdated } from "../features/posts/postsSlice";
 import { incomingMessagesUpdated } from "../features/incomingMessages/incomingMessagesSlice";
 import { outgoingMessagesUpdated } from "../features/outgoingMessages/outgoingMessagesSlice";
+import * as fb from "firebase"; //this is only needed, because we want to use server timestamps
 
 // URL of my website.
 const FAKEBOOK_URL = { url: "https://alexerdei73.github.io/fakebook/" };
@@ -89,7 +90,9 @@ export function subscribePosts() {
     const posts = [];
     snapshot.forEach((post) => {
       const postData = post.data();
-      const dateString = post.data().timestamp.toDate().toLocaleString();
+      const timestamp = postData.timestamp;
+      let dateString = "";
+      if (timestamp) dateString = timestamp.toDate().toLocaleString();
       postData.timestamp = dateString;
       postData.postID = post.id;
       posts.push(postData);
@@ -191,4 +194,26 @@ export async function signInUser(user) {
 
 export function sendPasswordReminder(email) {
   return auth.sendPasswordResetEmail(email);
+}
+
+export async function upload(post) {
+  const refPosts = firestore.collection("posts");
+  const docRef = await refPosts.add({
+    ...post,
+    timestamp: fb.default.firestore.FieldValue.serverTimestamp(),
+  });
+  const postID = docRef.id;
+  updateUserPosts(postID);
+  return docRef;
+}
+
+function updateUserPosts(postID) {
+  const user = store.getState().currentUser;
+  let newPosts;
+  if (user.posts) newPosts = [...user.posts];
+  else newPosts = [];
+  newPosts.unshift(postID);
+  userDocRef.update({
+    posts: newPosts,
+  });
 }

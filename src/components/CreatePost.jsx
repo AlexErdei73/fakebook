@@ -5,9 +5,12 @@ import PostModal from "./PostModal";
 import "./CreatePost.css";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { AiFillYoutube } from "react-icons/ai";
+import { useSelector } from "react-redux";
 
 const CreatePost = (props) => {
-  const { user, userID, firstname, isCurrentUser, ...rest } = props;
+  const { firstname, isCurrentUser, ...rest } = props;
+
+  const user = useSelector((state) => state.currentUser);
 
   const PLACEHOLDER_FOR_CURRENT_USER = `What's on your mind ${user.firstname}?`;
   const PLACEHOLDER_FOR_ANOTHER_USER = `Write something to ${firstname}`;
@@ -51,7 +54,11 @@ const CreatePost = (props) => {
         <Card.Body>
           <Card.Title>
             <CircularImage size="40" url={user.profilePictureURL} />
-            <button type="button" className="p-2 w-75 text-dark text-btn" onClick={handleClick}>
+            <button
+              type="button"
+              className="p-2 w-75 text-dark text-btn"
+              onClick={handleClick}
+            >
               {getText()}
             </button>
           </Card.Title>
@@ -80,8 +87,6 @@ const CreatePost = (props) => {
       <PostModal
         show={showPostModal}
         onClose={handleClose}
-        user={user}
-        userID={userID}
         setText={setText}
         isYoutubeBtnPressed={isYoutubeBtnPressed}
         placeholder={getPlaceholder()}

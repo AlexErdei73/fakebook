@@ -1,25 +1,20 @@
 import React, { useState } from "react";
 import { Modal, Button, CloseButton } from "react-bootstrap";
-import { useStorage, useFirestore } from "reactfire";
 import StorageImage from "./StorageImage";
 import ProfileLink from "./ProfileLink";
 import UploadPhoto from "./UploadPhoto";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { AiFillYoutube } from "react-icons/ai";
-import * as fb from "firebase"; //this is only needed, because we want to use server timestamps
 import "./PostModal.css";
 import { handleTextareaChange, addPhoto, delPhoto } from "./helper";
+import { useSelector } from "react-redux";
+import { upload } from "../backend/backend";
 
 const PostModal = (props) => {
-  const {
-    show,
-    onClose,
-    user,
-    userID,
-    setText,
-    isYoutubeBtnPressed,
-    placeholder,
-  } = props;
+  const { show, onClose, setText, isYoutubeBtnPressed, placeholder } = props;
+
+  const user = useSelector((state) => state.currentUser);
+  const userID = useSelector((state) => state.user.id);
 
   const WELCOME_TEXT = `For adding YouTube video do the following:
      1. copy link of the video from the addresse bar of your browser
@@ -74,15 +69,12 @@ const PostModal = (props) => {
     setBtnEnabled(true);
   }
 
-  const storage = useStorage();
-
   function deletePhoto() {
     delPhoto({
       state: post,
       setState: setPost,
       user: user,
       userID: userID,
-      storage: storage,
       sideEffect: setPostBtnAsSideEffect,
     });
   }
@@ -91,32 +83,11 @@ const PostModal = (props) => {
     if (post.text === "" && !post.isYoutube) setBtnEnabled(false);
   }
 
-  const firestore = useFirestore();
-
   function uploadPost() {
-    const refPosts = firestore.collection("posts");
-    refPosts
-      .add({
-        ...post,
-        timestamp: fb.default.firestore.FieldValue.serverTimestamp(),
-      })
-      .then((docRef) => {
-        const postID = docRef.id;
-        updateUserPosts(postID);
-        setPost(INIT_POST);
-        setText("");
-        onClose();
-      });
-  }
-
-  function updateUserPosts(postID) {
-    let newPosts;
-    if (user.posts) newPosts = [...user.posts];
-    else newPosts = [];
-    newPosts.unshift(postID);
-    const refUser = firestore.collection("users").doc(userID);
-    refUser.update({
-      posts: newPosts,
+    upload(post).then(() => {
+      setPost(INIT_POST);
+      setText("");
+      onClose();
     });
   }
 

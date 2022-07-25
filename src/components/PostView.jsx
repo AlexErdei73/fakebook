@@ -3,13 +3,11 @@ import CreatePost from "./CreatePost";
 import DisplayPost from "./DisplayPost";
 
 const PostView = (props) => {
-  const { user, userID, posts, users } = props;
+  const { userID, posts, users } = props;
 
   return (
     <>
       <CreatePost
-        user={user}
-        userID={userID}
         isCurrentUser={true}
         className="mw-100 m-auto p-0"
         style={{ width: "450px" }}
