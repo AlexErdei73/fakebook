@@ -1,11 +1,11 @@
 import React, { useState, useCallback, useEffect } from "react";
 import "./App.css";
 import SignupModal from "./components/SignupModal.jsx";
-import Login from "./components/Login";
+import Login from "./components/Login.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import RecentLogins from "./components/RecentLogins";
+import RecentLogins from "./components/RecentLogins.jsx";
 import Button from "react-bootstrap/Button";
 import UserAccount from "./components/UserAccount";
 import PasswordReminderModal from "./components/PasswordReminderModal";
@@ -66,7 +66,7 @@ function App() {
             lg={{ span: 5, offset: 1 }}
             className="d-flex justify-content-center"
           >
-            <RecentLogins></RecentLogins>
+            <RecentLogins />
           </Col>
           <Col lg={5} className="bg-200 d-flex justify-content-center">
             <div className="login p-3 bg-light">
