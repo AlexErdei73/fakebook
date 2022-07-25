@@ -123,9 +123,7 @@ function App() {
             {isModalSignup ? (
               <Modal.Body>
                 <Signup
-                  onChange={updateUser}
                   onSubmit={handleCloseCallback}
-                  user={userState}
                 ></Signup>
               </Modal.Body>
             ) : (

@@ -4,31 +4,22 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import "./Signup.css";
-import { useSelector } from "react-redux";
 import { createUserAccount } from "../backend/backend";
 
 const Signup = (props) => {
-  const { user, onSubmit, onChange } = props;
-
-  const error = useSelector((state) => state.user.error);
-
-  // onChange function
-  const handleChange = (e) => {
-    onChange(e.target.name, e.target.value);
-  };
-
-  // Handle name change on form differently because of first and last name
-  const [name, setName] = useState({
+  const { onSubmit } = props;
+  
+  const [user, setUser] = useState({
     firstname: "",
     lastname: "",
+    email: "",
+    password: "",
   });
 
-  const handleNameChange = (e) => {
-    setName({
-      ...name,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const handleChange = (e) => setUser({
+    ... user,
+    [e.target.name]: e.target.value,
+  });
 
   const [validated, setValidated] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
@@ -39,8 +30,8 @@ const Signup = (props) => {
     const form = e.currentTarget;
     if (form.checkValidity() === true) {
       createUserAccount({
-        firstname: name.firstname,
-        lastname: name.lastname,
+        firstname: user.firstname,
+        lastname: user.lastname,
         email: user.email,
         password: user.password,
       });
@@ -61,7 +52,7 @@ const Signup = (props) => {
             type="text"
             placeholder="First name"
             name="firstname"
-            onChange={handleNameChange}
+            onChange={handleChange}
             required
           />
           <Form.Control.Feedback type="invalid">
@@ -73,7 +64,7 @@ const Signup = (props) => {
             type="text"
             placeholder="Surename"
             name="lastname"
-            onChange={handleNameChange}
+            onChange={handleChange}
             required
           />
           <Form.Control.Feedback type="invalid">
