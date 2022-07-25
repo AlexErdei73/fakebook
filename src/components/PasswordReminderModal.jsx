@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { sendPasswordReminder } from "../backend/backend";
 import { errorOccured } from "../features/user/userSlice";
 
-const PasswordReminder = (props) => {
-  const { onHide } = props;
+const PasswordReminderModal = (props) => {
+  const { show, onHide, onExit } = props;
 
   const errorMsg = useSelector((state) => state.user.error);
   const dispatch = useDispatch();
@@ -27,7 +27,13 @@ const PasswordReminder = (props) => {
   }
 
   return (
-    <>
+    <Modal show={show} onHide={onHide} onExited={onExit}>
+      <Modal.Header>
+        <Modal.Title>
+          <strong className="fs-2">Password Reset Email</strong>
+        </Modal.Title>
+      </Modal.Header>
+
       <Modal.Body>
         {errorMsg !== "" && <Alert variant="danger">{errorMsg}</Alert>}
         <Form.Group>
@@ -61,8 +67,8 @@ const PasswordReminder = (props) => {
           <b className="px-2">Send</b>
         </Button>
       </Modal.Footer>
-    </>
+    </Modal>
   );
 };
 
-export default PasswordReminder;
+export default PasswordReminderModal;

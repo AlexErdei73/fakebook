@@ -1,15 +1,14 @@
 import React, { useState, useCallback, useEffect } from "react";
 import "./App.css";
-import Signup from "./components/Signup";
+import SignupModal from "./components/SignupModal.jsx";
 import Login from "./components/Login";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import RecentLogins from "./components/RecentLogins";
 import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 import UserAccount from "./components/UserAccount";
-import PasswordReminder from "./components/PasswordReminder";
+import PasswordReminderModal from "./components/PasswordReminderModal";
 import { useSelector } from "react-redux";
 import { subscribeAuth } from "./backend/backend";
 
@@ -75,7 +74,9 @@ function App() {
                 onClickForgottenPswd={handleClickPasswordReminderBtn}
                 disabled
               ></Login>
+
               <hr />
+
               <Button
                 variant="success"
                 size="lg"
@@ -86,30 +87,18 @@ function App() {
               </Button>
             </div>
           </Col>
-          <Modal
-            show={show}
-            onHide={handleClose}
-            onExited={() => setModalSignup(true)}
-          >
-            <Modal.Header closeButton={isModalSignup}>
-              <Modal.Title>
-                <strong className="fs-2">
-                  {isModalSignup ? "Sign Up" : "Password Reset Email"}
-                </strong>
-                {isModalSignup && (
-                  <div className="title-footer">It's quick and easy.</div>
-                )}
-              </Modal.Title>
-            </Modal.Header>
 
-            {isModalSignup ? (
-              <Modal.Body>
-                <Signup onSubmit={handleCloseCallback}></Signup>
-              </Modal.Body>
-            ) : (
-              <PasswordReminder onHide={handleClose} />
-            )}
-          </Modal>
+          <SignupModal
+            show={show && isModalSignup}
+            onHide={handleCloseCallback}
+            onExit={() => setModalSignup(true)}
+          ></SignupModal>
+
+          <PasswordReminderModal
+            show={show && !isModalSignup}
+            onHide={handleClose}
+            onExit={() => setModalSignup(true)}
+          />
         </Row>
       </Col>
     );
