@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { createUserAccount } from "../backend/backend";
 
 const Signup = (props) => {
-  const { user, onSubmit, onChange, onError } = props;
+  const { user, onSubmit, onChange } = props;
 
   const error = useSelector((state) => state.user.error);
 
@@ -50,11 +50,8 @@ const Signup = (props) => {
   };
 
   useEffect(() => {
-    if (formIsValid) {
-      if (error) onError(error.message);
-      onSubmit();
-    }
-  }, [formIsValid, error, onError, onSubmit]);
+    if (formIsValid) onSubmit(); 
+  }, [formIsValid, onSubmit]);
 
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>

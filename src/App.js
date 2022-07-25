@@ -30,13 +30,6 @@ function App() {
 
   const [userState, setUserState] = useState(initUser);
 
-  function addError(errorMsg) {
-    setUserState({
-      ...userState,
-      error: errorMsg,
-    });
-  }
-
   function updateUser(name, value) {
     setUserState({
       ...userState,
@@ -56,7 +49,6 @@ function App() {
     setShow(true);
   }
 
-  const addErrorCallback = useCallback(addError, []);
   const handleCloseCallback = useCallback(handleClose, []);
 
   //get the first and lastName for the route of the profile
@@ -131,7 +123,6 @@ function App() {
             {isModalSignup ? (
               <Modal.Body>
                 <Signup
-                  onError={addErrorCallback}
                   onChange={updateUser}
                   onSubmit={handleCloseCallback}
                   user={userState}
