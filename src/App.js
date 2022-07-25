@@ -58,7 +58,7 @@ function App() {
 
   if (user.isSignedIn && !user.error) {
     if (user.isEmailVerified)
-      return <UserAccount profileLink={profileLink} userState={userState} />;
+      return <UserAccount profileLink={profileLink} />;
     else return <></>;
   } else {
     return (

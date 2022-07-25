@@ -16,7 +16,9 @@ import {
 } from "../backend/backend";
 
 const UserAccount = (props) => {
-  const { profileLink, userState } = props;
+  const { profileLink } = props;
+
+  const error = useSelector(state => state.user.error);
 
   useEffect(() => {
     const unsubscribeCurrentUser = subscribeCurrentUser();
@@ -179,7 +181,7 @@ const UserAccount = (props) => {
             />
           </Switch>
         </BrowserRouter>
-        <div>{userState.error && <h4>{userState.error}</h4>}</div>
+        <div>{error && <h4>{error}</h4>}</div>
       </Container>
     </div>
   );
