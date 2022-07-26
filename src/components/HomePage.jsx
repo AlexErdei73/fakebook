@@ -6,7 +6,6 @@ import VideoView from "./VideoView";
 import Contacts from "./Contacts";
 import "./HomePage.css";
 import { handleClickLink } from "./helper";
-import { useSelector } from "react-redux";
 
 const HomePage = (props) => {
   const {
@@ -17,11 +16,6 @@ const HomePage = (props) => {
     activeLink,
     setActiveLink,
   } = props;
-
-  const user = useSelector((state) => state.currentUser);
-  const userID = useSelector((state) => state.user.id);
-  const users = useSelector((state) => state.users);
-  const posts = useSelector((state) => state.posts);
 
   //we set the active link to the home link when it renders
   useEffect(() => {
@@ -44,7 +38,7 @@ const HomePage = (props) => {
         className="mh-100 overflow-auto hide-scrollbar"
       >
         {!isWatch && <PostView />}
-        {isWatch && <VideoView users={users} posts={posts} userID={userID} />}
+        {isWatch && <VideoView />}
       </Col>
       {!isWatch && (
         <Col

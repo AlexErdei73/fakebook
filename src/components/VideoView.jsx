@@ -1,8 +1,9 @@
 import React from "react";
 import DisplayPost from "./DisplayPost";
+import { useSelector } from "react-redux";
 
-const VideoView = (props) => {
-  const { posts, users, userID } = props;
+const VideoView = () => {
+  const posts = useSelector((state) => state.posts);
 
   const videos = posts.filter((post) => post.isYoutube);
 
@@ -12,9 +13,6 @@ const VideoView = (props) => {
         <DisplayPost
           key={index}
           post={video}
-          postID={video.postID}
-          users={users}
-          userID={userID}
           className="mw-100 mx-auto my-2"
           style={{ width: "550px" }}
         />
