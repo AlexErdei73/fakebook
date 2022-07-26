@@ -1,6 +1,5 @@
 import React from "react";
 import StorageImage from "./StorageImage";
-import "firebase/storage";
 
 const CircularImage = (props) => {
   const { size, url, isOnline, ...rest } = props;

@@ -149,7 +149,7 @@ const Contacts = () => {
       (msg) => msg.sender === sender.userID
     );
     messagesToUpdate.forEach((msg) => {
-      const messageID = msg.messageID;
+      const messageID = msg.id;
       updateToBeRead(messageID);
     });
   }
