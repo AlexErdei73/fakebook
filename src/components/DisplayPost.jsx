@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import { Card, Button } from "react-bootstrap";
-import { StorageImage, useFirestore } from "reactfire";
+import StorageImage from "./StorageImage";
 import ProfileLink from "./ProfileLink";
 import LikesModal from "./LikesModal";
 import Comments from "./Comments";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { GoComment } from "react-icons/go";
+import { useSelector } from "react-redux";
+import { updatePost } from "../backend/backend";
 
 const DisplayPost = (props) => {
-  const { post, postID, users, userID, ...rest } = props;
+  const { post, postID, ...rest } = props;
+
+  const userID = useSelector((state) => state.user.id);
+  const users = useSelector((state) => state.users);
+  const currentUser = useSelector((state) => state.currentUser);
 
   const [show, setShow] = useState(false);
 
@@ -18,20 +24,10 @@ const DisplayPost = (props) => {
     setShow(false);
   }
 
-  const firestore = useFirestore();
-
   //We avoid error if post is undefind
   if (!post) return <></>;
 
   const user = users.find((user) => user.userID === post.userID);
-
-  const currentUser = users.find((user) => user.userID === userID);
-
-  const postRef = firestore.collection("posts").doc(postID);
-
-  function updatePost(post) {
-    postRef.update(post);
-  }
 
   function index() {
     return post.likes.indexOf(userID);
@@ -42,11 +38,11 @@ const DisplayPost = (props) => {
   }
 
   function handleClick() {
-    const likes = post.likes;
+    const likes = [...post.likes];
     const index = likes.indexOf(userID);
     if (index === -1) likes.push(userID);
     else likes.splice(index, 1);
-    updatePost({ likes: likes });
+    updatePost({ likes: likes }, postID);
   }
 
   function handleCommentClick() {

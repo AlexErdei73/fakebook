@@ -217,3 +217,8 @@ function updateUserPosts(postID) {
     posts: newPosts,
   });
 }
+
+export function updatePost(post, postID) {
+  const postRef = firestore.collection("posts").doc(postID);
+  postRef.update(post);
+}
