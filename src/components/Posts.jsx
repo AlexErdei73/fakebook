@@ -5,19 +5,23 @@ import MiniPhotos from "./MiniPhotos";
 import MiniFriends from "./MiniFriends";
 import DisplayUserPost from "./DisplayUserPost";
 import { handleClickLink } from "./helper";
+import { useSelector } from "react-redux";
 
 const Posts = (props) => {
   const {
     userID,
-    users,
-    currentUser,
-    isCurrentUser,
     postsLinkRef,
     friendsLinkRef,
     photosLinkRef,
     activeLink,
     setActiveLink,
   } = props;
+
+  const users = useSelector((state) => state.users);
+  const currentUser = useSelector((state) => state.currentUser);
+  const currentUserID = useSelector((state) => state.user.id);
+
+  const isCurrentUser = userID === currentUserID;
 
   const user = users.find((user) => user.userID === userID);
 
