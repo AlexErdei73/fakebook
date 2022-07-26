@@ -222,3 +222,8 @@ export function updatePost(post, postID) {
   const postRef = firestore.collection("posts").doc(postID);
   postRef.update(post);
 }
+
+export function addFileToStorage(file) {
+  const ref = storage.ref(userID).child(file.name);
+  return ref.put(file);
+}

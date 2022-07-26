@@ -1,10 +1,8 @@
 import React, { useRef, useEffect } from "react";
-import { useStorage } from "reactfire";
+import { addFileToStorage } from "../backend/backend";
 
 const UploadPhoto = (props) => {
-  const { show, setShow, updateDatabase, userID } = props;
-
-  const storage = useStorage();
+  const { show, setShow, updatePost } = props;
 
   const fileInputRef = useRef(null);
 
@@ -17,9 +15,8 @@ const UploadPhoto = (props) => {
   function onChange(event) {
     event.preventDefault();
     const file = event.target.files[0];
-    const ref = storage.ref(userID).child(file.name);
-    ref.put(file).then(() => {
-      return updateDatabase(file);
+    addFileToStorage(file).then(() => {
+      return updatePost(file);
     });
   }
 

@@ -219,8 +219,7 @@ const PostModal = (props) => {
       <UploadPhoto
         show={showUploadPhotoDlg}
         setShow={setShowUploadPhotoDlg}
-        updateDatabase={addPhotoToPost}
-        userID={userID}
+        updatePost={addPhotoToPost}
       />
     </>
   );
