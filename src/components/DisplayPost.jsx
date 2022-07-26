@@ -133,12 +133,7 @@ const DisplayPost = (props) => {
         )}
       </Card.Footer>
 
-      <LikesModal
-        show={show}
-        onHide={handleHide}
-        users={users}
-        likes={post.likes}
-      />
+      <LikesModal show={show} onHide={handleHide} likes={post.likes} />
     </Card>
   );
 };

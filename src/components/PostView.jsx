@@ -18,8 +18,6 @@ const PostView = (props) => {
             key={index}
             post={post}
             postID={post.postID}
-            users={users}
-            userID={userID}
             className="mw-100 mx-auto my-2"
             style={{ width: "450px" }}
           />
