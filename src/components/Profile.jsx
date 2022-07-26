@@ -253,11 +253,8 @@ const Profile = (props) => {
           <Switch>
             <Route path={`${path}/:itemId`}>
               <NestedRoute
-                photos={photos}
                 userID={userId()}
-                users={users}
                 openFileInput={() => openFileInput("")}
-                isCurrentUser={isCurrentUser}
                 //we only need the rest to handle the changes of the activeLink
                 photosLinkRef={photosLinkRef}
                 friendsLinkRef={friendsLinkRef}

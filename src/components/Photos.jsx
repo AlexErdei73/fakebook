@@ -3,18 +3,19 @@ import { Row, Col, Card, Button } from "react-bootstrap";
 import { Link, useRouteMatch } from "react-router-dom";
 import ResponsiveImage from "./ResponsiveImage";
 import { handleClickLink } from "./helper";
+import { useSelector } from "react-redux";
 
 const Photos = (props) => {
   const { url } = useRouteMatch();
-  const {
-    userID,
-    photos,
-    openFileInput,
-    isCurrentUser,
-    photosLinkRef,
-    activeLink,
-    setActiveLink,
-  } = props;
+  const { userID, openFileInput, photosLinkRef, activeLink, setActiveLink } =
+    props;
+
+  const users = useSelector((state) => state.users);
+  const currentUserID = useSelector((state) => state.user.id);
+
+  const isCurrentUser = userID === currentUserID;
+  const user = users.find((user) => user.userID === userID);
+  const photos = user.photos;
 
   useEffect(() => {
     handleClickLink(

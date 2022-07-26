@@ -8,11 +8,8 @@ const NestedRoute = (props) => {
   const { itemId } = useParams();
 
   const {
-    photos,
     userID,
     openFileInput,
-    users,
-    isCurrentUser,
     photosLinkRef,
     friendsLinkRef,
     postsLinkRef,
@@ -23,11 +20,9 @@ const NestedRoute = (props) => {
   if (itemId === "Photos")
     return (
       <Photos
-        photos={photos}
         userID={userID}
-        //the rendering of the component changes the activeLink
         openFileInput={openFileInput}
-        isCurrentUser={isCurrentUser}
+        //the rendering of the component changes the activeLink
         photosLinkRef={photosLinkRef}
         activeLink={activeLink}
         setActiveLink={setActiveLink}
