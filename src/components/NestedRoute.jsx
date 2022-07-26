@@ -36,7 +36,6 @@ const NestedRoute = (props) => {
   if (itemId === "Friends")
     return (
       <Friends
-        users={users}
         //the rendering of the component changes the activeLink
         friendsLinkRef={friendsLinkRef}
         activeLink={activeLink}

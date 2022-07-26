@@ -3,11 +3,14 @@ import { Card, Row } from "react-bootstrap";
 import { Link, useRouteMatch } from "react-router-dom";
 import FriendCard from "./FriendCard";
 import { handleClickLink } from "./helper";
+import { useSelector } from "react-redux";
 
 const Friends = (props) => {
   const { url } = useRouteMatch();
 
-  const { users, friendsLinkRef, activeLink, setActiveLink } = props;
+  const { friendsLinkRef, activeLink, setActiveLink } = props;
+
+  const users = useSelector((state) => state.users);
 
   useEffect(() => {
     handleClickLink(
