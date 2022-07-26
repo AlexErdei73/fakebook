@@ -1,9 +1,10 @@
 import React from "react";
 import CreatePost from "./CreatePost";
 import DisplayPost from "./DisplayPost";
+import { useSelector } from "react-redux";
 
-const PostView = (props) => {
-  const { userID, posts, users } = props;
+const PostView = () => {
+  const posts = useSelector((state) => state.posts);
 
   return (
     <>

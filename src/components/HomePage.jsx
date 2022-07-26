@@ -43,9 +43,7 @@ const HomePage = (props) => {
         lg={isWatch ? 9 : 6}
         className="mh-100 overflow-auto hide-scrollbar"
       >
-        {!isWatch && (
-          <PostView user={user} userID={userID} posts={posts} users={users} />
-        )}
+        {!isWatch && <PostView />}
         {isWatch && <VideoView users={users} posts={posts} userID={userID} />}
       </Col>
       {!isWatch && (
