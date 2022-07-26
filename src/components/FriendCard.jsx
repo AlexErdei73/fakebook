@@ -47,7 +47,7 @@ const FriendCard = (props) => {
           type="button"
           onClick={handleClick}
           className="friend-btn"
-          tabindex="-1"
+          tabIndex="-1"
         >
           <StorageImage
             storagePath={user.profilePictureURL}

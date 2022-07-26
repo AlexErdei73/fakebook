@@ -3,17 +3,10 @@ import { Card, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { handleClickLink } from "./helper";
 import ResponsiveImage from "./ResponsiveImage";
+import { useSelector } from "react-redux";
 
 const MiniFriends = (props) => {
-  const {
-    user,
-    userID,
-    users,
-    friendsLinkRef,
-    activeLink,
-    setActiveLink,
-    ...rest
-  } = props;
+  const { user, friendsLinkRef, activeLink, setActiveLink, ...rest } = props;
 
   const NUMBER_OF_FRIENDS = 9;
 
@@ -29,6 +22,8 @@ const MiniFriends = (props) => {
       setActiveLink
     );
   }
+
+  const users = useSelector((state) => state.users);
 
   return (
     <Card {...rest}>

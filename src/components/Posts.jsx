@@ -18,7 +18,6 @@ const Posts = (props) => {
   } = props;
 
   const users = useSelector((state) => state.users);
-  const currentUser = useSelector((state) => state.currentUser);
   const currentUserID = useSelector((state) => state.user.id);
 
   const isCurrentUser = userID === currentUserID;
@@ -46,8 +45,6 @@ const Posts = (props) => {
         />
         <MiniFriends
           user={user}
-          userID={userID}
-          users={users}
           friendsLinkRef={friendsLinkRef}
           activeLink={activeLink}
           setActiveLink={setActiveLink}
@@ -56,8 +53,6 @@ const Posts = (props) => {
       </Col>
       <Col sm={7} className="mh-100 overflow-auto hide-scrollbar bg-200">
         <CreatePost
-          user={currentUser}
-          userID={currentUser.userID}
           firstname={user.firstname}
           isCurrentUser={isCurrentUser}
           className="mt-2"
@@ -67,8 +62,6 @@ const Posts = (props) => {
             <DisplayUserPost
               key={index}
               postID={postID}
-              userID={userID}
-              users={users}
               className="mx-auto my-2"
             />
           );
