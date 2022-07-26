@@ -235,3 +235,16 @@ export function addFileToStorage(file) {
 export function updateProfile(profile) {
   return userDocRef.update(profile);
 }
+
+const refMessages = firestore.collection("messages");
+
+export function uploadMessage(msg) {
+  return refMessages.add({
+    ...msg,
+    timestamp: fb.default.firestore.FieldValue.serverTimestamp(),
+  });
+}
+
+export function updateToBeRead(messageID) {
+  refMessages.doc(messageID).update({ isRead: true });
+}

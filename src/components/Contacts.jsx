@@ -8,7 +8,6 @@ import {
   Col,
   Row,
 } from "react-bootstrap";
-import { useStorage, useFirestore } from "reactfire";
 import StorageImage from "./StorageImage";
 import ProfileLink from "./ProfileLink";
 import { FiEdit } from "react-icons/fi";
@@ -23,10 +22,13 @@ import {
   delPhoto,
   handleKeyPress,
 } from "./helper";
-import * as fb from "firebase"; //this is only needed, because we want to use server timestamps
 import "./Contacts.css";
 import { useSelector } from "react-redux";
-import { subscribeMessages } from "../backend/backend";
+import {
+  subscribeMessages,
+  updateToBeRead,
+  uploadMessage,
+} from "../backend/backend";
 
 const Contacts = () => {
   const [showOverlay, setShowOverlay] = useState(false);
@@ -87,15 +89,12 @@ const Contacts = () => {
     });
   }
 
-  const storage = useStorage();
-
   function deletePhoto() {
     delPhoto({
       state: message,
       setState: setMessage,
       user: user,
       userID: userID,
-      storage: storage,
     });
   }
 
@@ -103,7 +102,10 @@ const Contacts = () => {
   const [scrollHeight, setScrollHeight] = useState("");
 
   function saveMessage() {
-    uploadMessage(message);
+    uploadMessage(message).then(() => {
+      setMessage(INIT_MESSAGE);
+      setScrollHeight(convRowRef.current.scrollHeight);
+    });
   }
 
   useEffect(() => {
@@ -119,24 +121,7 @@ const Contacts = () => {
     };
   }, []);
 
-  const firestore = useFirestore();
-
-  function uploadMessage(msg) {
-    const refMessages = firestore.collection("messages");
-    refMessages
-      .add({
-        ...msg,
-        timestamp: fb.default.firestore.FieldValue.serverTimestamp(),
-      })
-      .then(() => {
-        setMessage(INIT_MESSAGE);
-        setScrollHeight(convRowRef.current.scrollHeight);
-      });
-  }
-
   const [senders, setSenders] = useState([]);
-
-  const messagesRef = firestore.collection("messages");
 
   const incomingMessages = useSelector((state) => state.incomingMessages);
   const unread = incomingMessages.filter((message) => !message.isRead);
@@ -165,7 +150,7 @@ const Contacts = () => {
     );
     messagesToUpdate.forEach((msg) => {
       const messageID = msg.messageID;
-      messagesRef.doc(messageID).update({ isRead: true });
+      updateToBeRead(messageID);
     });
   }
 
@@ -335,7 +320,7 @@ const Contacts = () => {
             <UploadPhoto
               show={showPhotoDlg}
               setShow={setShowPhotoDlg}
-              updateDatabase={addPhotoToMessage}
+              updatePost={addPhotoToMessage}
               userID={userID}
             />
           </Card>
