@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useFirestore } from "reactfire";
 import {
   Row,
   Col,
@@ -31,6 +30,7 @@ import StorageImage from "./StorageImage";
 import "./Profile.css";
 import { handleClickLink } from "./helper";
 import { useSelector } from "react-redux";
+import { updateProfile } from "../backend/backend";
 
 const Profile = (props) => {
   const { userName } = useParams();
@@ -57,8 +57,6 @@ const Profile = (props) => {
 
   let { firstname, lastname, profilePictureURL, backgroundPictureURL, photos } =
     user();
-
-  const profileRef = useFirestore().collection("users").doc(userId());
 
   const [showRemoveCoverPhotoDlg, setShowRemoveCoverPhotoDlg] = useState(false);
 
@@ -106,7 +104,7 @@ const Profile = (props) => {
 
   function removeCoverPhoto() {
     closeDlg();
-    return profileRef.update({ backgroundPictureURL: "background-server.jpg" });
+    return updateProfile({ backgroundPictureURL: "background-server.jpg" });
   }
 
   function hideBgPhotoModal() {
@@ -140,14 +138,14 @@ const Profile = (props) => {
     }
     const newProfile = { photos: photos };
     if (nameOfURL !== "") newProfile[nameOfURL] = `${userID}/${file.name}`;
-    return profileRef.update(newProfile);
+    return updateProfile(newProfile);
   }
 
   function handlePhotoClick(e, name) {
     const index = Number(e.target.id);
     const photo = photos[index];
     const storagePath = `${userID}/${photo.fileName}`;
-    return profileRef.update({ [name]: storagePath });
+    return updateProfile({ [name]: storagePath });
   }
 
   useEffect(() => {

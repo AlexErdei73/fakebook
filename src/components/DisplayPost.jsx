@@ -12,8 +12,6 @@ import { updatePost } from "../backend/backend";
 const DisplayPost = (props) => {
   const { post, ...rest } = props;
 
-  const postID = post.postID;
-
   const userID = useSelector((state) => state.user.id);
   const users = useSelector((state) => state.users);
 
@@ -27,6 +25,8 @@ const DisplayPost = (props) => {
 
   //We avoid error if post is undefind
   if (!post) return <></>;
+
+  const postID = post.postID;
 
   const user = users.find((user) => user.userID === post.userID);
 

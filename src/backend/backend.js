@@ -48,6 +48,8 @@ const firestore = firebase.firestore();
 
 const usersCollection = firestore.collection("users");
 
+//The following global variables get values, when the UserAccount component renders and runs
+//subscribeCurrentUser. After that we use them globally in the following functions.
 let userID;
 let userDocRef;
 
@@ -228,4 +230,8 @@ export function updatePost(post, postID) {
 export function addFileToStorage(file) {
   const ref = storage.ref(userID).child(file.name);
   return ref.put(file);
+}
+
+export function updateProfile(profile) {
+  return userDocRef.update(profile);
 }
