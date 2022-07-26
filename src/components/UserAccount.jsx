@@ -45,7 +45,6 @@ const UserAccount = (props) => {
     };
   }, []);
 
-  const userID = useSelector((state) => state.user.id);
   const currentUser = useSelector((state) => state.currentUser);
   const users = useSelector((state) => state.users);
 
