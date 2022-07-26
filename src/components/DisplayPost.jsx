@@ -10,11 +10,12 @@ import { useSelector } from "react-redux";
 import { updatePost } from "../backend/backend";
 
 const DisplayPost = (props) => {
-  const { post, postID, ...rest } = props;
+  const { post, ...rest } = props;
+
+  const postID = post.postID;
 
   const userID = useSelector((state) => state.user.id);
   const users = useSelector((state) => state.users);
-  const currentUser = useSelector((state) => state.currentUser);
 
   const [show, setShow] = useState(false);
 
@@ -123,14 +124,7 @@ const DisplayPost = (props) => {
           <GoComment size="22px" />
           <b> Comment</b>
         </Button>
-        {showComments && (
-          <Comments
-            user={currentUser}
-            post={post}
-            updatePost={updatePost}
-            users={users}
-          />
-        )}
+        {showComments && <Comments post={post} />}
       </Card.Footer>
 
       <LikesModal show={show} onHide={handleHide} likes={post.likes} />

@@ -220,7 +220,9 @@ function updateUserPosts(postID) {
 
 export function updatePost(post, postID) {
   const postRef = firestore.collection("posts").doc(postID);
-  postRef.update(post);
+  //We need to remove the timestamp, because it is stored in serializable format in the redux-store
+  const { timestamp, ...restPost } = post;
+  postRef.update(restPost);
 }
 
 export function addFileToStorage(file) {

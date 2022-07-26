@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Col, Row, CloseButton, Button } from "react-bootstrap";
-import { useStorage } from "reactfire";
 import StorageImage from "./StorageImage";
 import CircularImage from "./CircularImage";
 import UploadPhoto from "./UploadPhoto";
@@ -15,13 +14,18 @@ import {
   handleKeyPress,
 } from "./helper";
 import "./Comments.css";
+import { useSelector } from "react-redux";
+import { updatePost } from "../backend/backend";
 
 const Comments = (props) => {
-  const { user, post, updatePost, users } = props;
+  const { post } = props;
+
+  const user = useSelector((state) => state.currentUser);
+  const userID = useSelector((state) => state.user.id);
 
   const WELCOME_TEXT = "Write a comment ...";
   const INIT_COMMENT = {
-    userID: `${user.userID}`,
+    userID: userID,
     text: "",
     isPhoto: false,
     photoURL: "",
@@ -43,28 +47,29 @@ const Comments = (props) => {
       state: comment,
       setState: setComment,
       file: file,
-      userID: user.userID,
+      userID: userID,
     });
   }
-
-  const storage = useStorage();
 
   function deletePhoto() {
     delPhoto({
       state: comment,
       setState: setComment,
       user: user,
-      userID: user.userID,
-      storage: storage,
+      userID: userID,
     });
   }
 
   function saveComment() {
     if (comment.text === "" && !comment.isPhoto) return;
-    const newPost = { ...post };
+    const newPost = {
+      ...post,
+      comments: [...post.comments],
+    };
+    const postID = post.postID;
     if (!post.comments) newPost.comments = [];
     newPost.comments.push(comment);
-    updatePost(newPost);
+    updatePost(newPost, postID);
     setComment(INIT_COMMENT);
   }
 
@@ -73,12 +78,7 @@ const Comments = (props) => {
       <hr />
       {post.comments &&
         post.comments.map((comment, index) => (
-          <DisplayComment
-            key={index}
-            comment={comment}
-            users={users}
-            className="mb-2"
-          />
+          <DisplayComment key={index} comment={comment} className="mb-2" />
         ))}
       <Row>
         <Col xs={1}>
@@ -149,8 +149,7 @@ const Comments = (props) => {
       <UploadPhoto
         show={show}
         setShow={setShow}
-        updateDatabase={addPhotoToComment}
-        userID={user.userID}
+        updatePost={addPhotoToComment}
       />
     </Col>
   );

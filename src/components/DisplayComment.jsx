@@ -2,11 +2,14 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import StorageImage from "./StorageImage";
 import CircularImage from "./CircularImage";
+import { useSelector } from "react-redux";
 
 const DisplayComment = (props) => {
-  const { comment, users, ...rest } = props;
+  const { comment, ...rest } = props;
 
   const userID = comment.userID;
+
+  const users = useSelector((state) => state.users);
 
   const user = users.find((user) => user.userID === userID);
 

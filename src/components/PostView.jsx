@@ -18,7 +18,6 @@ const PostView = () => {
           <DisplayPost
             key={index}
             post={post}
-            postID={post.postID}
             className="mw-100 mx-auto my-2"
             style={{ width: "450px" }}
           />

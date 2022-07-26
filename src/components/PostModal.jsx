@@ -167,9 +167,9 @@ const PostModal = (props) => {
                 <iframe
                   src={post.youtubeURL}
                   title="YouTube video player"
-                  frameborder="0"
+                  frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
-                  allowfullscreen
+                  allowFullScreen
                 ></iframe>
                 <div className="close-btn-container">
                   <CloseButton onClick={deleteYoutubeVideo} />
