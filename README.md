@@ -4,7 +4,7 @@ This is a facebook clone, which is made to show my skills as a webdeveloper in J
 
 # used simplifications
 
-This has been my largest Java Script project. Although it's a fairly large project, I needed to make lot of simplifications, just to keep the project manageble by myself. 
+This has been my largest Java Script project. Although it's a fairly large project, I needed to make lot of simplifications, just to keep the project manageble by myself.
 
 - First of all I simplified the data structure as much as possible. Here every registered user is friend with all other registered users. This is a major simplification and restricts the functionality. You can't delete your friends and they can't do it with you either. Nobody can be blocked. This is fine for a demonstration app like this.
 
@@ -14,16 +14,30 @@ This has been my largest Java Script project. Although it's a fairly large proje
 
 # applied technology
 
-This app seemed to be way more complicated even with the mentioned simplifications than anything else I have done before. It seemed to be natural to apply some libraries beside vanilla Java Script. The back end is handled by Firebase. For more information visit https://firebase.google.com. 
+## old version
+
+This app seemed to be way more complicated even with the mentioned simplifications than anything else I have done before. It seemed to be natural to apply some libraries beside vanilla Java Script. The back end is handled by Firebase. For more information visit https://firebase.google.com.
 
 -The actual front end part is built by React, just like the real world version. The Odin Project has a great intermediate React course, which gave me the basics. This was great basic foundation, but I needed to go slightly deeper. The official React documentation was great help with this. More information can be found here: https://reactjs.org/
 
--Communicating with Firebase is a deeply asynchronous process. The inner working of React is deeply asynchronous too. The application of these technologies in the same app is not completely straightforward. Luckily there is a library, which connects the two. This is called reactfire, from the developers of Firebase. This contains costum hooks and React components, to use Firebase easily in a React app. Unfortunately this is still in experimental phase, and older versions were supposed to work with only experimental versions of React, not with the stable build. By now this situation is improving and this library is at it's 4.2.0 version. I used the 3.0.0 version, which works great even with the latest stable React build, apart from a few issues, especially with the Firebase Auth product. 
+-Communicating with Firebase is a deeply asynchronous process. The inner working of React is deeply asynchronous too. The application of these technologies in the same app is not completely straightforward. Luckily there is a library, which connects the two. This is called reactfire, from the developers of Firebase. This contains costum hooks and React components, to use Firebase easily in a React app. Unfortunately this is still in experimental phase, and older versions were supposed to work with only experimental versions of React, not with the stable build. By now this situation is improving and this library is at it's 4.2.0 version. I used the 3.0.0 version, which works great even with the latest stable React build, apart from a few issues, especially with the Firebase Auth product.
 One of the reason, why this library is so powerful, is that it's based on the rxjs library, which is an implementation of the Observer pattern for client-server communication. I've met with it before regarding Angular, but I experienced the true power of it during building this app. More information can be found about reactfire here: https://github.com/FirebaseExtended/reactfire/tree/v3.0.0 It's certainly worth to get some information about the relevant Observer pattern, which is one of the most common and powerful OOP design pattern. I certainly need further studies to fully understand it.
 
 -Regarding the styling Bootstrap was tremendous help and I used components from React-Bootstrap. This made my work much easier, especially because the visual world of these tools and the look of the original app is very similar. Wherever these tools were not powerful enough, vanilla CSS was a great help. For more information: https://react-bootstrap.github.io
 
 -All the icons have been taken from the react-icons library. You can find it here: https://react-icons.github.io/react-icons
+
+## new version
+
+The app recently received some major updates.
+
+1. I removed the JS solutions, which extended the responsive behaviour, gained by bootstrap. Instead of JS the app uses CSS media queries.
+2. I made the app keyboard navigable and added aria-labels for buttons, which did not have text description. These are important improvements for making the app more accessible.
+3. I removed reactfire and added redux to the app. This is a major improvement for a lot of reasons:
+   - Reactfire made easy to use Firebase data in the react components. This seemed to be positive. Unfortunately it forces directly firebase to the components, which makes it difficult to separate the code, which deals with firebase, from the actual UI code. This makes it difficult to make the app working with a different kind of backend than Firebase. It even makes difficult to upgrade from Firebase 8 to 9.
+   - Applying Redux I could achieve a better structured React code. It has obviously much less prop drilling than before.
+   - The code has become much better testable and debuggable with time travel debugging.
+   - It was a nice surprise that I did not need to use the redux-tools, which need to inject asynchronous processes into the Redux dataflow. The reason is that the app mainly uses listeners to connect to Firebase. This way the redux-store can be directly updated, when the data in the Firebase app changes. Firebase is a nice application of the Observer pattern, just like Redux is.
 
 # What have I learnt from this project?
 
@@ -35,21 +49,21 @@ During building this app I learnt more than I could have imagined. There were so
 
 - Lot's of minor or major problems regarding the styling of components. I needed to find some non-trivial solutions in CSS. Some of the solutions are really interesting. I would only mention just how you can style an image to become responsive but to keep its aspect ratio. This is surprisingly difficult problem, or even the dynamic styling of textarea components to allow them to follow their content size horizontally. This is far from trivial especially in React code. Some of these solutions could be a great blog topic at least in React. Luckily vanilla Java Script solutions have already documented well.
 
-- The responsive design is mostly done by Bootstrap. There were some points, where Bootstrap was not powerful enough. I made a unique React solution for this problem, but I can imagine that it can be done easier with advanced CSS. That's going to be one of the topic of my further studies for example. 
+- The responsive design is mostly done by Bootstrap. There were some points, where Bootstrap was not powerful enough. I made a unique React solution for this problem, but I can imagine that it can be done easier with advanced CSS. That's going to be one of the topic of my further studies for example.
 
 - It was non trivial how I can apply Firebase timestamps without cloud functions. It was not obvious at all. Although the solution, which I found, works well, I am not sure it's the best.
 
 - Deploying React apps to gh-pages can be a lot of work, if they contain a lot of routes like this app. The relative links work fine in the developer version without the fakebook in the path. On the other hand the deployed webpage has to contain fakebook/ at the beginning of all the paths, because the relative links are relative to the root directory of the gh-pages.
 
-# What are the possible directions for improvement? 
+# What are the possible directions for improvement?
 
-- Relatively simple improvement would be to add the messaging functionality to other pages of the app. This is currently available on the homepage, but in the real world app there are "Message" buttons on the user cards or even user profiles too. 
+- Relatively simple improvement would be to add the messaging functionality to other pages of the app. This is currently available on the homepage, but in the real world app there are "Message" buttons on the user cards or even user profiles too.
 
 - Another possible improvement would be to add videos to the app. At the moment only YouTube videos can be added to posts and comments, and only pictures to user profiles. If videos were available, that would make the storage usage much higher. This is a good compromise to keep the app free from Firebase fees.
 
 - We could add GIF-s and emoji-s to the app. For keep things simple I haven't dome it yet, but these are great, so there is opportunity for improvement here.
 
-- Cloud functions would be great to maintain data security. They would also give oportunity to apply AI technologies from Firebase to filter out inappropriate content automatically. 
+- Cloud functions would be great to maintain data security. They would also give oportunity to apply AI technologies from Firebase to filter out inappropriate content automatically.
 
 - This app has not been designed to target users with accessibility needs. If we added more text content to pictures, and users it could be used for this purposes too. We could for example populate the alt properties of the images with usful text descriptions.
 
@@ -59,7 +73,7 @@ During building this app I learnt more than I could have imagined. There were so
 
 # Testing
 
-The project description requires us to do high-level testing for this project. Because this project is a React front-end code, simple automated unit testing is out of question. It's not obvious how high level should this testing be. Most of the components contain some connection with Firebase. Automated testing of these is difficult, because mocking the whole back end can be difficult. We should perhaps use the firebase emulator and we could build test with including that tool. We also could choose some components, which is free from communicating with Firebase, to test. This code contains lot of side effects, so the components are hardly ever pure functions. Testing this code with the automated unit testing tools seems to be hard at the moment. I will try to find some ways to do it in the future, but I am affraid the test coverage will not be very high in this case. I will perhaps restrict myself to test some of the simplest components. 
+The project description requires us to do high-level testing for this project. Because this project is a React front-end code, simple automated unit testing is out of question. It's not obvious how high level should this testing be. Most of the components contain some connection with Firebase. Automated testing of these is difficult, because mocking the whole back end can be difficult. We should perhaps use the firebase emulator and we could build test with including that tool. We also could choose some components, which is free from communicating with Firebase, to test. This code contains lot of side effects, so the components are hardly ever pure functions. Testing this code with the automated unit testing tools seems to be hard at the moment. I will try to find some ways to do it in the future, but I am affraid the test coverage will not be very high in this case. I will perhaps restrict myself to test some of the simplest components.
 
 # Getting Started with Create React App
 
