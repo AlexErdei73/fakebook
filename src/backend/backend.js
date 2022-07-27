@@ -53,8 +53,8 @@ let userID;
 let userDocRef;
 
 export function subscribeCurrentUser() {
-  userID = store.getState().user.id;
-  userDocRef = usersCollection.doc(userID);
+  userID = store.getState().user.id; //These are the
+  userDocRef = usersCollection.doc(userID); //global values
   return userDocRef.onSnapshot((doc) => {
     store.dispatch(currentUserUpdated(doc.data()));
   });
@@ -172,6 +172,9 @@ export async function createUserAccount(user) {
 }
 
 export async function signInUser(user) {
+  const EMAIL_VERIFICATION_ERROR =
+    "Please verify your email before to continue";
+  const NO_ERROR = "";
   try {
     const result = await auth.signInWithEmailAndPassword(
       user.email,
@@ -180,11 +183,9 @@ export async function signInUser(user) {
     // email has been verified?
     if (!result.user.emailVerified) {
       auth.signOut();
-      store.dispatch(
-        errorOccured("Please verify your email before to continue")
-      );
+      store.dispatch(errorOccured(EMAIL_VERIFICATION_ERROR));
     } else {
-      store.dispatch(errorOccured(""));
+      store.dispatch(errorOccured(NO_ERROR));
       store.dispatch(loadingFinished());
     }
   } catch (error) {
@@ -222,6 +223,7 @@ function updateUserPosts(postID) {
 export function updatePost(post, postID) {
   const postRef = firestore.collection("posts").doc(postID);
   //We need to remove the timestamp, because it is stored in serializable format in the redux-store
+  //so we can't write it back to firestore
   const { timestamp, ...restPost } = post;
   postRef.update(restPost);
 }
@@ -245,5 +247,5 @@ export function uploadMessage(msg) {
 }
 
 export function updateToBeRead(messageID) {
-  refMessages.doc(messageID).update({ isRead: true });
+  return refMessages.doc(messageID).update({ isRead: true });
 }

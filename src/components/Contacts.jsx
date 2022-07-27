@@ -65,8 +65,8 @@ const Contacts = () => {
 
   const handleClickCallback = useCallback(handleClick, [user]);
 
-  function handleClose() {
-    updateReadStatusOfMessages(recipient);
+  async function handleClose() {
+    await updateReadStatusOfMessages(recipient);
     removeSender();
     setShowOverlay(false);
     setRecipient(null);
@@ -148,10 +148,12 @@ const Contacts = () => {
     const messagesToUpdate = unread.filter(
       (msg) => msg.sender === sender.userID
     );
+    const updates = [];
     messagesToUpdate.forEach((msg) => {
       const messageID = msg.id;
-      updateToBeRead(messageID);
+      updates.push(updateToBeRead(messageID));
     });
+    return Promise.all(updates);
   }
 
   function removeSender() {
