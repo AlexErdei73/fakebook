@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useFirestore, useFirestoreDocData } from "reactfire";
 import StorageImage from "./StorageImage";
 import { Row, Col, Carousel } from "react-bootstrap";
 import { useHistory, useParams, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const PhotoViewer = () => {
   const { userID, n } = useParams();
 
-  const profileRef = useFirestore().collection("users").doc(userID);
-  let result = useFirestoreDocData(profileRef, { initialData: { photos: [] } });
-
-  let { photos } = result.data;
+  const users = useSelector((state) => state.users);
+  const photos = users.find((user) => user.userID === userID).photos;
 
   const [activeIndex, setActiveIndex] = useState(Number(n));
 
