@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { getImageURL } from "../backend/backend";
 import { useSelector, useDispatch } from "react-redux";
-import placeholderImage from "../images/friends.jpg";
+import placeholderImage from "../images/placeholder-image.jpg";
 import { imageAdded, imageUrlFound } from "../features/images/imagesSlice";
 import { useEffect } from "react";
 

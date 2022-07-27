@@ -3,9 +3,9 @@ import CircularImage from "./CircularImage";
 import { Row, Col } from "react-bootstrap";
 
 const ProfileLink = (props) => {
-  const { size, fullname, bold } = props;
+  const { size, fullname, bold, user } = props;
 
-  const { firstname, lastname, profilePictureURL, isOnline } = props.user;
+  const { firstname, lastname, profilePictureURL, isOnline } = user;
 
   let name;
   if (fullname === "true") name = `${firstname} ${lastname}`;

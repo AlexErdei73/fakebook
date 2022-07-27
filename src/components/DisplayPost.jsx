@@ -30,6 +30,9 @@ const DisplayPost = (props) => {
 
   const user = users.find((user) => user.userID === post.userID);
 
+  //We avoid error if user is undefined
+  if (!user) return <></>;
+
   function index() {
     return post.likes.indexOf(userID);
   }

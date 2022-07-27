@@ -9,6 +9,7 @@ import {
   signOut,
   errorOccured,
   loadingFinished,
+  loadingStarted,
 } from "../features/user/userSlice";
 import { currentUserUpdated } from "../features/currentUser/currentUserSlice";
 import { usersUpdated } from "../features/users/usersSlice";
@@ -81,8 +82,10 @@ export function subscribeUsers() {
 }
 
 export async function signUserOut() {
+  store.dispatch(loadingStarted());
   await currentUserOffline();
-  auth.signOut();
+  await auth.signOut();
+  store.dispatch(loadingFinished());
 }
 
 export function subscribePosts() {

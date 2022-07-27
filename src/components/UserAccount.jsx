@@ -18,7 +18,8 @@ import {
 const UserAccount = (props) => {
   const { profileLink } = props;
 
-  const error = useSelector((state) => state.user.error);
+  const currentUser = useSelector((state) => state.currentUser);
+  const users = useSelector((state) => state.users);
 
   useEffect(() => {
     const unsubscribeCurrentUser = subscribeCurrentUser();
@@ -29,24 +30,23 @@ const UserAccount = (props) => {
       currentUserOnline();
     }
     //We add event listener for the event when the user closes the browser window
-    window.addEventListener("beforeunload", (e) => {
+    const beforeunloadListener = (e) => {
       //We put the user offline
       currentUserOffline();
-    });
+    };
+    window.addEventListener("beforeunload", beforeunloadListener);
     //we add event listener for the event when the browser window change visibility
-    document.addEventListener("visibilitychange", (e) => {
+    const visibilitychangeListener = (e) => {
       if (document.visibilityState === "visible") currentUserOnline();
       else currentUserOffline();
-    });
+    };
+    document.addEventListener("visibilitychange", visibilitychangeListener);
     return () => {
       unsubscribeCurrentUser();
       unsubscribeUsers();
       unsubscribePosts();
     };
-  }, []);
-
-  const currentUser = useSelector((state) => state.currentUser);
-  const users = useSelector((state) => state.users);
+  }, [currentUser.isOnline]);
 
   //We add the index of user to the profileLink if there are more users with the exact same userName
   function modifyProfileLink() {
@@ -74,7 +74,7 @@ const UserAccount = (props) => {
 
   const [activeLink, setActiveLink] = useState(null);
 
-  if (users.length === 0 || !currentUser.isOnline) {
+  if (users.length === 0 || !currentUser) {
     return <div>...Loading</div>;
   }
 
@@ -165,7 +165,6 @@ const UserAccount = (props) => {
             />
           </Switch>
         </BrowserRouter>
-        <div>{error && <h4>{error}</h4>}</div>
       </Container>
     </div>
   );
