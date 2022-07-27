@@ -15,7 +15,6 @@ import { usersUpdated } from "../features/users/usersSlice";
 import { postsUpdated } from "../features/posts/postsSlice";
 import { incomingMessagesUpdated } from "../features/incomingMessages/incomingMessagesSlice";
 import { outgoingMessagesUpdated } from "../features/outgoingMessages/outgoingMessagesSlice";
-import * as fb from "firebase"; //this is only needed, because we want to use server timestamps
 
 // URL of my website.
 const FAKEBOOK_URL = { url: "https://alexerdei73.github.io/fakebook/" };
@@ -202,7 +201,7 @@ export async function upload(post) {
   const refPosts = firestore.collection("posts");
   const docRef = await refPosts.add({
     ...post,
-    timestamp: fb.default.firestore.FieldValue.serverTimestamp(),
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
   });
   const postID = docRef.id;
   updateUserPosts(postID);
@@ -241,7 +240,7 @@ const refMessages = firestore.collection("messages");
 export function uploadMessage(msg) {
   return refMessages.add({
     ...msg,
-    timestamp: fb.default.firestore.FieldValue.serverTimestamp(),
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
   });
 }
 
