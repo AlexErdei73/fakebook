@@ -25,10 +25,8 @@ const UserAccount = (props) => {
     const unsubscribeCurrentUser = subscribeCurrentUser();
     const unsubscribeUsers = subscribeUsers();
     const unsubscribePosts = subscribePosts();
-    //Update the online status if the current user does not seem to be online
-    if (!currentUser.isOnline) {
-      currentUserOnline();
-    }
+    //We make currentUser online
+    currentUserOnline();
     //We add event listener for the event when the user closes the browser window
     const beforeunloadListener = (e) => {
       //We put the user offline
@@ -46,7 +44,7 @@ const UserAccount = (props) => {
       unsubscribeUsers();
       unsubscribePosts();
     };
-  }, [currentUser.isOnline]);
+  }, []);
 
   //We add the index of user to the profileLink if there are more users with the exact same userName
   function modifyProfileLink() {
