@@ -41,6 +41,7 @@ export function subscribeAuth() {
     } else {
       store.dispatch(signOut());
     }
+    store.dispatch(loadingFinished());
   });
 }
 
@@ -189,11 +190,12 @@ export async function signInUser(user) {
       store.dispatch(errorOccured(EMAIL_VERIFICATION_ERROR));
     } else {
       store.dispatch(errorOccured(NO_ERROR));
-      store.dispatch(loadingFinished());
     }
   } catch (error) {
     // Update the error
     store.dispatch(errorOccured(error.message));
+  } finally {
+    store.dispatch(loadingFinished());
   }
 }
 

@@ -7,7 +7,7 @@ export const userSlice = createSlice({
     isSignedIn: false,
     isEmailVerified: false,
     error: "",
-    isLoading: false,
+    isLoading: true,
   },
   reducers: {
     signIn: (state, action) => {
