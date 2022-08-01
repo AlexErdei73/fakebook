@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b134a2a22f966eec0d8ba95250fd17cf",
+    "revision": "778c22986a5aebf5d9f51c13c3c25a6c",
     "url": "/fakebook/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fakebook/static/css/2.63f31f8d.chunk.css"
   },
   {
-    "revision": "5e5a87fff2fc42796faa",
+    "revision": "60f5b84c44061e034709",
     "url": "/fakebook/static/css/main.8b9d7053.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fakebook/static/js/2.f25a6516.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "5e5a87fff2fc42796faa",
-    "url": "/fakebook/static/js/main.c18394c0.chunk.js"
+    "revision": "60f5b84c44061e034709",
+    "url": "/fakebook/static/js/main.723402b9.chunk.js"
   },
   {
     "revision": "cdc298b1ecddd2f31987",
