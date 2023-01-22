@@ -64,10 +64,10 @@ const Comments = (props) => {
     if (comment.text === "" && !comment.isPhoto) return;
     const newPost = {
       ...post,
-      comments: [...post.comments],
+      comments: [],
     };
     const postID = post.postID;
-    if (!post.comments) newPost.comments = [];
+    if (post.comments) newPost.comments = [...post.comments];
     newPost.comments.push(comment);
     updatePost(newPost, postID);
     setComment(INIT_COMMENT);
@@ -90,8 +90,7 @@ const Comments = (props) => {
               background: "#e9ecef",
               borderRadius: "18px",
               marginLeft: "5px",
-            }}
-          >
+            }}>
             <Col xs={9} className="align-self-center">
               <StyledTextarea
                 onChange={handleChange}
@@ -108,8 +107,7 @@ const Comments = (props) => {
                   size="sm"
                   className="comment-btn"
                   onClick={() => setShow(true)}
-                  disabled={comment.isPhoto}
-                >
+                  disabled={comment.isPhoto}>
                   <MdPhotoCamera
                     size="18px"
                     className="text-muted"
@@ -120,8 +118,7 @@ const Comments = (props) => {
                   variant="light"
                   size="sm"
                   className="comment-btn"
-                  onClick={() => saveComment()}
-                >
+                  onClick={() => saveComment()}>
                   <MdSend
                     size="18px"
                     className="text-primary"
