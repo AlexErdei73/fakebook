@@ -252,6 +252,8 @@ export function addFileToStorage(file) {
 }
 
 export function updateProfile(profile) {
+  console.log(userDocRef);
+  console.log(profile);
   return userDocRef.update(profile);
 }
 

@@ -133,10 +133,11 @@ const Profile = (props) => {
   function updatePhotos(file) {
     const newPhoto = { fileName: file.name };
     const filenames = photos.map((photo) => photo.fileName);
+    const newPhotos = [...photos];
     if (filenames.indexOf(file.name) === -1) {
-      photos.push(newPhoto);
+      newPhotos.push(newPhoto);
     }
-    const newProfile = { photos: photos };
+    const newProfile = { photos: newPhotos };
     if (nameOfURL !== "") newProfile[nameOfURL] = `${userID}/${file.name}`;
     return updateProfile(newProfile);
   }
@@ -177,8 +178,7 @@ const Profile = (props) => {
                     <span>Edit Cover Photo</span>
                   </b>
                 }
-                size="sm"
-              >
+                size="sm">
                 <Dropdown.Item eventKey="1" onSelect={handleSelect}>
                   <HiOutlinePhotograph size="20px" className="mr-2" />
                   Select Photo
@@ -199,8 +199,7 @@ const Profile = (props) => {
                 <Button
                   variant="light"
                   className="profile-pic-button"
-                  onClick={() => setShowUpdateProfilePic(true)}
-                >
+                  onClick={() => setShowUpdateProfilePic(true)}>
                   <MdPhotoCamera size="19px" aria-label="photo" />
                 </Button>
               )}
@@ -219,8 +218,7 @@ const Profile = (props) => {
                   key="1"
                   to={`${url}/Posts`}
                   className="nav-link mx-2"
-                  ref={postsLinkRef}
-                >
+                  ref={postsLinkRef}>
                   <b>Posts</b>
                 </Link>
               </Nav.Item>
@@ -229,8 +227,7 @@ const Profile = (props) => {
                   key="2"
                   to={`${url}/Friends`}
                   className="nav-link mx-2"
-                  ref={friendsLinkRef}
-                >
+                  ref={friendsLinkRef}>
                   <b>Friends</b> {users.length}
                 </Link>
               </Nav.Item>
@@ -239,8 +236,7 @@ const Profile = (props) => {
                   key="3"
                   to={`${url}/Photos`}
                   className="nav-link mx-2"
-                  ref={photosLinkRef}
-                >
+                  ref={photosLinkRef}>
                   <b>Photos</b>
                 </Link>
               </Nav.Item>
