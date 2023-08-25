@@ -77,7 +77,7 @@ const UserAccount = (props) => {
   }
 
   return (
-    <div className="bg-200 vw-100 main-container">
+    <div className="bg-200 vw-100 main-container overflow-hidden">
       <Container className="w-100 p-0" fluid>
         <BrowserRouter>
           <TitleBar
@@ -110,7 +110,7 @@ const UserAccount = (props) => {
                 isFriendsListPage.current = false;
                 return (
                   <HomePage
-                    className="pt-0"
+                    className="pt-5"
                     profileLink={modifyProfileLink()}
                     isWatch={true}
                     // the components need the above props to change the active link
@@ -150,7 +150,7 @@ const UserAccount = (props) => {
                 isFriendsListPage.current = false;
                 return (
                   <HomePage
-                    className="pt-0"
+                    className="pt-5"
                     profileLink={modifyProfileLink()}
                     isWatch={false}
                     // the components need the above props to change the active link
