@@ -10,6 +10,11 @@
   background-color: #e9ecef;
 }
 
+.main-container {
+  max-width: 100em;
+  margin: auto;
+}
+
 .title-footer {
   font-size: small;
   font-weight: lighter;
