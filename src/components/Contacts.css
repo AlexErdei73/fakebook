@@ -14,3 +14,20 @@
 .white {
   background-color: white;
 }
+
+.msg-btn {
+  position: fixed;
+  background: white;
+  padding: 12px;
+  border-radius: 50%;
+  bottom: 20px;
+  right: calc((100vw - 100em) / 2 + 20px);
+  box-shadow: 0px 5px 5px 0px lightgray;
+  border: none;
+}
+
+@media (max-width: 100em) {
+  .msg-btn {
+    right: 20px;
+  }
+}
