@@ -23,7 +23,7 @@ const TitleBar = (props) => {
   };
 
   return (
-    <div class="titlebar">
+    <div class="titlebar bg-light">
       <Navbar bg="light" className="p-0 nav-container">
         <Navbar.Brand as={Link} to="/fakebook">
           <FaFacebook color="dodgerblue" fontSize="2em" className="mx-3" />
