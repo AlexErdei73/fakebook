@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import { getImageURL } from "../backend/backend";
 import { useSelector, useDispatch } from "react-redux";
 import placeholderImage from "../images/placeholder-image.jpg";
+import fakebookAvatar from "../images/fakebook-avatar.jpeg";
+import backgroundServer from "../images/background-server.jpg";
 import { imageAdded, imageUrlFound } from "../features/images/imagesSlice";
 import { useEffect } from "react";
 
 const StorageImage = (props) => {
   const { storagePath, alt, ...rest } = props;
+
+  const PLACEHOLDER_AVATAR_STORAGE_PATH = "fakebook-avatar.jpeg";
+  const PLACEHOLDER_BACKGROUND_STORAGE_PATH = "background-server.jpg";
 
   //We use the images slice as a buffer. Fetching the actual url of the image
   //in the storage takes relatively long time and uses Firebase. We render the same
@@ -19,6 +24,18 @@ const StorageImage = (props) => {
 
   useEffect(() => {
     let shouldUpdate = true;
+    const cleanup = () => (shouldUpdate = false);
+
+    //We filter out placeholder pictures
+    if (storagePath === PLACEHOLDER_AVATAR_STORAGE_PATH) {
+      setUrl(fakebookAvatar);
+      return cleanup;
+    }
+    if (storagePath === PLACEHOLDER_BACKGROUND_STORAGE_PATH) {
+      setUrl(backgroundServer);
+      return cleanup;
+    }
+
     //We look for the url in images slice first
     const imageIndex = images
       .map((image) => image.storagePath)
@@ -53,7 +70,7 @@ const StorageImage = (props) => {
     //the shouldUpdate to false, so after this the state cannot be updated. If
     //we don't do this React gives us error messages about state update on our
     //unmounted component
-    return () => (shouldUpdate = false);
+    return cleanup;
   }, [images, storagePath, url, dispatch]);
 
   return <img src={url} alt={alt} {...rest} />;
