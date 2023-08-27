@@ -8,6 +8,7 @@ import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { GoComment } from "react-icons/go";
 import { useSelector } from "react-redux";
 import { updatePost } from "../backend/backend";
+import ReactPlayer from "react-player/lazy";
 
 const DisplayPost = (props) => {
   const { post, ...rest } = props;
@@ -53,6 +54,14 @@ const DisplayPost = (props) => {
     setShowComments(true);
   }
 
+  function getYouTubeURL(url) {
+    const index = url.lastIndexOf("/");
+    const videoID = url.slice(index + 1);
+    const newURL = `https://www.youtube.com/watch?v=${videoID}`;
+    console.log(newURL);
+    return newURL;
+  }
+
   return (
     <Card {...rest}>
       <Card.Header>
@@ -72,13 +81,15 @@ const DisplayPost = (props) => {
         )}
         {post.isYoutube && (
           <div className="video-container">
-            <iframe
-              src={post.youtubeURL}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
-              allowFullScreen
-            ></iframe>
+            <ReactPlayer
+              className="react-player"
+              url={getYouTubeURL(post.youtubeURL)}
+              light
+              width="100%"
+              height="100%"
+              playing
+              controls
+            />
           </div>
         )}
       </Card.Body>
