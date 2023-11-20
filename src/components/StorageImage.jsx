@@ -22,6 +22,12 @@ const StorageImage = (props) => {
 
   const [url, setUrl] = useState(placeholderImage);
 
+  function changeStoragePath(storagePath) {
+    const words = storagePath.split(".");
+    words[words.length - 2] += "_400x400";
+    return words.join(".");
+  }
+
   useEffect(() => {
     let shouldUpdate = true;
     const cleanup = () => (shouldUpdate = false);
@@ -37,28 +43,45 @@ const StorageImage = (props) => {
     }
 
     //We look for the url in images slice first
-    const imageIndex = images
+    let imageIndex = images
       .map((image) => image.storagePath)
       .indexOf(storagePath);
-    //If we are unable to find it we add the image to the slice
     if (imageIndex === -1) {
-      dispatch(
-        imageAdded({
-          storagePath,
-          url,
-        })
-      );
-      //We add the url for the image to the images slice when we have actually got it
-      //We also update the local state to show the right image
-      getImageURL(storagePath).then((url) => {
-        setUrl(url);
+      imageIndex = images
+        .map((image) => image.storagePath)
+        .indexOf(changeStoragePath(storagePath));
+      //If we are unable to find it anyway we add the image to the slice
+      if (imageIndex === -1) {
         dispatch(
-          imageUrlFound({
+          imageAdded({
             storagePath,
             url,
           })
         );
-      });
+      }
+      //We add the url for the image to the images slice when we have actually got it
+      //We also update the local state to show the right image
+      getImageURL(storagePath)
+        .then((url) => {
+          setUrl(url);
+          dispatch(
+            imageUrlFound({
+              storagePath,
+              url,
+            })
+          );
+        })
+        .catch((_error) => {
+          getImageURL(changeStoragePath(storagePath)).then((url) => {
+            setUrl(url);
+            dispatch(
+              imageUrlFound({
+                storagePath,
+                url,
+              })
+            );
+          });
+        });
     } else {
       //If we are able to find the url in the images slice we just use it instead of fetching
       const newUrl = images[imageIndex].url;
