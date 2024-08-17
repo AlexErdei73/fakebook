@@ -1,26 +1,28 @@
-.create-post-card {
-  position: relative;
-  height: 145px;
-}
-
 .text-btn {
-  background: #e9ecef;
-  border-radius: 20px;
-  position: absolute;
-  top: 20px;
-  left: 80px;
-  color: gray;
-  border: none;
-  text-align: left;
+	background: #e9ecef;
+	border-radius: 20px;
+	position: absolute;
+	top: 20px;
+	left: 80px;
+	color: gray;
+	border: none;
+	text-align: left;
+	width: calc(100% - 100px);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .text-div:hover {
-  background: lightgray;
+	background: lightgray;
 }
 
 .add-btn {
-  display: block;
-  width: 33%;
-  min-width: 150px;
-  float: left;
+	display: block;
+	flex: 1;
+	max-width: 150px;
+}
+
+.card .d-flex {
+	justify-content: space-between;
 }
