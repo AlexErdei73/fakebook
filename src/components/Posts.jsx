@@ -6,6 +6,7 @@ import MiniFriends from "./MiniFriends";
 import DisplayUserPost from "./DisplayUserPost";
 import { handleClickLink } from "./helper";
 import { useSelector } from "react-redux";
+import "./Posts.css";
 
 const Posts = (props) => {
   const {
@@ -33,7 +34,7 @@ const Posts = (props) => {
   }, [activeLink, postsLinkRef, setActiveLink]);
 
   return (
-    <Row className="w-100" style={{ height: "1000px" }}>
+    <Row className="w-100 posts">
       <Col sm={5} className="mh-100 overflow-hidden">
         <MiniPhotos
           user={user}
