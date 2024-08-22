@@ -6,6 +6,7 @@ import postsReducer from "../features/posts/postsSlice";
 import incomingMessagesReducer from "../features/incomingMessages/incomingMessagesSlice";
 import outgoingMessagesReducer from "../features/outgoingMessages/outgoingMessagesSlice";
 import imagesReducer from "../features/images/imagesSlice";
+import linkReducer from "../features/link/linkSlice";
 
 export default configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export default configureStore({
     incomingMessages: incomingMessagesReducer,
     outgoingMessages: outgoingMessagesReducer,
     images: imagesReducer,
+    link: linkReducer,
   },
 });

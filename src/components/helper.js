@@ -7,7 +7,7 @@ export function handleClickLink(e, linkState, setLinkState) {
     previous.style.color = "";
   }
   if (current) {
-    setLinkState(current);
+    if (setLinkState) setLinkState(current);
     current.style.color = "dodgerblue";
     if (current.id === "profile") {
       current.style.backgroundColor = "lightblue";

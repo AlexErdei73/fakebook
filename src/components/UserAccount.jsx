@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import TitleBar from "./Titlebar";
 import Profile from "./Profile";
 import PhotoViewer from "./PhotoViewer";
@@ -59,19 +59,6 @@ const UserAccount = (props) => {
     isFriendsListPage.current = false;
   }
 
-  //code responsible for changing activelink with url changes
-
-  const refs = {
-    home: useRef(null),
-    friends: useRef(null),
-    watch: useRef(null),
-    profile: useRef(null),
-  };
-
-  //add the active status of the link DOM elements
-
-  const [activeLink, setActiveLink] = useState(null);
-
   if (users.length === 0 || !currentUser) {
     return <div>...Loading</div>;
   }
@@ -83,7 +70,6 @@ const UserAccount = (props) => {
           <TitleBar
             profilelink={modifyProfileLink()}
             closeFriendsListPage={closeFriendsListPage}
-            refs={refs}
           />
           <Switch>
             <Route
@@ -91,12 +77,7 @@ const UserAccount = (props) => {
               render={() => {
                 isFriendsListPage.current = true;
                 return (
-                  <FriendsListPage
-                    // the components need the above props to change the active link
-                    linkRef={refs.friends}
-                    activeLink={activeLink}
-                    setActiveLink={setActiveLink}
-                  />
+                  <FriendsListPage />
                 );
               }}
             />
@@ -113,10 +94,6 @@ const UserAccount = (props) => {
                     className="pt-5"
                     profileLink={modifyProfileLink()}
                     isWatch={true}
-                    // the components need the above props to change the active link
-                    linkRef={refs.watch}
-                    activeLink={activeLink}
-                    setActiveLink={setActiveLink}
                   />
                 );
               }}
@@ -126,21 +103,11 @@ const UserAccount = (props) => {
               render={() => {
                 if (isFriendsListPage.current)
                   return (
-                    <FriendsListPage
-                      // the components need the above props to change the active link
-                      linkRef={refs.friends}
-                      activeLink={activeLink}
-                      setActiveLink={setActiveLink}
-                    />
+                    <FriendsListPage />
                   );
                 else
                   return (
-                    <Profile
-                      // the components need the above props to change the active link
-                      linkRef={refs.profile}
-                      activeMainLink={activeLink}
-                      setActiveMainLink={setActiveLink}
-                    />
+                    <Profile />
                   );
               }}
             />
@@ -153,10 +120,6 @@ const UserAccount = (props) => {
                     className="pt-5"
                     profileLink={modifyProfileLink()}
                     isWatch={false}
-                    // the components need the above props to change the active link
-                    linkRef={refs.home}
-                    activeLink={activeLink}
-                    setActiveLink={setActiveLink}
                   />
                 );
               }}
