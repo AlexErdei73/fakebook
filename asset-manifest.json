@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/fakebook/static/css/main.a9f07a2f.chunk.css",
-    "main.js": "/fakebook/static/js/main.d481897c.chunk.js",
-    "main.js.map": "/fakebook/static/js/main.d481897c.chunk.js.map",
+    "main.js": "/fakebook/static/js/main.333efa2c.chunk.js",
+    "main.js.map": "/fakebook/static/js/main.333efa2c.chunk.js.map",
     "reactPlayerDailyMotion.js": "/fakebook/static/js/reactPlayerDailyMotion.31e79a91.chunk.js",
     "reactPlayerDailyMotion.js.map": "/fakebook/static/js/reactPlayerDailyMotion.31e79a91.chunk.js.map",
     "reactPlayerFacebook.js": "/fakebook/static/js/reactPlayerFacebook.86c47400.chunk.js",
@@ -32,14 +32,14 @@
     "runtime-main.js": "/fakebook/static/js/runtime-main.337e3582.js",
     "runtime-main.js.map": "/fakebook/static/js/runtime-main.337e3582.js.map",
     "static/css/15.63f31f8d.chunk.css": "/fakebook/static/css/15.63f31f8d.chunk.css",
-    "static/js/15.274d681b.chunk.js": "/fakebook/static/js/15.274d681b.chunk.js",
-    "static/js/15.274d681b.chunk.js.map": "/fakebook/static/js/15.274d681b.chunk.js.map",
+    "static/js/15.7fe14671.chunk.js": "/fakebook/static/js/15.7fe14671.chunk.js",
+    "static/js/15.7fe14671.chunk.js.map": "/fakebook/static/js/15.7fe14671.chunk.js.map",
     "index.html": "/fakebook/index.html",
-    "precache-manifest.b151d2fd72c1e8dd0014ff0c772782cf.js": "/fakebook/precache-manifest.b151d2fd72c1e8dd0014ff0c772782cf.js",
+    "precache-manifest.02426d08d6bec43195c30c8e7ca6b0c6.js": "/fakebook/precache-manifest.02426d08d6bec43195c30c8e7ca6b0c6.js",
     "service-worker.js": "/fakebook/service-worker.js",
     "static/css/15.63f31f8d.chunk.css.map": "/fakebook/static/css/15.63f31f8d.chunk.css.map",
     "static/css/main.a9f07a2f.chunk.css.map": "/fakebook/static/css/main.a9f07a2f.chunk.css.map",
-    "static/js/15.274d681b.chunk.js.LICENSE.txt": "/fakebook/static/js/15.274d681b.chunk.js.LICENSE.txt",
+    "static/js/15.7fe14671.chunk.js.LICENSE.txt": "/fakebook/static/js/15.7fe14671.chunk.js.LICENSE.txt",
     "static/media/background-server.jpg": "/fakebook/static/media/background-server.070904ee.jpg",
     "static/media/fakebook-avatar.jpeg": "/fakebook/static/media/fakebook-avatar.c2424276.jpeg",
     "static/media/friends.jpg": "/fakebook/static/media/friends.2536911b.jpg",
@@ -48,8 +48,8 @@
   "entrypoints": [
     "static/js/runtime-main.337e3582.js",
     "static/css/15.63f31f8d.chunk.css",
-    "static/js/15.274d681b.chunk.js",
+    "static/js/15.7fe14671.chunk.js",
     "static/css/main.a9f07a2f.chunk.css",
-    "static/js/main.d481897c.chunk.js"
+    "static/js/main.333efa2c.chunk.js"
   ]
 }
