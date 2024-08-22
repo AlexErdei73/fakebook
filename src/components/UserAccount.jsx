@@ -6,7 +6,7 @@ import HomePage from "./HomePage";
 import FriendsListPage from "./FriendsListPage";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Container from "react-bootstrap/Container";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   currentUserOffline,
   currentUserOnline,
@@ -14,12 +14,15 @@ import {
   subscribeUsers,
   subscribePosts,
 } from "../backend/backend";
+import { linkUpdated } from "../features/link/linkSlice";
 
 const UserAccount = (props) => {
   const { profileLink } = props;
 
   const currentUser = useSelector((state) => state.currentUser);
   const users = useSelector((state) => state.users);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const unsubscribeCurrentUser = subscribeCurrentUser();
@@ -57,6 +60,7 @@ const UserAccount = (props) => {
 
   function closeFriendsListPage() {
     isFriendsListPage.current = false;
+    dispatch(linkUpdated("profile"));
   }
 
   if (users.length === 0 || !currentUser) {
@@ -105,10 +109,11 @@ const UserAccount = (props) => {
                   return (
                     <FriendsListPage />
                   );
-                else
+                else {
                   return (
                     <Profile />
                   );
+                }
               }}
             />
             <Route
