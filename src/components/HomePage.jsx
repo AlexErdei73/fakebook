@@ -5,16 +5,14 @@ import LeftNavbar from "./LeftNavbar";
 import VideoView from "./VideoView";
 import Contacts from "./Contacts";
 import "./HomePage.css";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { linkUpdated } from "../features/link/linkSlice";
 
 const HomePage = (props) => {
-	const {
-		profileLink,
-		className,
-		isWatch,
-	} = props;
+	const { className } = props;
 
+	const accountPage = useSelector((state) => state.accountPage);
+	const { profileLink, isWatch } = accountPage;
 	const dispatch = useDispatch();
 
 	//we set the active link to the home link when it renders

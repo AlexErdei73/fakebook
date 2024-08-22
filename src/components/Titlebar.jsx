@@ -9,13 +9,14 @@ import { ImExit } from "react-icons/im";
 import "./Titlebar.css";
 import ProfileLink from "./ProfileLink";
 import { signUserOut } from "../backend/backend";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { handleClickLink } from "./helper";
+import { linkUpdated } from "../features/link/linkSlice";
+import { friendsListPageSet } from "../features/accountPage/accountPageSlice";
+
 
 const TitleBar = (props) => {
-	//get the signed in user and closeFriendsListPage function
-	const { closeFriendsListPage } = props;
 
 	const refs = {
 		home: useRef(null),
@@ -24,8 +25,12 @@ const TitleBar = (props) => {
 		profile: useRef(null),
 	};
 
+	//Get the signed in user, active link and the profileLink
 	const user = useSelector((state) => state.currentUser);
 	const link = useSelector((state) => state.link);
+	const profileLink = useSelector((state) => state.accountPage.profileLink);
+
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		handleClickLink(
@@ -38,6 +43,11 @@ const TitleBar = (props) => {
 	const handleClick = () => {
 		signUserOut();
 	};
+
+	function closeFriendsListPage() {
+		dispatch(friendsListPageSet(false));
+		dispatch(linkUpdated("profile"));
+	  }
 
 	return (
 		<div className="titlebar bg-light">
@@ -82,12 +92,10 @@ const TitleBar = (props) => {
 				<Nav className="w-25 justify-content-end align-self-center">
 					<Nav.Item className="align-self-center first">
 						<Link
-							to={props.profilelink}
+							to={profileLink}
 							className="nav-link profile"
 							id="profile"
-							onClick={(e) => {
-								closeFriendsListPage();
-							}}
+							onClick={closeFriendsListPage}
 							ref={refs.profile}>
 							<ProfileLink user={user} size="30" fullname="false" bold="true" />
 						</Link>
@@ -99,8 +107,8 @@ const TitleBar = (props) => {
 							menuAlign="right">
 							<Dropdown.Item
 								as={Link}
-								to={props.profilelink}
-								onClick={() => closeFriendsListPage()}>
+								to={profileLink}
+								onClick={closeFriendsListPage}>
 								<ProfileLink
 									user={user}
 									size="60"
