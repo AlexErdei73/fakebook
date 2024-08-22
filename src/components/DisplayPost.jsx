@@ -58,7 +58,6 @@ const DisplayPost = (props) => {
     const index = url.lastIndexOf("/");
     const videoID = url.slice(index + 1);
     const newURL = `https://www.youtube.com/watch?v=${videoID}`;
-    console.log(newURL);
     return newURL;
   }
 
