@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { addFileToStorage } from "../backend/backend";
 
 const UploadPhoto = (props) => {
-  const { show, setShow, updatePost } = props;
+  const { show, setShow, updateDatabase } = props;
 
   const fileInputRef = useRef(null);
 
@@ -16,7 +16,7 @@ const UploadPhoto = (props) => {
     event.preventDefault();
     const file = event.target.files[0];
     addFileToStorage(file).then(() => {
-      return updatePost(file);
+      return updateDatabase(file);
     });
   }
 
