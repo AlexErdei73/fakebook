@@ -14,23 +14,21 @@ import {
 	subscribeUsers,
 	subscribePosts,
 } from "../backend/backend";
-import { friendsListPageSet, profileLinkSet } from "../features/accountPage/accountPageSlice";
+import {
+	friendsListPageSet,
+	profileLinkSet,
+} from "../features/accountPage/accountPageSlice";
 
 const UserAccount = (props) => {
 	const profileLink = useSelector((state) => state.accountPage.profileLink);
 
 	const currentUser = useSelector((state) => state.currentUser);
 	const users = useSelector((state) => state.users);
-  const isFriendsListPage = useSelector((state) => state.accountPage.isFriendsListPage);
+	const isFriendsListPage = useSelector(
+		(state) => state.accountPage.isFriendsListPage
+	);
 
 	const dispatch = useDispatch();
-
-  //We add the index of user to the profileLink if there are more users with the exact same userName
-	function addIndexToProfileLink() {
-		if (currentUser && currentUser.index && currentUser.index > 0) {
-			return `${profileLink}.${currentUser.index}`;
-		} else return profileLink;
-	}
 
 	useEffect(() => {
 		const unsubscribeCurrentUser = subscribeCurrentUser();
@@ -50,15 +48,21 @@ const UserAccount = (props) => {
 			else currentUserOffline();
 		};
 		document.addEventListener("visibilitychange", visibilitychangeListener);
-		//We add index to the profileLink if more users have the exact same name
-		const newProfileLink = addIndexToProfileLink();
-		dispatch(profileLinkSet(newProfileLink));
 		return () => {
 			unsubscribeCurrentUser();
 			unsubscribeUsers();
 			unsubscribePosts();
 		};
-	});
+	}, []);
+
+	//We add the index of user to the profileLink if there are more users with the exact same userName
+	const addIndexToProfileLink = () => {
+		if (currentUser && currentUser.index && currentUser.index > 0) {
+			return `${profileLink}.${currentUser.index}`;
+		} else return profileLink;
+	};
+	const newProfileLink = addIndexToProfileLink();
+	useEffect(() => dispatch(profileLinkSet(newProfileLink)), [dispatch, newProfileLink]);
 
 	if (users.length === 0 || !currentUser) {
 		return <div>...Loading</div>;
