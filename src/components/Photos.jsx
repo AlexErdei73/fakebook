@@ -7,8 +7,10 @@ import { useSelector } from "react-redux";
 
 const Photos = (props) => {
   const { url } = useRouteMatch();
-  const { userID, openFileInput, photosLinkRef, activeLink, setActiveLink } =
-    props;
+  const { userID, openFileInput, linkHandling } = props;
+  const { linkRefs, linkState } = linkHandling;
+  const photosLinkRef = linkRefs.photos;
+  const [activeLink, setActiveLink] = linkState;
 
   const users = useSelector((state) => state.users);
   const currentUserID = useSelector((state) => state.user.id);

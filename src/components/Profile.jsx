@@ -74,6 +74,15 @@ const Profile = (props) => {
 	const friendsLinkRef = useRef(null);
 	const postsLinkRef = useRef(null);
 
+	const linkHandlingProps = {
+		linkRefs: {
+			photos: photosLinkRef,
+			friends: friendsLinkRef,
+			posts: postsLinkRef
+		},
+		linkState: [activeLink, setActiveLink]
+	}
+
 	const { url, path } = useRouteMatch();
 
 	function openFileInput(nameOfURL) {
@@ -252,22 +261,14 @@ const Profile = (props) => {
 								userID={userId()}
 								openFileInput={() => openFileInput("")}
 								//we only need the rest to handle the changes of the activeLink
-								photosLinkRef={photosLinkRef}
-								friendsLinkRef={friendsLinkRef}
-								postsLinkRef={postsLinkRef}
-								activeLink={activeLink}
-								setActiveLink={setActiveLink}
+								linkHandling = {linkHandlingProps}
 							/>
 						</Route>
 						<Route path={path}>
 							<Posts
 								userID={userId()}
 								//we only need the rest to handle the changes of the activeLink
-								photosLinkRef={photosLinkRef}
-								friendsLinkRef={friendsLinkRef}
-								postsLinkRef={postsLinkRef}
-								activeLink={activeLink}
-								setActiveLink={setActiveLink}
+								linkHandling = {linkHandlingProps}
 							/>
 						</Route>
 					</Switch>

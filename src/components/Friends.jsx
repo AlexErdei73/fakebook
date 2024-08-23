@@ -8,7 +8,11 @@ import { useSelector } from "react-redux";
 const Friends = (props) => {
   const { url } = useRouteMatch();
 
-  const { friendsLinkRef, activeLink, setActiveLink } = props;
+  const { linkHandling } = props;
+  const { linkRefs, linkState } = linkHandling;
+  const [activeLink, setActiveLink] = linkState;
+  const friendsLinkRef = linkRefs.friends;
+
 
   const users = useSelector((state) => state.users);
 
