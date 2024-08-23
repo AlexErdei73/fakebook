@@ -17,6 +17,7 @@ import {
 import {
 	friendsListPageSet,
 	profileLinkSet,
+	watchSet,
 } from "../features/accountPage/accountPageSlice";
 
 const UserAccount = (props) => {
@@ -89,6 +90,7 @@ const UserAccount = (props) => {
 							path="/fakebook/watch"
 							render={() => {
 								dispatch(friendsListPageSet(false));
+								dispatch(watchSet(true));
 								return <HomePage className="pt-5" />;
 							}}
 						/>
@@ -105,6 +107,7 @@ const UserAccount = (props) => {
 							path="/fakebook"
 							render={() => {
 								dispatch(friendsListPageSet(false));
+								dispatch(watchSet(false));
 								return <HomePage className="pt-5" />;
 							}}
 						/>
