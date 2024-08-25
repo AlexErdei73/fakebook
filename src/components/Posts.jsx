@@ -13,11 +13,7 @@ const Posts = (props) => {
 
 	const { linkRefs, linkState } = linkHandling;
 	const [activeLink, setActiveLink] = linkState;
-	const {
-		photos: photosLinkRef,
-		friends: friendsLinkRef,
-		posts: postsLinkRef,
-	} = linkRefs;
+	const { posts: postsLinkRef } = linkRefs;
 
 	const users = useSelector((state) => state.users);
 	const currentUserID = useSelector((state) => state.user.id);
@@ -40,18 +36,10 @@ const Posts = (props) => {
 				<MiniPhotos
 					user={user}
 					userID={userID}
-					photosLinkRef={photosLinkRef}
-					activeLink={activeLink}
-					setActiveLink={setActiveLink}
+					linkHandling={linkHandling}
 					className="my-2"
 				/>
-				<MiniFriends
-					user={user}
-					friendsLinkRef={friendsLinkRef}
-					activeLink={activeLink}
-					setActiveLink={setActiveLink}
-					className="my-2"
-				/>
+				<MiniFriends user={user} linkHandling={linkHandling} className="my-2" />
 			</Col>
 			<Col sm={7} className="mh-100 overflow-auto hide-scrollbar bg-200">
 				<CreatePost
